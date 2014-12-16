@@ -18,11 +18,6 @@ class AlertUpdater
     private $translator;
 
     /**
-     * @var TwigEngine
-     */
-    private $templating;
-
-    /**
      * @var \Swift_Mailer
      */
     private $mailer;

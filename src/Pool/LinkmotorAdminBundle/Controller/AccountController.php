@@ -4,7 +4,6 @@ namespace Pool\LinkmotorAdminBundle\Controller;
 
 use Pool\LinkmotorBundle\Controller\BaseController;
 use Pool\LinkmotorAdminBundle\Form\Type\AccountType;
-use Pool\LinkmotorBundle\Twig\HelperExtension;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;

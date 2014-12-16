@@ -2,7 +2,6 @@
 
 namespace Pool\LinkmotorBundle\Controller;
 
-use Pool\LinkmotorBundle\Entity\Page;
 use Pool\LinkmotorBundle\Form\Type\BookmarkletSelect;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;

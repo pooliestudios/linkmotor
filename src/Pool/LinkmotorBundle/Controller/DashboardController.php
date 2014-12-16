@@ -6,7 +6,6 @@ use Pool\LinkmotorBundle\Entity\Project;
 use Pool\LinkmotorBundle\Entity\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Component\HttpFoundation\Request;
 
 class DashboardController extends BaseController
 {

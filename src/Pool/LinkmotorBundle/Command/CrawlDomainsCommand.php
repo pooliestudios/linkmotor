@@ -5,7 +5,6 @@ use Pool\LinkmotorBundle\Entity\Domain;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Pool\LinkmotorBundle\Service\Crawler;
 use Pool\LinkmotorBundle\Service\SeoServices;

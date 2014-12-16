@@ -4,7 +4,6 @@ namespace Pool\LinkmotorBundle\Form\Type;
 use Pool\LinkmotorBundle\Entity\Project;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class UserNotificationSettingsType extends AbstractType
 {

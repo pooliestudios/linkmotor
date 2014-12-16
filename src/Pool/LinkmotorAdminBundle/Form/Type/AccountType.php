@@ -1,9 +1,7 @@
 <?php
 namespace Pool\LinkmotorAdminBundle\Form\Type;
 
-use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class AccountType extends InvoiceInformationType
 {

@@ -3,8 +3,6 @@ namespace Pool\LinkmotorBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Doctrine\ORM\EntityRepository;
 
 class BacklinkBulkActionsType extends AbstractType
 {
