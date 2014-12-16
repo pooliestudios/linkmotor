@@ -1,0 +1,49 @@
+{% extends 'PoolLinkmotorBundle::layout.html.twig' %}
+
+{% block title %}{% trans %}Projects{% endtrans %} - {% trans %}Administration{% endtrans %} - {% endblock %}
+
+{% block subnav %}
+    {% include 'PoolLinkmotorAdminBundle:Default:subnav.html.twig' with {active:'projects'} %}
+{% endblock %}
+
+{% block content %}
+    {% if accountLimitsOverstepped('projects') %}
+        {% include 'PoolLinkmotorBundle:Default:limitOverstepped.html.twig' with {which:'projects'} %}
+    {% elseif accountLimitsReached('projects') %}
+        {% include 'PoolLinkmotorBundle:Default:limitReached.html.twig' with {which:'projects'} %}
+    {% endif %}
+
+    <table class="uk-table uk-table-hover">
+        <tr>
+            <th>{% trans %}Name{% endtrans %}</th>
+            <th>{% trans %}Pages{% endtrans %}</th>
+            <th>{% trans %}Backlinks{% endtrans %}</th>
+            <th>{% trans %}Alerts{% endtrans %}</th>
+            <th></th>
+        </tr>
+        {% for project in projects %}
+            <tr>
+                <td>
+                    <a href="{{ path('pool_linkmotor_select_project', {id:project.id}) }}">
+                        <img src="//www.google.com/s2/favicons?domain={{ project.name }}" width="16" height="16"> <strong>{{ project.name }}</strong>
+                    </a>
+                </td>
+                <td class="uk-alert">{{ project.pages.count }}</td>
+                <td class="uk-alert uk-alert-success">{{ project.backlinks.count }}</td>
+                <td class="uk-alert uk-alert-danger">{{ project.alerts.count }}</td>
+                <td>
+                    <div class="uk-button-group">
+                        <a class="uk-button uk-button-small" href="{{ path('pool_linkmotor_admin_projects_delete', {id:project.id}) }}">
+                            <i class="uk-icon-trash-o"></i> {% trans %}Delete{% endtrans %}
+                        </a>
+                        <a class="uk-button uk-button-small" href="{{ path('pool_linkmotor_admin_projects_settings', {id:project.id}) }}">
+                            <i class="uk-icon-cog"></i> {% trans %}Settings{% endtrans %}
+                        </a>
+                    </div>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+
+    {{ knp_pagination_render(projects) }}
+{% endblock %}

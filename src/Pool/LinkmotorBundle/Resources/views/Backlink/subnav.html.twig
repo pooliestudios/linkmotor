@@ -1,0 +1,33 @@
+</div>
+<div class="lm-wrapper-sub">
+    <div class="uk-container uk-container-center">
+
+<div class="uk-float-right">
+    {% if '_index' in app.request.attributes.get('_route') %}
+            <a class="uk-button uk-button-primary" href="{{ path('pool_linkmotor_pages_search_backlinks') }}"><i class="uk-icon-plus"></i> {% trans %}add{% endtrans %}</a>
+		<div class="uk-button-group">
+		        <a class="uk-button" href="{{ path('pool_linkmotor_backlinks_import') }}">
+		            {% trans %}Import{% endtrans %}
+		        </a>
+		        <a class="uk-button" href="{{ path('pool_linkmotor_backlinks_export', {type:active}) }}">
+		            {% trans %}Export{% endtrans %}
+		        </a>
+		</div>
+    {% endif %}
+</div>
+<ul class="uk-tab">
+    <li{% if active == 'my-alerts' %} class="uk-active"{% endif %}>
+        <a href="{{ path('pool_linkmotor_backlinks_index', {type:'my-alerts'}) }}">
+            {% trans %}My alerts{% endtrans %}
+        </a>
+    </li>
+    <li{% if active == 'all' %} class="uk-active"{% endif %}>
+        <a href="{{ path('pool_linkmotor_backlinks_index', {type:'all'}) }}">
+            {% trans %}All backlinks{% endtrans %}
+        </a>
+    </li>
+</ul>
+
+</div>
+</div>
+<div class="uk-container uk-container-center">

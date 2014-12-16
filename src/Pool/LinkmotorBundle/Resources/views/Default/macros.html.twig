@@ -1,0 +1,397 @@
+{% macro dragHandler() %}
+    <div class="drag-handle"><i class="uk-icon-arrows"></i></div>
+{% endmacro %}
+{% macro sortableHead(pagination, field, label, tooltip, id, class) %}
+    {% if tooltip is not defined %}
+        {% set tooltip = '' %}
+    {% endif %}
+    {% if id is not defined %}
+        {% set id = 0 %}
+    {% endif %}
+    {% if class is not defined %}
+        {% set class = '' %}
+    {% endif %}
+    {% if pagination.isSorted(field) %}
+        {% if pagination.params.direction == "asc" %}
+            {% set icon = "uk-icon-sort-up" %}
+        {% else %}
+            {% set icon = "uk-icon-sort-down" %}
+        {% endif %}
+    {% else %}
+        {% set icon = "uk-icon-sort" %}
+    {% endif %}
+    <th {% if id %}id="row-{{ id }}" {% endif %}class="draggable-column {{ class }}" data-uk-tooltip title="{{ tooltip|trans }}">
+        {{ _self.dragHandler }}
+        <i class="{{ icon }}"></i>{{ knp_pagination_sortable(pagination, label|trans, field) }}
+    </th>
+{% endmacro %}
+{% macro showPagesInfo(tableOption, type) %}
+    {% set id = tableOption.id %}
+    {% set icon = (tableOption.class == '') ? 'uk-icon-check-square-o' : 'uk-icon-square-o' %}
+    {% if id == 1 %}
+        <li><a href="" data-id="{{ id }}"><i class="{{ icon }}"></i> {{ 'URL'|trans }}</a></li>
+    {% elseif id == 2 %}
+        <li><a href="" data-id="{{ id }}"><i class="{{ icon }}"></i> {{ 'Actions'|trans }}</a></li>
+    {% elseif id == 3 %}
+        <li><a href="" data-id="{{ id }}"><i class="{{ icon }}"></i> {{ 'Status'|trans }}</a></li>
+    {% elseif id == 4 %}
+        <li><a href="" data-id="{{ id }}"><i class="{{ icon }}"></i> {{ 'PA'|trans }}</a></li>
+    {% elseif id == 5 %}
+        <li><a href="" data-id="{{ id }}"><i class="{{ icon }}"></i> {{ 'DA'|trans }}</a></li>
+    {% elseif id == 6 %}
+        <li><a href="" data-id="{{ id }}"><i class="{{ icon }}"></i> {{ 'Domain Age'|trans }}</a></li>
+    {% elseif id == 7 %}
+        <li><a href="" data-id="{{ id }}"><i class="{{ icon }}"></i> {{ 'NetPop'|trans }}</a></li>
+    {% elseif id == 8 %}
+        <li><a href="" data-id="{{ id }}"><i class="{{ icon }}"></i> {{ 'Visibilityindex'|trans }}</a></li>
+    {% elseif id == 9 %}
+        <li><a href="" data-id="{{ id }}"><i class="{{ icon }}"></i> {{ 'OVI'|trans }}</a></li>
+    {% elseif id == 10 %}
+        <li><a href="" data-id="{{ id }}"><i class="{{ icon }}"></i> {{ 'Domain'|trans }}</a></li>
+    {% elseif id == 11 %}
+        <li><a href="" data-id="{{ id }}"><i class="{{ icon }}"></i> {{ 'Vendor'|trans }}</a></li>
+    {% elseif id == 12 and type == 'all' %}
+        <li><a href="" data-id="{{ id }}"><i class="{{ icon }}"></i> {{ 'User'|trans }}</a></li>
+    {% elseif id == 13 %}
+        <li><a href="" data-id="{{ id }}"><i class="{{ icon }}"></i> {{ 'Notes'|trans }}</a></li>
+    {% elseif id == 14 %}
+        <li><a href="" data-id="{{ id }}"><i class="{{ icon }}"></i> {{ 'Modified'|trans }}</a></li>
+    {% endif %}
+{% endmacro %}
+{% macro showBacklinksInfo(tableOption) %}
+    {% set id = tableOption.id %}
+    {% set icon = (tableOption.class == '') ? 'uk-icon-check-square-o' : 'uk-icon-square-o' %}
+    {% if id == 1 %}
+        <li><a href="" data-id="{{ id }}"><i class="{{ icon }}"></i> {{ 'Page'|trans }}</a></li>
+    {% elseif id == 2 %}
+        <li><a href="" data-id="{{ id }}"><i class="{{ icon }}"></i> {{ 'Actions'|trans }}</a></li>
+    {% elseif id == 3 %}
+        <li><a href="" data-id="{{ id }}"><i class="{{ icon }}"></i> {{ 'Status'|trans }}</a></li>
+    {% elseif id == 4 %}
+        <li><a href="" data-id="{{ id }}"><i class="{{ icon }}"></i> {{ 'Follow'|trans }}</a></li>
+    {% elseif id == 5 %}
+        <li><a href="" data-id="{{ id }}"><i class="{{ icon }}"></i> {{ 'Type'|trans }}</a></li>
+    {% elseif id == 6 %}
+        <li><a href="" data-id="{{ id }}"><i class="{{ icon }}"></i> {{ 'Anchor'|trans }}</a></li>
+    {% elseif id == 7 %}
+        <li><a href="" data-id="{{ id }}"><i class="{{ icon }}"></i> {{ 'Target'|trans }}</a></li>
+    {% elseif id == 8 %}
+        <li><a href="" data-id="{{ id }}"><i class="{{ icon }}"></i> {{ 'Vendor'|trans }}</a></li>
+    {% elseif id == 9 %}
+        <li><a href="" data-id="{{ id }}"><i class="{{ icon }}"></i> {{ 'PA'|trans }}</a></li>
+    {% elseif id == 10 %}
+        <li><a href="" data-id="{{ id }}"><i class="{{ icon }}"></i> {{ 'DA'|trans }}</a></li>
+    {% elseif id == 11 %}
+        <li><a href="" data-id="{{ id }}"><i class="{{ icon }}"></i> {{ 'NetPop'|trans }}</a></li>
+    {% elseif id == 12 %}
+        <li><a href="" data-id="{{ id }}"><i class="{{ icon }}"></i> {{ 'Visibilityindex'|trans }}</a></li>
+    {% elseif id == 13 %}
+        <li><a href="" data-id="{{ id }}"><i class="{{ icon }}"></i> {{ 'OVI'|trans }}</a></li>
+    {% elseif id == 14 %}
+        <li><a href="" data-id="{{ id }}"><i class="{{ icon }}"></i> {{ 'Created'|trans }}</a></li>
+    {% elseif id == 15 %}
+        <li><a href="" data-id="{{ id }}"><i class="{{ icon }}"></i> {{ 'Costs'|trans }}</a></li>
+    {% elseif id == 16 %}
+        <li><a href="" data-id="{{ id }}"><i class="{{ icon }}"></i> {{ 'Price'|trans }}</a></li>
+    {% endif %}
+{% endmacro %}
+{% macro showPagesHeadCell(tableOption, pages, type) %}
+    {% set id = tableOption.id %}
+    {% set class = tableOption.class %}
+    {% if id == 1 %}
+        {{ _self.sortableHead(pages, 'completeUrl', 'URL', '', id, class) }}
+    {% elseif id == 2 %}
+        <th id="row-{{ id }}" class="draggable-column {{ class }}">{{ _self.dragHandler }}</th>
+    {% elseif id == 3 %}
+        {{ _self.sortableHead(pages, 's.sortOrder', 'Status', '', id, class) }}
+    {% elseif id == 4 %}
+        {{ _self.sortableHead(pages, 'p.authority', 'PA', 'Page Authority - Data from Moz.com', id, class) }}
+    {% elseif id == 5 %}
+        {{ _self.sortableHead(pages, 'd.authority', 'DA', 'Domain Authority - Data from Moz.com', id, class) }}
+    {% elseif id == 6 %}
+        {{ _self.sortableHead(pages, 'd.firstDay', 'Domain Age', '', id, class) }}
+    {% elseif id == 7 %}
+        {{ _self.sortableHead(pages, 'd.netPop', 'NetPop', 'NetPop(ularity) stands for the amount of networks that link to the current project.', id, class) }}
+    {% elseif id == 8 %}
+        {{ _self.sortableHead(pages, 'sd.sichtbarkeitsindex', 'Visibilityindex', 'Visibilityindex - SISTRIX', id, class) }}
+    {% elseif id == 9 %}
+        {{ _self.sortableHead(pages, 'sd.ovi', 'OVI', 'Online Value Index (OVI) - XOVI', id, class) }}
+    {% elseif id == 10 %}
+        {{ _self.sortableHead(pages, 'd.name', 'Domain', '', id, class) }}
+    {% elseif id == 11 %}
+        <th id="row-{{ id }}" class="draggable-column {{ class }}">
+            {{ _self.dragHandler }}
+            {% trans %}Vendor{% endtrans %}
+        </th>
+    {% elseif id == 12 and type == 'all' %}
+        {{ _self.sortableHead(pages, 'u.name', 'User', '', id, class) }}
+    {% elseif id == 13 %}
+        <th id="row-{{ id }}" class="draggable-column {{ class }}">
+            {{ _self.dragHandler }}
+            {% trans %}Notes{% endtrans %}
+        </th>
+    {% elseif id == 14 %}
+        {{ _self.sortableHead(pages, 'p.lastModifiedAt', 'Modified', '', id, class) }}
+    {% endif %}
+{% endmacro %}
+{% macro showBacklinksHeadCell(tableOption, backlinks) %}
+    {% set id = tableOption.id %}
+    {% set class = tableOption.class %}
+    {% if id == 1 %}
+        {{ _self.sortableHead(backlinks, 'completeUrl', 'Page', '', id, class) }}
+    {% elseif id == 2 %}
+        <th id="row-{{ id }}" class="draggable-column {{ class }}">{{ _self.dragHandler }}</th>
+    {% elseif id == 3 %}
+        <th id="row-{{ id }}" class="draggable-column {{ class }}">
+            {{ _self.dragHandler }}
+            Status
+        </th>
+    {% elseif id == 4 %}
+        {{ _self.sortableHead(backlinks, 'b.follow', 'Follow', '', id, class) }}
+    {% elseif id == 5 %}
+        {{ _self.sortableHead(backlinks, 'b.type', 'Type', '', id, class) }}
+    {% elseif id == 6 %}
+        {{ _self.sortableHead(backlinks, 'b.anchor', 'Anchor', '', id, class) }}
+    {% elseif id == 7 %}
+        {{ _self.sortableHead(backlinks, 'b.url', 'Target', '', id, class) }}
+    {% elseif id == 8 %}
+        <th id="row-{{ id }}" class="draggable-column {{ class }}">
+            {{ _self.dragHandler }}
+            {% trans %}Vendor{% endtrans %}
+        </th>
+    {% elseif id == 9 %}
+        {{ _self.sortableHead(backlinks, 'p.authority', 'PA', 'Page Authority - Data from Moz.com', id, class) }}
+    {% elseif id == 10 %}
+        {{ _self.sortableHead(backlinks, 'd.authority', 'DA', 'Domain Authority - Data from Moz.com', id, class) }}
+    {% elseif id == 11 %}
+        {{ _self.sortableHead(backlinks, 'd.netPop', 'NetPop', 'NetPop(ularity) stands for the amount of networks that link to the current project.', id, class) }}
+    {% elseif id == 12 %}
+        {{ _self.sortableHead(backlinks, 'sd.sichtbarkeitsindex', 'Visibilityindex', 'Visibilityindex - SISTRIX', id, class) }}
+    {% elseif id == 13 %}
+        {{ _self.sortableHead(backlinks, 'sd.ovi', 'OVI', 'Online Value Index (OVI) - XOVI', id, class) }}
+    {% elseif id == 14 %}
+        {{ _self.sortableHead(backlinks, 'b.createdAt', 'Created', '', id, class) }}
+    {% elseif id == 15 %}
+        <th id="row-{{ id }}" class="draggable-column {{ class }}">
+            {{ _self.dragHandler }}
+            {% trans %}Costs{% endtrans %}
+        </th>
+    {% elseif id == 16 %}
+        <th id="row-{{ id }}" class="draggable-column {{ class }}">
+            {{ _self.dragHandler }}
+            {% trans %}Price{% endtrans %}
+        </th>
+    {% endif %}
+{% endmacro %}
+
+{% macro showPagesBodyCell(tableOption, page, type, previousPageId) %}
+    {% set id = tableOption.id %}
+    {% set class = 'row-' ~ id ~ ' ' ~ tableOption.class %}
+    {% if id == 1 %}
+        <td class="url {{ class }}">
+            <a id="prospect-{{ page.id}}" href="{{ path('pool_linkmotor_pages_view', {id:page.id}) }}" title="{{ page.full }}">
+                {{ page.fullForDisplay }}
+            </a>
+        </td>
+    {% elseif id == 2 %}
+        <td class="lm-actions {{ class }}">
+            <div class="uk-button-group">
+                <a title="{% trans %}Open{% endtrans %}" class="uk-button lmexternal" href="{{ path('pool_linkmotor_anonymizer') ~ '?url=' ~ page.full }}" target="_blank">
+                    <i class="uk-icon-external-link"></i>
+                </a>
+                <a title="{% trans %}Search for backlinks{% endtrans %}" class="uk-button slow" href="{{ path('pool_linkmotor_pages_search_backlinks', {id:page.id}) }}">
+                    <i class="uk-icon-link"></i>
+                    <i class="uk-icon-plus icon-backlink"></i>
+                </a>
+            </div>
+        </td>
+    {% elseif id == 3 %}
+        <td class="{{ class }}">
+            {% if page.statusMayBeChangedByUser(app.user) %}
+                <form class="autosubmit" action="{{ path('pool_linkmotor_pages_edit', {id:page.id}) }}" method="POST">
+                    <input type="hidden" name="inline" value="true">
+                    <input type="hidden" name="previous" value="{{ previousPageId }}">
+                    <select name="page_edit[status]">
+                        <option value="1"{% if page.status.id == 1 %} selected="selected"{% endif %}>
+                            {% trans %}New{% endtrans %}
+                        </option>
+                        <option value="2"{% if page.status.id == 2 %} selected="selected"{% endif %}>
+                            {% trans %}Relevant{% endtrans %}
+                        </option>
+                        <option value="3"{% if page.status.id == 3 %} selected="selected"{% endif %}>
+                            {% trans %}Not relevant{% endtrans %}
+                        </option>
+                        <option value="4"{% if page.status.id == 4 %} selected="selected"{% endif %}>
+                            {% trans %}1. Contact{% endtrans %}
+                        </option>
+                        <option value="5"{% if page.status.id == 5 %} selected="selected"{% endif %}>
+                            {% trans %}2. Contact{% endtrans %}
+                        </option>
+                        <option value="8"{% if page.status.id == 8 %} selected="selected"{% endif %}>
+                            {% trans %}In progress{% endtrans %}
+                        </option>
+                    </select>
+                </form>
+            {% else %}
+                {{ page.status.name|trans }}
+            {% endif %}
+        </td>
+    {% elseif id == 4 %}
+        <td class="{{ class }}">{{ valueOrSpinner(page.authority, 0) }}</td>
+    {% elseif id == 5 %}
+        <td class="{{ class }}">{{ valueOrSpinner(page.subdomain.domain.authority, 0) }}</td>
+    {% elseif id == 6 %}
+        <td class="{{ class }}">
+            {% if not page.subdomain.domain.notYetCrawled and not page.subdomain.domain.firstYear %}
+                {% trans %}n/a{% endtrans %}
+            {% else %}
+                {{ valueOrSpinner(page.subdomain.domain.firstYear) }}
+            {% endif %}
+        </td>
+    {% elseif id == 7 %}
+        <td class="{{ class }}">{{ valueOrSpinner(page.subdomain.domain.netPop|localeNumber, null) }}</td>
+    {% elseif id == 8 %}
+        <td class="{{ class }}">{{ valueOrSpinnerOrInfo('sistrix', page.subdomain.sichtbarkeitsindex|localeNumber(4), null) }}</td>
+    {% elseif id == 9 %}
+        <td class="{{ class }}">{{ valueOrSpinnerOrInfo('xovi', page.subdomain.ovi|localeNumber(2), null) }}</td>
+    {% elseif id == 10 %}
+        <td class="{{ class }}">
+            <a href="{{ path('pool_linkmotor_domains_view', {id:page.subdomain.domain.id}) }}" class="domain">
+                {{ page.subdomain.domain.nameForDisplay }}
+            </a>
+        </td>
+    {% elseif id == 11 %}
+        <td class="{{ class }}" style="min-width: 75px;">
+            {% if page.subdomain.vendor %}
+                <a class="uk-text-muted" href="{{ path('pool_linkmotor_vendors_view', {id:page.subdomain.vendor.id}) }}"
+                   data-uk-tooltip="{pos:'bottom'}" title="Subdomain-{% trans %}Vendor{% endtrans %}: {{ page.subdomain.vendor.displayName }}">
+                    <i class="uk-icon-user"></i> <small>{% trans %}show{% endtrans %}</small>
+                </a>
+            {% elseif page.subdomain.domain.vendor %}
+                <a data-uk-tooltip title="{{ page.subdomain.domain.vendor.displayName }} {{ page.subdomain.domain.vendor.phone }}" href="{{ path('pool_linkmotor_vendors_view', {id:page.subdomain.domain.vendor.id}) }}">
+                    <i class="uk-icon-user"></i> <small>{% trans %}show{% endtrans %}</small>
+                </a>
+            {% else %}
+                <a class="uk-text-muted" href="{{ path('pool_linkmotor_domains_set_vendor', {id:page.subdomain.domain.id}) }}">
+                    <i class="uk-icon-plus-square"></i> <small>{% trans %}add{% endtrans %}</small>
+                </a>
+            {% endif %}
+        </td>
+    {% elseif id == 12 and type == 'all'%}
+        <td class="{{ class }}">{{ page.assignedTo.displayName }}</td>
+    {% elseif id == 13 %}
+        <td class="{{ class }}">
+            {% if page.lastNote %}
+                <span data-uk-tooltip="{pos:'bottom'}" title="{{ page.lastNote.content }}">
+                    <i class="uk-icon-comment"></i>
+                </span>
+            {% endif %}
+        </td>
+    {% elseif id == 14 %}
+        <td class="{{ class }}"><small>{{ page.lastModifiedAt|localeDate('d') }}</small></td>
+    {% endif %}
+{% endmacro %}
+
+{% macro showBacklinksBodyCell(tableOption, backlink) %}
+    {% set id = tableOption.id %}
+    {% set class = 'row-' ~ id ~ ' ' ~ tableOption.class %}
+    {% if id == 1 %}
+        <td class="url {{ class }}">
+            <a href="{{ path('pool_linkmotor_backlinks_view', {id:backlink.id}) }}">
+                {{ backlink.page.fullForDisplay }}
+            </a>
+        </td>
+    {% elseif id == 2 %}
+        <td class="lm-actions {{ class }}">
+            <div class="uk-button-group">
+                <a title="{% trans %}Open{% endtrans %}" class="uk-button lmexternal" href="{{ path('pool_linkmotor_anonymizer') ~ '?url=' ~ backlink.page.full }}" target="_blank">
+                    <i class="uk-icon-external-link"></i>
+                </a>
+                <a title="{% trans %}Edit{% endtrans %}" class="uk-button" href="{{ path('pool_linkmotor_backlinks_edit', {id:backlink.id}) }}">
+                    <i class="uk-icon-edit"></i>
+                </a>
+            </div>
+        </td>
+    {% elseif id == 3 %}
+        <td class="{{ class }}">
+            {% if backlink.status == 'offline' %}
+                <div class="uk-badge">{% trans %}Offline{% endtrans %}</div>
+            {% elseif backlink.status == 'pending' %}
+                <div class="uk-badge">{% trans %}Pending{% endtrans %}</div>
+            {% elseif backlink.status == 'ok' %}
+                <div class="uk-badge uk-badge-success">OK</div>
+            {% elseif backlink.status == 'warning' %}
+                <div class="uk-badge uk-badge-warning">{% trans %}Warning{% endtrans %}</div>
+            {% else %}
+                <div class="uk-badge uk-badge-danger">{% trans %}Error{% endtrans %}</div>
+            {% endif %}
+        </td>
+    {% elseif id == 4 %}
+        {% if backlink.crawlType == 'dom' %}
+            <td class="{{ class }}">{{ backlink.follow ? 'Yes'|trans : 'No'|trans }}</td>
+        {% else %}
+            <td class="{{ class }}">
+                <i class="uk-icon-info-circle" data-uk-tooltip title="{% trans %}Textmatching backlink{% endtrans %}"></i>
+            </td>
+        {% endif %}
+    {% elseif id == 5 %}
+        {% if backlink.crawlType == 'dom' %}
+            <td class="{{ class }}">{{ backlink.typeName|trans }}</td>
+        {% else %}
+            <td class="{{ class }}">
+                <i class="uk-icon-info-circle" data-uk-tooltip title="{% trans %}Textmatching backlink{% endtrans %}"></i>
+            </td>
+        {% endif %}
+    {% elseif id == 6 %}
+        {% if backlink.crawlType == 'dom' %}
+            <td class="{{ class }} anchor">{{ backlink.anchor }}</td>
+        {% else %}
+            <td class="{{ class }}">
+                <i class="uk-icon-info-circle" data-uk-tooltip title="{% trans %}Textmatching backlink{% endtrans %}"></i>
+            </td>
+        {% endif %}
+    {% elseif id == 7 %}
+        <td class="url {{ class }}">{{ backlink.url }}</td>
+    {% elseif id == 8 %}
+        <td class="{{ class }}" style="min-width: 75px;">
+            {% if backlink.page.subdomain.vendor %}
+                <a data-uk-tooltip title="{{ backlink.page.subdomain.vendor.displayName }} {{ backlink.page.subdomain.vendor.phone }}" href="{{ path('pool_linkmotor_vendors_view', {id:backlink.page.subdomain.vendor.id}) }}">
+                    <i class="uk-icon-user"></i> <small>{% trans %}show{% endtrans %}</small>
+                </a>
+            {% elseif backlink.page.subdomain.domain.vendor %}
+                <a data-uk-tooltip title="{{ backlink.page.subdomain.domain.vendor.displayName }} {{ backlink.page.subdomain.domain.vendor.phone }}" href="{{ path('pool_linkmotor_vendors_view', {id:backlink.page.subdomain.domain.vendor.id}) }}">
+                    <i class="uk-icon-user"></i> <small>{% trans %}show{% endtrans %}</small>
+                </a>
+            {% else %}
+                <a class="uk-text-muted" href="{{ path('pool_linkmotor_domains_set_vendor', {id:backlink.page.subdomain.domain.id}) }}">
+                    <i class="uk-icon-plus-square"></i> <small>{% trans %}add{% endtrans %}</small>
+                </a>
+            {% endif %}
+        </td>
+    {% elseif id == 9 %}
+        <td class="{{ class }}">{{ valueOrSpinner(backlink.page.authority, 0) }}</td>
+    {% elseif id == 10 %}
+        <td class="{{ class }}">{{ valueOrSpinner(backlink.page.subdomain.domain.authority, 0) }}</td>
+    {% elseif id == 11 %}
+        <td class="{{ class }}">{{ valueOrSpinner(backlink.page.subdomain.domain.netPop|localeNumber, null) }}</td>
+    {% elseif id == 12 %}
+        <td class="{{ class }}">{{ valueOrSpinnerOrInfo('sistrix', backlink.page.subdomain.sichtbarkeitsindex|localeNumber(4), null) }}</td>
+    {% elseif id == 13 %}
+        <td class="{{ class }}">{{ valueOrSpinnerOrInfo('xovi', backlink.page.subdomain.ovi|localeNumber(2), null) }}</td>
+    {% elseif id == 14 %}
+        <td class="{{ class }}"><small>{{ backlink.createdAt|localeDate('d') }}</small></td>
+    {% elseif id == 15 %}
+        <td class="{{ class }}">{{ backlink.costTypeName|trans }}</td>
+    {% elseif id == 16 %}
+        <td class="{{ class }}">
+            {% if backlink.costType in [1, 2, 3] %}
+                {{ backlink.price|localeNumber(2) }}
+            {% endif %}
+            {% if backlink.costType > 0 and backlink.costNote %}
+                <span data-uk-tooltip="{pos:'bottom'}" title="{{ backlink.costNote }}">
+                    <i class="uk-icon-comment"></i>
+                </span>
+            {% endif %}
+        </td>
+    {% endif %}
+{% endmacro %}

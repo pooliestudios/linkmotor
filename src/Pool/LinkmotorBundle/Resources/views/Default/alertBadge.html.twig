@@ -1,0 +1,8 @@
+{% if number > 0 %}
+    <div class="uk-badge uk-badge-notification uk-badge-danger">{% spaceless %}
+        {{ number|localeNumber }}
+    {% endspaceless %}</div>
+{% endif %}
+<script type="text/javascript">
+    poolFaviconBadge = {{ number|localeNumber }};
+</script>

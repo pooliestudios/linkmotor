@@ -1,0 +1,9 @@
+"{{ filter|filterCsv('backlink') }}"
+"Page";"Status";"Crawltype";"Follow";"Type";"Anchor";"Target";"Domain";"Vendor";"PA";"DA";"NetPop";"Created";"Costs";"Price";"CostNote"
+{% for backlink in backlinks %}{% spaceless %}
+    {# Wegen des Alias für die Gesamt-URL #}
+    {% if backlink[0] is defined %}
+        {% set backlink = backlink[0] %}
+    {% endif %}{% endspaceless %}
+"{{ backlink.page.full }}";"{{ backlink.status }}";"{{ backlink.crawlType }}";{% if backlink.crawlType == 'text' %}"";"";""{% else %}"{{ backlink.follow ? 'Yes' : 'No' }}";"{{ backlink.type == 'i' ? 'Image' : 'Text' }}";"{{ backlink.anchor }}"{% endif %};"{{ backlink.url }}";"{{ backlink.page.subdomain.full }}";"{% if backlink.page.subdomain.domain.vendor %}{{ backlink.page.subdomain.domain.vendor.email }}{% endif %}";"{{ backlink.page.authority }}";"{{ backlink.page.subdomain.domain.authority }}";"{{ backlink.page.subdomain.domain.netPop }}";"{{ backlink.createdAt|date('Y-m-d') }}";"{{ backlink.costTypeName }}";"{% if backlink.costType in [1, 2, 3] %}{{ backlink.price }}{% endif %}";"{% if backlink.costType > 0 %}{{ backlink.costNote }}{% endif %}"
+{% endfor %}

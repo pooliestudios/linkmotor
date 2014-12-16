@@ -1,0 +1,34 @@
+{% if type == 'my' %}
+    {% set urlNew = path('pool_linkmotor_pages_index', {type:'my-new'}) %}
+    {% set urlRelevant = path('pool_linkmotor_pages_index', {type:'my-relevant'}) %}
+    {% set urlContacted = path('pool_linkmotor_pages_index', {type:'my-contacted'}) %}
+    {% set urlInProgress = path('pool_linkmotor_pages_index', {type:'my-in-progress'}) %}
+    {% set urlAlerts = path('pool_linkmotor_backlinks_index', {type:'my-alerts'}) %}
+{% else %}
+    {% set urlNew = path('pool_linkmotor_pages_index', {type:type, resetFilter:1, changeStatusFilter:'new'}) %}
+    {% set urlRelevant = path('pool_linkmotor_pages_index', {type:type, resetFilter:1, changeStatusFilter:'relevant'}) %}
+    {% set urlContacted = path('pool_linkmotor_pages_index', {type:type, resetFilter:1, changeStatusFilter:'contacted'}) %}
+    {% set urlInProgress = path('pool_linkmotor_pages_index', {type:type, resetFilter:1, changeStatusFilter:'in-progress'}) %}
+    {% set urlAlerts = path('pool_linkmotor_backlinks_index', {type:type, resetFilter:1, changeBacklinkStatusFilter:'alerts'}) %}
+{% endif %}
+<div class="uk-width-1-5">
+   <div class="uk-animation-slide-left">
+    <a class="lm-normal-link" href="{{ path('pool_linkmotor_select_project', {id:item.project.id}) }}">
+        {% if not isLimited %}
+            <div data-uk-tooltip="{pos:'top'}" title="{{ values.alerts|localeNumber }} {% trans %}Alerts{% endtrans %} {% trans %}that you should take care of!{% endtrans %}" class="uk-badge {{  values.alerts > 0 ? 'uk-badge-danger' : 'hidden' }}" style="right: -5px; top:-5px; position: absolute;">
+                {{ values.alerts|localeNumber }}
+            </div>
+        {% endif %}
+    </a>
+    </div>
+
+    <a class="uk-thumbnail" href="{{ path('pool_linkmotor_select_project', {id:item.project.id}) }}" title="{{ item.project.name }}">
+        <img {% if isLimited %}class="limited"{% endif %} alt="{{ item.project.name }}" width="351" height="264" src="http://api.webthumbnail.org/?width=500&height=350&screen=1280&format=png&url=http://{{ item.project.name }}">
+        <div class="uk-thumbnail-caption{% if isLimited %} uk-text-muted{% endif %}">
+            {% if isLimited %}
+                <i class="uk-icon-warning" data-uk-tooltip="{pos:'top'}" title="{% trans %}You overstepped your account limits{% endtrans %}"></i>
+            {% endif %}
+            <strong>{{ item.project.name }}</strong>
+        </div>
+    </a>
+</div>

@@ -1,0 +1,26 @@
+Hi {{ user.displayName }},<br>
+<br>
+{% trans %}the following errors occurred while inspecting your links{% endtrans %}:<br>
+{% for item in notificationData %}
+    <a href="{{ url('pool_linkmotor_project_dashboard', {id:item.projectId, _locale:locale}) }}">
+        {{ item.projectName }}
+    </a>
+    <br>
+    {% if item.numErrors %}
+        <strong>{{ item.numErrors }} {% trans %}Errors{% endtrans %}</strong> ({{ item.numNewErrors }} {% trans %}New{% endtrans %})
+    {% endif %}
+    {% if item.numWarnings %}
+        {% if item.numErrors %},{% endif %}
+        {{ item.numWarnings }} {% trans %}Warnings{% endtrans %} ({{ item.numNewWarnings }} {% trans %}New{% endtrans %})
+    {% endif %}
+    <br><br>
+{% endfor %}
+<br>
+{% trans %}Good luck on fixing those links, we wish you a nice day!{% endtrans %}<br>
+Linkmotor.de
+<br><br>
+<small style="color:#999;">
+<a style="color:#999;" href="{{ url('pool_linkmotor_user_notification_settings',{_locale:locale}) }}">
+    {% trans %}Change notification settings{% endtrans %}
+</a>
+</small>

@@ -1,0 +1,17 @@
+{% if chartId is defined %}
+    <canvas id="{{ chartId }}" width="{{ width }}" height="{{ height }}"></canvas>
+    <div  class="uk-text-center" id="{{ chartId }}Legend">
+        <div class="uk-badge legend-badge-green">follow: {{ numBacklinksFollow }}</div>
+        <div class="uk-badge legend-badge-red">nofollow: {{ numBacklinksNofollow }}</div>
+    </div>
+    <script type="text/javascript">
+        poolCharts.push(function() {
+            var {{ chartId }}Ctx = $('#{{ chartId }}').get(0).getContext('2d');
+            var {{ chartId }}Data = [
+                { value:{{ numBacklinksFollow }}, color:"#1ABC9C" },
+                { value: {{ numBacklinksNofollow }}, color : "#E74C3C" }
+            ];
+            var {{ chartId }}Chart = new Chart({{ chartId }}Ctx).Doughnut({{ chartId }}Data);
+        });
+    </script>
+{% endif %}

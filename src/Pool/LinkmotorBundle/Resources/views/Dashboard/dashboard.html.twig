@@ -1,0 +1,40 @@
+{% extends 'PoolLinkmotorBundle::layout.html.twig' %}
+
+{% block title %}{% trans %}Dashboard{% endtrans %} - {% endblock %}
+
+{% block navigation %}{% endblock %}
+
+{% block content %}
+
+{% if accountLimitsOverstepped('projects') %}
+    {% include 'PoolLinkmotorBundle:Default:limitOverstepped.html.twig' with {which:'projects'} %}
+{% endif %}
+
+<br>
+<br>
+<br>
+
+<div class="uk-grid" data-uk-grid-margin>
+    {% for item in projects %}
+        {% set isLimited = false %}
+        {% if limitedProjects %}
+           {% set isLimited = true %}
+           {% for limitedProject in limitedProjects %}
+               {% if limitedProject.id == item.project.id %}
+                   {% set isLimited = false %}
+               {% endif %}
+           {% endfor %}
+        {% endif %}
+        {% include 'PoolLinkmotorBundle:Dashboard:todosDashboard.html.twig' with {isLimited:isLimited, values:item.dashboardValues.my, type:'my'} %}
+    {% endfor %}
+
+    {% if is_granted('ROLE_ADMIN') %}
+        <div class="uk-width-1-5">
+            <a class="uk-thumbnail" href="{{ path('pool_linkmotor_admin_projects_add') }}" title="{% trans %}Add new project{% endtrans %}">
+                <img width="351" height="264" src="{{ asset('bundles/poollinkmotor/img/new-project.png') }}" alt="{% trans %}Add new project{% endtrans %}">
+                <div class="uk-thumbnail-caption">{% trans %}Add new project{% endtrans %}</div>
+            </a>
+        </div>
+    {% endif %}
+</div>
+	{% endblock %}

@@ -1,0 +1,59 @@
+<table class="uk-table uk-table-striped uk-table-hover">
+    <tr>
+        <th>{% trans %}Page{% endtrans %}</th>
+        <th>{% trans %}Status{% endtrans %}</th>
+        <th>{% trans %}Follow{% endtrans %}</th>
+        <th>{% trans %}Type{% endtrans %}</th>
+        <th>{% trans %}Target{% endtrans %}</th>
+        <th>{% trans %}PA{% endtrans %}</th>
+        <th>{% trans %}DA{% endtrans %}</th>
+        <th>{% trans %}Created{% endtrans %}</th>
+        <th>{% trans %}Costs{% endtrans %}</th>
+        <th>{% trans %}Price{% endtrans %}</th>
+    </tr>
+    {% for backlink in backlinks %}
+        <tr>
+            <td class="url">
+                <a class="uk-button-small lmexternal" href="{{ path('pool_linkmotor_anonymizer') ~ '?url=' ~ backlink.page.full }}" target="_blank">
+                    <i class="uk-icon-external-link"></i>
+                </a> <a href="{{ path('pool_linkmotor_backlinks_view', {id:backlink.id}) }}">
+                    {{ backlink.page.fullForDisplay }}
+                </a>
+            </td>
+            <td>
+                {% if backlink.status == 'offline' %}
+                    <div class="uk-badge">{% trans %}Offline{% endtrans %}</div>
+                {% elseif backlink.status == 'ok' %}
+                    <div class="uk-badge uk-badge-success">OK</div>
+                {% elseif backlink.status == 'warning' %}
+                    <div class="uk-badge uk-badge-warning">{% trans %}Warning{% endtrans %}</div>
+                {% else %}
+                    <div class="uk-badge uk-badge-danger">{% trans %}Error{% endtrans %}</div>
+                {% endif %}
+            </td>
+            {% if backlink.crawlType == 'dom' %}
+                <td>{{ backlink.follow ? 'Yes'|trans : 'No'|trans }}</td>
+                <td>{{ backlink.typeName|trans }}</td>
+            {% else %}
+                <td colspan="2" class="uk-text-center">
+                    <em>{% trans %}Textmatching backlink{% endtrans %}</em>
+                </td>
+            {% endif %}
+            <td class="url">{{ backlink.url }}</td>
+            <td>{{ valueOrSpinner(backlink.page.authority, 0) }}</td>
+            <td>{{ valueOrSpinner(backlink.page.subdomain.domain.authority, 0) }}</td>
+            <td><small>{{ backlink.createdAt|date('Y-m-d') }}</small></td>
+            <td>{{ backlink.costTypeName|trans }}</td>
+            <td>
+                {% if backlink.costType in [1, 2, 3] %}
+                    {{ backlink.price }}
+                {% endif %}
+                {% if backlink.costType > 0 and backlink.costNote %}
+                    <span data-uk-tooltip="{pos:'bottom'}" title="{{ backlink.costNote }}">
+                        <i class="uk-icon-comment"></i>
+                    </span>
+                {% endif %}
+            </td>
+        </tr>
+    {% endfor %}
+</table>

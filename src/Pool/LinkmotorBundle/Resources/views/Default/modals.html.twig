@@ -1,0 +1,45 @@
+<!-- Feedback -->
+<div id="feedback" class="uk-modal">
+    <div class="uk-modal-dialog uk-modal-dialog-slide">
+        <a href="" class="uk-modal-close uk-close"></a>
+        <h2>{% trans %}Feedback or Questions?{% endtrans %}</h2>
+        <p>{% trans %}We would love to get your feedback, and will also try to help with any problems.{% endtrans %}</p>
+        <h3>{% trans %}Contact Person:{% endtrans %}</h3>
+        <p><strong>Felix Treutle</strong><br>
+            <i class="uk-icon-phone"></i> 0221 6306 111 36<br>
+            <i class="uk-icon-envelope"></i> <a href="mailto:support@linkmotor.de">support@linkmotor.de</a><br>
+            <i class="uk-icon-twitter"></i> <a href="https://twitter.com/linkmotorseo" target="_blank">@LinkmotorSEO</a>
+        </p>
+        <p>{% trans %}We may ask for this: Linkmotor Version{% endtrans %} {{ linkmotorVersion }}</p>
+    </div>
+</div>
+
+<!-- Slow -->
+<div id="slow-modal" class="uk-modal">
+    <div class="uk-modal-dialog">
+        <h2>{% trans %}Please be patient{% endtrans %}</h2>
+        <p>{% trans %}This may take a moment{% endtrans %}...</p>
+        <div class="uk-progress uk-progress-striped uk-active">
+            <div class="uk-progress-bar" style="width: 100%;"></div>
+        </div>
+    </div>
+</div>
+
+<!-- Finish Installation -->
+{% if app.user and is_granted('ROLE_ADMIN') and accountOptions('account_secret_key') == ''
+      and app.request.attributes.get('_route') != 'pool_linkmotor_admin_settings_edit'
+%}
+    <div id="finish-installation-modal" class="uk-modal">
+        <div class="uk-modal-dialog">
+            <h2>{% trans %}Attention{% endtrans %}!</h2>
+            <p>
+                {% trans %}Please finish the installation by creating your SEO-Services account!{% endtrans %}
+            </p>
+            <p>
+                <a class="uk-button uk-button-small uk-button-danger" href="{{ path('pool_linkmotor_admin_settings_edit') }}">
+                    {% trans %}Continue{% endtrans %} &raquo
+                </a>
+            </p>
+        </div>
+    </div>
+{% endif %}

@@ -1,0 +1,48 @@
+{% extends 'PoolLinkmotorBundle::layout.html.twig' %}
+
+{% block content %}
+
+    {% include 'PoolLinkmotorBundle:Alert:snippet.html.twig' with {showActionLinks:false} %}
+
+    <form class="uk-form uk-form-horizontal" action="{{ path('pool_linkmotor_alerts_hide_until', {id:alert.id}) }}" method="post" {{ form_enctype(form) }}>
+
+        {{ form_errors(form) }}
+
+        <ul class="uk-subnav uk-subnav-pill pool-datetime-presets" rel="alert_hide_until_hideUntil">
+            <li><strong>{% trans %}Presets{% endtrans %}</strong>:</li>
+            <li class="uk-active">
+                <a href="#" pool-datetime-preset="24">
+                    24 {% trans %}hours{% endtrans %}
+                </a>
+            </li>
+            <li>
+                <a href="#" pool-datetime-preset="48">
+                    48 {% trans %}hours{% endtrans %}
+                </a>
+            </li>
+            <li>
+                <a href="#" pool-datetime-preset="168">
+                    7 {% trans %}days{% endtrans %}
+                </a>
+            </li>
+            <li>
+                <a href="#" pool-datetime-preset="336">
+                    14 {% trans %}days{% endtrans %}
+                </a>
+            </li>
+        </ul>
+
+        </fieldset>
+            <div id="alert_hide_until_hideUntil_form_row">
+                {% include 'PoolLinkmotorBundle:Alert:hideUntilFormRow.html.twig' %}
+            </div>
+            {{ form_rest(form) }}
+        </fieldset>
+
+        <input class="uk-button uk-button-primary" type="submit" value="{% trans %}Save{% endtrans %}" />
+        <a class="uk-button" href="{{ path('pool_linkmotor_project_dashboard', {id:alert.project.id, type:app.user.optionsDashboardType}) }}">
+            {% trans %}Cancel{% endtrans %}
+        </a>
+    </form>
+
+{% endblock %}

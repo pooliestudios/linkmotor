@@ -1,0 +1,36 @@
+{% if page.assignedTo == app.user %}
+    {% if page.status.id == 1 %}
+        {% set active = 'my-new' %}
+        {% set label = 'My new'|trans %}
+    {% elseif page.status.id in [4, 5] %}
+        {% set active = 'my-contacted' %}
+        {% set label = 'My contacted'|trans %}
+    {% elseif page.status.id == 2 %}
+        {% set active = 'my-relevant' %}
+        {% set label = 'My relevant'|trans %}
+    {% elseif page.status.id == 8 %}
+        {% set active = 'my-in-progress' %}
+        {% set label = 'My in progress'|trans %}
+    {% else %}
+        {# @todo wird irgendwann nicht mehr gebraucht, ist nur für legacy-handling #}
+        {% set active = 'my' %}
+        {% set label = 'My pages'|trans %}
+    {% endif %}
+{% else %}
+    {% set active = 'all' %}
+    {% set label = 'All pages'|trans %}
+{% endif %}
+<div class="uk-panel uk-panel-box">
+    <ul class="uk-breadcrumb">
+        <li>
+            <a href="{{ path('pool_linkmotor_project_dashboard', {id:page.project.id}) }}">
+                {{ page.project.name }}
+            </a>
+        </li>
+        <li>
+            <a href="{{ path('pool_linkmotor_pages_index', {type:active}) }}">
+                {{ label }}
+            </a>
+        </li>
+    </ul>
+</div>

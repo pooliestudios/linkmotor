@@ -1,0 +1,22 @@
+login:
+    pattern:   /login
+    defaults:  { _controller: PoolLinkmotorBundle:User:login }
+login_check:
+    pattern:   /login_check
+logout:
+  path:   /logout
+
+pool_seo_tool_admin:
+    resource: "@PoolLinkmotorAdminBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+pool_seo_tool:
+    resource: "@PoolLinkmotorBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+pool_seo_tool_api:
+    resource: "@PoolLinkmotorApiBundle/Controller/"
+    type:     annotation
+    prefix:   /api/

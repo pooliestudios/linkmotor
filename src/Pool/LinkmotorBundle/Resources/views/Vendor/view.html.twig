@@ -1,0 +1,108 @@
+{% extends 'PoolLinkmotorBundle::layout.html.twig' %}
+
+{% block title %}{{ vendor.displayName }} - {% trans %}Vendors{% endtrans %} - {% endblock %}
+
+{% block content %}
+</div>
+<div class="lm-wrapper-sub">
+	<div class="uk-container uk-container-center">
+		<div class="uk-panel vendor-single">
+    		<img class="uk-border-circle uk-comment-avatar" src="{{ asset('bundles/poollinkmotor/img/user.png') }}" width="100" alt="{{ vendor.name|default('-') }}">
+			<!--
+			{% if vendor.displayTitle %}
+			<small>{{ vendor.displayTitle|trans }}</small>
+			{% endif %}
+			-->
+			<h1>{{ vendor.name|default('-') }}</h1>
+			{% if vendor.email %}
+			<a href="mailto:{{ vendor.email }}">
+				<i class="uk-icon-envelope"></i> {{ vendor.email }}
+			</a>
+			{% endif %}
+			{% if vendor.phone %}
+			<br>
+			<a href="tel:{{ vendor.phone }}">
+				<i class="uk-icon-phone"></i> {{ vendor.phone }}
+			</a>
+			{% endif %}
+		</div>
+    {% include 'PoolLinkmotorBundle:Vendor:viewsubnav.html.twig' with {active:'overview'} %}
+	</div>
+</div>
+
+<div class="uk-container uk-container-center">
+
+    {% include 'PoolLinkmotorBundle:Vendor:overview.html.twig' %}
+
+</div> {# struktur der divs übergreifend verändert #}
+
+<div class="lm-wrapper">
+    <div class="uk-container uk-container-center">
+    <h3>{% trans %}Domains{% endtrans %}</h3>
+    <table class="uk-table uk-table-striped uk-table-hover">
+        <tr>
+            <th>Name</th>
+            <th><abbr title="{% trans %}Domain Authority - Data from Moz.com{% endtrans %}" data-uk-tooltip>DA</abbr></th>
+        </tr>
+        {% for domain in vendor.domains %}
+            <tr>
+                <td>
+                    <a href="{{ path('pool_linkmotor_domains_view', {id:domain.id}) }}">
+                        {{ domain.nameForDisplay }}
+                    </a>
+                </td>
+                <td>{{ valueOrSpinner(domain.authority, 0) }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+<br>
+    <h3>{% trans %}Subdomains{% endtrans %}</h3>
+    <table class="uk-table uk-table-striped uk-table-hover">
+        <tr>
+            <th>Name</th>
+            <th>{% trans %}Pages{% endtrans %}</th>
+            <th>{% trans %}Backlinks{% endtrans %}</th>
+            <th><abbr title="{% trans %}Domain Authority - Data from Moz.com{% endtrans %}" data-uk-tooltip>DA</abbr></th>
+        </tr>
+        {% for subdomain in vendor.subdomains %}
+            <tr>
+                <td>{{ subdomain.full }}</td>
+                <td>
+                    <a href="{{ path('pool_linkmotor_pages_subdomain', {id:subdomain.id}) }}">
+                        {{ subdomain.numPages(project)|localeNumber }}
+                    </a>
+                </td>
+                <td>
+                    <a href="{{ path('pool_linkmotor_backlinks_subdomain', {id:subdomain.id}) }}">
+                        {{ subdomain.numBacklinks(project)|localeNumber }}
+                    </a>
+                </td>
+                <td>{{ valueOrSpinner(subdomain.domain.authority, 0) }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+</div> {# struktur der divs übergreifend verändert #}
+</div>
+
+<div class="uk-container uk-container-center">
+    <h3>{% trans %}Domains of this contact are also used in these projects{% endtrans %}</h3>
+    <table class="uk-table uk-table-striped uk-table-hover">
+        <tr>
+            <th>{% trans %}Project{% endtrans %}</th>
+        </tr>
+        {% set displayedProjects = [project.id] %}
+        {% for domain in vendor.domains %}
+            {% for subdomain in domain.subdomains %}
+                {% for page in subdomain.pages %}
+                    {% if page.project.id not in displayedProjects %}
+                        {% set displayedProjects = displayedProjects|merge([page.project.id]) %}
+                        <tr>
+                            <td>{{ page.project.name }}</td>
+                            <td>-</td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+            {% endfor %}
+        {% endfor %}
+    </table>
+{% endblock %}

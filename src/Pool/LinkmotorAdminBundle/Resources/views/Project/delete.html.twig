@@ -1,0 +1,20 @@
+{% extends 'PoolLinkmotorBundle::layout.html.twig' %}
+
+{% block subnav %}
+    {% include 'PoolLinkmotorAdminBundle:Project:breadcrumb.html.twig' %}
+{% endblock %}
+
+{% block content %}
+    <h1>{% trans %}Delete{% endtrans %}</h1>
+    <form class="uk-form uk-form-horizontal slow" action="{{ path('pool_linkmotor_admin_projects_delete', {id:project.id}) }}" method="post">
+        <fieldset class="uk-alert-danger uk-alert-large">
+            <h2>{% trans %}Are you sure?{% endtrans %}</h2>
+            <p>{% trans %}Deleting this project cannot be undone!{% endtrans %}</p>
+            <p>{% trans %}All pages, backlinks, competitors, keywords and blacklists will be removed with it.{% endtrans %}</p>
+        </fieldset>
+        <input class="uk-button uk-button-danger" type="submit" value="{% trans %}Delete{% endtrans %}" />
+        <a class="uk-button-small uk-button-link lmcancelbutton" href="{{ path('pool_linkmotor_admin_projects_index') }}">
+            {% trans %}Cancel{% endtrans %}
+        </a>
+    </form>
+{% endblock %}

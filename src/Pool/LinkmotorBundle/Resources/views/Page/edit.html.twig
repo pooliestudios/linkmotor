@@ -1,0 +1,33 @@
+{% extends 'PoolLinkmotorBundle::layout.html.twig' %}
+
+{% block content %}
+
+    {% include 'PoolLinkmotorBundle:Page:viewsubnav.html.twig' with {active:'edit'} %}
+
+    {% if not loggedInUserMayEdit %}
+        <div class="uk-alert uk-alert-warning">
+            {% trans %}warning.loggedInUserMayNotEdit{% endtrans %}
+        </div>
+    {% elseif page.assignedTo != app.user %}
+        <div class="uk-alert uk-alert-warning">
+            {% trans %}warning.loggedInUserMayNotEdit.adminOverride{% endtrans %}
+        </div>
+    {% endif %}
+
+    <form class="uk-form uk-form-horizontal" action="{{ path('pool_linkmotor_pages_edit', {id:page.id}) }}" method="post" {{ form_enctype(form) }}>
+        {{ form_errors(form) }}
+
+        <fieldset>
+            {{ form_row(form.assignedTo) }}
+            {% if form.status is defined %}
+                {{ form_row(form.status) }}
+            {% else %}
+                <label class="uk-form-label">{% trans %}Status{% endtrans %}</label>
+                <div class="uk-form-controls">{{ page.status.name|trans }}</div>
+            {% endif %}
+            {{ form_row(form._token) }}
+        </fieldset>
+
+        <input class="uk-button uk-button-primary" type="submit" value="{% trans %}Save{% endtrans %}" />
+    </form>
+{% endblock %}

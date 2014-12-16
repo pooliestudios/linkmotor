@@ -1,0 +1,109 @@
+{% macro displayValueForStatusRow(backlink, attrName, successValue, wrongValue) %}
+    {% set value = attribute(backlink, attrName) %}
+    {% if attrName == 'type' or attrName == 'typeLastCrawl' %}
+        {% if value == 't' %}
+            {% set value = 'Text' %}
+        {% elseif value == 'i' %}
+            {% set value = 'Image' %}
+        {% endif %}
+    {% endif %}
+    {% if value %}
+        {% if successValue == '-' %}
+            {{ value }}
+        {% else %}
+            {{ successValue }}
+        {% endif %}
+    {% else %}
+        {% if wrongValue == '-' %}
+            {{ value }}
+        {% else %}
+            {{ wrongValue }}
+        {% endif %}
+    {% endif %}
+{% endmacro %}
+{% macro statusRow(backlink, label, attrName, successValue, wrongValue, errorLabelType) %}
+    {% set isPending = backlink.status == 'pending' %}
+    {% if isPending %}
+        {% set testResult = false %}
+        {% set errorLabelType = 'none' %}
+    {% else %}
+        {% set testResult = attribute(backlink, attrName ~ 'Ok') %}
+    {% endif %}
+    <tr>
+        <td class="uk-width-custom uk-text-bold{% if not testResult %} uk-alert uk-alert-{{ errorLabelType }}{% endif %}" style="width: 150px;">
+            {{ label|trans }}
+        </td>
+        <td class="lmstatus{% if not testResult %} uk-alert uk-alert-{{ errorLabelType }}{% endif %}">
+            <span class="uk-badge uk-badge-{% if not testResult %}{{ errorLabelType }}{% else %}success{% endif %}">
+                {% if isPending %}
+                    {% trans %}Pending{% endtrans %}
+                {% elseif not testResult %}
+                    {% trans %}Error{% endtrans %}
+                {% else %}
+                    OK
+                {% endif %}
+            </span>
+        </td>
+        {% if not testResult %}
+            <td class="uk-alert uk-alert-{{ errorLabelType }}">
+                {% if attrName == 'url' %}
+                    {{ backlink.url }}
+                    <a class="uk-button uk-button-mini" href="{{ path('pool_linkmotor_anonymizer') ~ '?url=' ~ backlink.url }}" target="_blank">
+                        <i class="uk-icon-external-link"></i> {% trans %}Open{% endtrans %}
+                    </a>
+                {% elseif attrName == 'xPath' %}
+                    {% if not isPending %}
+                        <abbr title="{{ backlink.xPathLastCrawl|default('leer'|trans) }}" data-uk-tooltip>
+                            {% trans %}Last crawl{% endtrans %}:
+                        </abbr><br>
+                    {% endif %}
+                    <abbr title="{{ backlink.xPath|default('leer'|trans) }}" data-uk-tooltip>
+                        {% trans %}Created as{% endtrans %}:
+                    </abbr>
+                    {% if not backlink.isOffline%}
+                        <a class="uk-button uk-button-mini slow" href="{{ path('pool_linkmotor_backlinks_refresh_xpath', {id:backlink.id}) }}">
+                            <i class="uk-icon-refresh"></i> {% trans %}Retrieve from page{% endtrans %}
+                        </a>
+                    {% endif %}
+                {% elseif attrName == 'anchor' %}
+                    {% if not isPending %}
+                        {% trans %}Last crawl{% endtrans %}: <span style="font-family:courier;" class="uk-text-bold uk-text-{{ errorLabelType }}">
+                            {{ _self.displayValueForStatusRow(backlink, attrName ~ 'LastCrawl', successValue, wrongValue) }}
+                        </span><br>
+                    {% endif %}
+                    {% trans %}Created as{% endtrans %}: <span style="font-family:courier;" class="uk-text-bold uk-text-success">
+                        {{ _self.displayValueForStatusRow(backlink, attrName, successValue, wrongValue) }}
+                    </span>
+                {% else %}
+                    {% if not isPending %}
+                        {% trans %}Last crawl{% endtrans %}: <span class="uk-text-bold uk-text-{{ errorLabelType }}">
+                            {{ _self.displayValueForStatusRow(backlink, attrName ~ 'LastCrawl', successValue, wrongValue) }}
+                        </span><br>
+                    {% endif %}
+                    {% trans %}Created as{% endtrans %}: <span class="uk-text-bold uk-text-success">
+                        {{ _self.displayValueForStatusRow(backlink, attrName, successValue, wrongValue) }}
+                    </span>
+                {% endif %}
+            </td>
+        {% else %}
+            <td>
+                {% if attrName == 'url' %}
+                    {{ backlink.url }}
+                    <a class="uk-button uk-button-mini" href="{{ path('pool_linkmotor_anonymizer') ~ '?url=' ~ backlink.url }}" target="_blank">
+                        <i class="uk-icon-external-link"></i> {% trans %}Open{% endtrans %}
+                    </a>
+                {% elseif attrName == 'xPath' %}
+                    <abbr title="{{ backlink.xPath|default('empty'|trans) }}" data-uk-tooltip>
+                        {% trans %}Show{% endtrans %}
+                    </abbr>
+                {% elseif attrName == 'anchor' %}
+                    <span style="font-family:courier;">
+                        {{ _self.displayValueForStatusRow(backlink, attrName, successValue, wrongValue) }}
+                    </span>
+                {% else %}
+                    {{ _self.displayValueForStatusRow(backlink, attrName, successValue, wrongValue) }}
+                {% endif %}
+            </td>
+        {% endif %}
+    </tr>
+{% endmacro %}

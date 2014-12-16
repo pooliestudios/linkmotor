@@ -1,0 +1,78 @@
+{% macro badge(item, field, successMessage, failMessage, failType) %}
+    {% if not item.urlOk %}
+        -
+    {% elseif attribute(item, field ~ 'Ok') %}
+        <div class="uk-badge uk-badge-success">{{ successMessage|trans }}</div>
+    {% else %}
+        <div class="uk-badge uk-badge-{{ failType|default('danger') }}">{{ failMessage|trans }}</div>
+    {% endif %}
+{% endmacro %}
+{% if mode is not defined %}
+    {% set mode = 'dashboard' %}
+{% endif %}
+<table class="uk-table uk-table-condensed">
+    <tr>
+        {% if mode == 'dashboard' %}
+            {% if project is not defined %}
+                <th>{% trans %}Project{% endtrans %}</th>
+            {% endif %}
+            <th>{% trans %}Page{% endtrans %}</th>
+            <th>{% trans %}Target{% endtrans %}</th>
+        {% endif %}
+        <th>{% trans %}Status{% endtrans %}</th>
+        <th>{% trans %}Anchor{% endtrans %}</th>
+        <th>{% trans %}Type{% endtrans %}</th>
+        <th>{% trans %}Follow{% endtrans %}</th>
+        <th>{% trans %}Position{% endtrans %}</th>
+        <th>{% trans %}Statuscode{% endtrans %}</th>
+        <th>{% trans %}Meta-Index{% endtrans %}</th>
+        <th>{% trans %}Meta-Follow{% endtrans %}</th>
+        <th>{% trans %}X-Robots-Index{% endtrans %}</th>
+        <th>{% trans %}X-Robots-Follow{% endtrans %}</th>
+        <th>{% trans %}robots.txt (Google){% endtrans %}</th>
+        <th>{% trans %}Timestamp{% endtrans %}</th>
+    </tr>
+    {% for item in log %}
+        <tr>
+            {% if mode == 'dashboard' %}
+                {% if project is not defined %}
+                    <td>
+                        <a href="{{ path('pool_linkmotor_select_project', {id:item.project.id}) }}">
+                            {{ item.project.name }}
+                        </a>
+                    </td>
+                {% endif %}
+                <td class="url">
+                    <a href="{{ path('pool_linkmotor_backlinks_view', {id:item.backlink.id}) }}">
+                        {{ item.backlink.page.fullForDisplay }}
+                    </a>
+                </td>
+                <td>{{ item.backlink.url }}</td>
+            {% endif %}
+            <td>
+                {% if item.urlOk %}
+                    <div class="uk-badge uk-badge-success">OK</div>
+                {% else %}
+                    <div class="uk-badge uk-badge-danger">{% trans %}Not&nbsp;found{% endtrans %}</div>
+                {% endif %}
+            </td>
+            {% if item.crawlType == 'text' %}
+                <td colspan="4" class="uk-text-center">
+                    <em>{% trans %}Textmatching backlink{% endtrans %}</em>
+                </td>
+            {% else %}
+                <td>{{  _self.badge(item, 'anchor', 'OK', 'Error') }}</td>
+                <td>{{  _self.badge(item, 'type', 'OK', 'Error') }}</td>
+                <td>{{  _self.badge(item, 'follow', 'OK', 'Error') }}</td>
+                <td>{{  _self.badge(item, 'xPath', 'OK', 'Changed', 'warning') }}</td>
+            {% endif %}
+            <td>{{  _self.badge(item, 'statusCode', 'OK', 'Error') }}</td>
+            <td>{{  _self.badge(item, 'metaIndex', 'OK', 'Error') }}</td>
+            <td>{{  _self.badge(item, 'metaFollow', 'OK', 'Error') }}</td>
+            <td>{{  _self.badge(item, 'xRobotsIndex', 'OK', 'Error') }}</td>
+            <td>{{  _self.badge(item, 'xRobotsFollow', 'OK', 'Error') }}</td>
+            <td>{{  _self.badge(item, 'robotsGoogle', 'OK', 'Error') }}</td>
+            <td>{{ item.createdAt|localeDate('d') }}&nbsp;<small>{{ item.createdAt|localeDate('t') }}</small></td>
+        </tr>
+    {% endfor %}
+</table>

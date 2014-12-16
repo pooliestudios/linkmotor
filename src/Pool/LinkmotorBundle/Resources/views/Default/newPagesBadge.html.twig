@@ -1,0 +1,5 @@
+{% if number > 0 %}
+    <div class="uk-badge uk-badge-notification uk-badge-success">{% spaceless %}
+            {{ number|localeNumber }}
+        {% endspaceless %}</div>
+{% endif %}

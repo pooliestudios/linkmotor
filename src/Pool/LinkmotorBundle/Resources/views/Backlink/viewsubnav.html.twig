@@ -1,0 +1,31 @@
+<ul class="uk-tab">
+    <li{% if active == 'overview' %} class="uk-active"{% endif %}>
+        <a id="view" href="{{ path('pool_linkmotor_backlinks_view', {id:backlink.id}) }}#view">
+            {% trans %}Details{% endtrans %}
+        </a>
+    </li>
+    <li{% if active == 'edit' %} class="uk-active"{% endif %}>
+        <a id="edit" href="{{ path('pool_linkmotor_backlinks_edit', {id:backlink.id}) }}#edit">
+            <i class="uk-icon-edit"></i>
+            {% trans %}Edit{% endtrans %}
+        </a>
+    </li>
+    <li{% if active == 'log' %} class="uk-active"{% endif %}>
+        <a id="crawl-log" href="{{ path('pool_linkmotor_backlinks_crawl_log', {id:backlink.id}) }}#crawl-log">
+            {% trans %}Crawl log{% endtrans %}
+        </a>
+    </li>
+    <li{% if active == 'changelog' %} class="uk-active"{% endif %}>
+        <a id="change-log" href="{{ path('pool_linkmotor_backlinks_changelog', {id:backlink.id}) }}#change-log">
+            {% trans %}Change log{% endtrans %}
+        </a>
+    </li>
+    {% if is_granted('ROLE_ADMIN') %}
+        <li{% if active == 'delete' %} class="uk-active"{% endif %}>
+            <a id="delete" href="{{ path('pool_linkmotor_backlinks_delete', {id:backlink.id}) }}#delete">
+                <i class="uk-icon-remove"></i>
+                {% trans %}Delete{% endtrans %}
+            </a>
+        </li>
+    {% endif %}
+</ul>

@@ -1,0 +1,19 @@
+{% extends 'PoolLinkmotorBundle::layout.html.twig' %}
+
+{% block subnav %}
+    {% include 'PoolLinkmotorAdminBundle:Default:subnav.html.twig' with {active:'invoice-information'} %}
+{% endblock %}
+
+{% block content %}
+    <form class="uk-form uk-form-horizontal" autocomplete="off" action="{{ path('pool_linkmotor_admin_invoice_information_edit') }}" method="post">
+
+        {{ form_errors(form) }}
+
+        <fieldset>
+            <legend>{% trans %}Invoice address{% endtrans %}</legend>
+            {{ form_rest(form) }}
+        </fieldset>
+
+        <button type="submit" class="uk-button uk-button-primary">{% trans %}Save{% endtrans %}</button>
+    </form>
+{% endblock %}

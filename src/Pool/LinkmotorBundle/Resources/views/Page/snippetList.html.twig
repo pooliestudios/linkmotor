@@ -1,0 +1,37 @@
+{% if excludePageId is not defined %}
+    {% set excludePageId = 0 %}
+{% endif %}
+{% set potentialPages = [] %}
+{% for subdomain in domain.subdomains %}
+    {% for page in subdomain.pages if page.project.id == project.id %}
+        {% if page.id != excludePageId %}
+            {% set potentialPages = potentialPages|merge([page]) %}
+        {% endif %}
+    {% endfor %}
+{% endfor %}
+{% if potentialPages %}
+    <h2>{% trans %}Pages on Domain{% endtrans %}</h2>
+    <table class="uk-table uk-table-striped uk-table-hover">
+        <tr>
+            <th>{% trans %}URL{% endtrans %}</th>
+            <th></th>
+            <th><abbr title="{% trans %}Page Authority - Data from Moz.com{% endtrans %}" data-uk-tooltip>PA</abbr></th>
+            <th>{% trans %}User{% endtrans %}</th>
+        </tr>
+        {% for page in potentialPages %}
+            <tr>
+                <td>
+                    <a href="{{ path('pool_linkmotor_pages_view', {id:page.id}) }}">
+                        {{ page.fullForDisplay }}
+                    </a>
+                </td>
+                <td><a class="uk-button-small lmexternal" href="{{ path('pool_linkmotor_anonymizer') ~ '?url=' ~ page.full }}" target="_blank">
+                        <i class="uk-icon-external-link"></i>
+                    </a>
+                </td>
+                <td>{{ valueOrSpinner(page.authority, 0) }}</td>
+                <td>{{ page.assignedTo.displayName }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endif %}

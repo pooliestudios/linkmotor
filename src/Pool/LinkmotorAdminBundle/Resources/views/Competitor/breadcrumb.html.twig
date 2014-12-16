@@ -1,0 +1,19 @@
+<div class="uk-panel uk-panel-box">
+    <ul class="uk-breadcrumb">
+        <li>
+            <a href="{{ path('pool_linkmotor_project_dashboard', {id:competitor.project.id}) }}">
+                {{ competitor.project.name }}
+            </a>
+        </li>
+        <li>
+            <a href="{{ path('pool_linkmotor_explorer_competitor_index') }}">
+                {% trans %}Competitors{% endtrans %}
+            </a>
+        </li>
+        <li class="uk-active">
+            <span>
+                {{ competitor.domain.name }}
+            </span>
+        </li>
+    </ul>
+</div>

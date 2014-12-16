@@ -1,0 +1,68 @@
+<table class="uk-table uk-table-striped">
+    <h3 class="uk-panel-title"><i class="uk-icon-bar-chart-o"></i> Domain-Metrik</h3>
+    <thead>
+        <tr>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                <abbr title="{% trans %}LinkPop Domain{% endtrans %}" data-uk-tooltip>
+                    {% trans %}LinkPop{% endtrans %}
+                </abbr>
+                <br><strong>{{ valueOrSpinner(subdomain.domain.linkPop|localeNumber, null) }}</strong>
+            </td>
+            <td>
+                <abbr title="{% trans %}DomainPop Domain{% endtrans %}" data-uk-tooltip>
+                    {% trans %}DomainPop{% endtrans %}
+                </abbr>
+                <br><strong>{{ valueOrSpinner(subdomain.domain.domainPop|localeNumber, null) }}</strong>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <abbr title="{% trans %}NetPop(ularity) stands for the amount of networks that link to the current project.{% endtrans %}" data-uk-tooltip>NetPop</abbr>
+                <br><strong>{{ valueOrSpinner(subdomain.domain.netPop|localeNumber, null) }}</strong>
+            </td>
+            <td>
+                <abbr title="{% trans %}Domain Authority - Data from Moz.com{% endtrans %}" data-uk-tooltip>
+                    Domain Authority
+                </abbr>
+                <br><strong>{{ valueOrSpinner(subdomain.domain.authority, 0) }}</strong><small>/100</small>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <abbr title="{% trans %}Visibilityindex - SISTRIX{% endtrans %}" data-uk-tooltip>
+                    {% trans %}SISTRIX-Visibilityindex{% endtrans %}
+                </abbr>
+                <br><strong>{{ valueOrSpinnerOrInfo('sistrix', subdomain.sichtbarkeitsindex) }}</strong>
+            </td>
+            <td>
+                <abbr title="{% trans %}Online Value Index (OVI) - XOVI{% endtrans %}" data-uk-tooltip>
+                    XOVI-Online Value Index
+                </abbr>
+                <br><strong>{{ valueOrSpinnerOrInfo('xovi', subdomain.ovi) }}</strong>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <abbr title="{% trans %}Year of first appearance of this domain{% endtrans %}" data-uk-tooltip>
+                    {% trans %}Domain Age{% endtrans %}
+                </abbr>
+                <br>
+                <strong>
+                    {% if not subdomain.domain.notYetCrawled and not subdomain.domain.firstYear %}
+                        {% trans %}n/a{% endtrans %}
+                    {% else %}
+                        {{ valueOrSpinner(subdomain.domain.firstYear) }}
+                    {% endif %}
+                </strong>
+            </td>
+            <td>
+            </td>
+        </tr>
+    </tbody>
+</table>

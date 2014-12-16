@@ -1,0 +1,9 @@
+"{{ filter|filterCsv('page') }}"
+"URL";"Status";"Domain";"Vendor";"PA";"DA";"NetPop";"User"
+{% for page in pages %}{% spaceless %}
+    {# Wegen des Alias für die Gesamt-URL #}
+    {% if page[0] is defined %}
+        {% set page = page[0] %}
+    {% endif %}{% endspaceless %}
+"{{ page.full }}";"{{ page.status.name }}";"{{ page.subdomain.full }}";"{% if page.subdomain.domain.vendor %}{{ page.subdomain.domain.vendor.email }}{% endif %}";"{{ page.authority }}";"{{ page.subdomain.domain.authority }}";"{{ page.subdomain.domain.netPop }}";"{{ page.assignedTo.username }}"
+{% endfor %}

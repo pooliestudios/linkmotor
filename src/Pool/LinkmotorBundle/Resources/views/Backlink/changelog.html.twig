@@ -1,0 +1,11 @@
+{% extends 'PoolLinkmotorBundle::layout.html.twig' %}
+
+{% block title %}{% trans %}Change log{% endtrans %} - {% trans %}Backlinks{% endtrans %} - {% endblock %}
+
+{% block content %}
+
+    {% include 'PoolLinkmotorBundle:Backlink:viewsubnav.html.twig' with {active:'changelog'} %}
+
+    {% include 'PoolLinkmotorBundle:Default:changelog.html.twig' %}
+
+{% endblock %}

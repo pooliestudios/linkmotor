@@ -1,0 +1,17 @@
+<ul class="uk-tab">
+    <li{% if active == 'settings' %} class="uk-active"{% endif %}>
+        <a href="{{ path('pool_linkmotor_user_settings') }}">
+            <i class="uk-icon-cog"></i> {% trans %}Settings{% endtrans %}
+        </a>
+    </li>
+    <li{% if active == 'password' %} class="uk-active"{% endif %}>
+        <a href="{{ path('pool_linkmotor_user_change_password') }}">
+            <i class="uk-icon-lock"></i> {% trans %}Change your password{% endtrans %}
+        </a>
+    </li>
+    <li{% if active == 'notifications' %} class="uk-active"{% endif %}>
+        <a href="{{ path('pool_linkmotor_user_notification_settings') }}">
+            <i class="uk-icon-envelope"></i> {% trans %}Notifications{% endtrans %}
+        </a>
+    </li>
+</ul>

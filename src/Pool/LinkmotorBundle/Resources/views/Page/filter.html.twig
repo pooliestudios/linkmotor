@@ -1,0 +1,93 @@
+<ul class="uk-subnav uk-subnav-pill filter">
+    <li>
+        <form class="uk-form autosubmit{% if filter['status'] != 'all' %} used-filter{% endif %}" action="{{ path('pool_linkmotor_pages_index', {type:'all'}) }}" method="get">
+            <input type="hidden" name="from" value="{{ type }}">
+            <select class="chosen" name="changeStatusFilter">
+                <option value="all">{% trans %}All status{% endtrans %}</option>
+                <option value="relevant"{% if filter['status'] == 'relevant' %} selected="selected"{% endif %}>
+                    {% trans %}Relevant{% endtrans %}
+                </option>
+                <option value="new"{% if filter['status'] == 'new' %} selected="selected"{% endif %}>
+                    {% trans %}New{% endtrans %}
+                </option>
+                <option value="contacted"{% if filter['status'] == 'contacted' %} selected="selected"{% endif %}>
+                    {% trans %}Contacted{% endtrans %}
+                </option>
+                <option value="contact1"{% if filter['status'] == 'contact1' %} selected="selected"{% endif %}>
+                    {% trans %}1. Contact{% endtrans %}
+                </option>
+                <option value="contact2"{% if filter['status'] == 'contact2' %} selected="selected"{% endif %}>
+                    {% trans %}2. Contact{% endtrans %}
+                </option>
+                <option value="in-progress"{% if filter['status'] == 'in-progress' %} selected="selected"{% endif %}>
+                    {% trans %}In progress{% endtrans %}
+                </option>
+                <option value="linked"{% if filter['status'] == 'linked' %} selected="selected"{% endif %}>
+                    {% trans %}Linked{% endtrans %}
+                </option>
+                <option value="offline"{% if filter['status'] == 'offline' %} selected="selected"{% endif %}>
+                    {% trans %}Offline{% endtrans %}
+                </option>
+                <option value="not-relevant"{% if filter['status'] == 'not-relevant' %} selected="selected"{% endif %}>
+                    {% trans %}Not relevant{% endtrans %}
+                </option>
+            </select>
+        </form>
+    </li>
+    <li class="uk-active">
+        <form class="uk-form autosubmit{% if filter['domain'] != '0' %} used-filter{% endif %}" action="{{ path('pool_linkmotor_pages_index', {type:'all'}) }}" method="get">
+            <input type="hidden" name="from" value="{{ type }}">
+            <select class="chosen" name="changeDomainFilter">
+                <option value="0">{% trans %}All domains{% endtrans %}</option>
+                {% for domain in domains %}
+                    <option value="{{ domain.id }}"{% if domain.id == filter['domain'] %} selected="selected"{% endif %}>
+                        {{ domain.name }}
+                    </option>
+                {% endfor %}
+            </select>
+        </form>
+    </li>
+    <li class="uk-active">
+        <form class="uk-form autosubmit{% if filter['vendor'] != '0' %} used-filter{% endif %}" action="{{ path('pool_linkmotor_pages_index', {type:'all'}) }}" method="get">
+            <input type="hidden" name="from" value="{{ type }}">
+            <select class="chosen" name="changeVendorFilter">
+                <option value="0">{% trans %}All vendors{% endtrans %}</option>
+                {% for vendor in vendors %}
+                    <option value="{{ vendor.id }}"{% if vendor.id == filter['vendor'] %} selected="selected"{% endif %}>
+                        {{ vendor.displayName }}
+                    </option>
+                {% endfor %}
+            </select>
+        </form>
+    </li>
+    {% if withUser %}
+        <li class="uk-active">
+            <form class="uk-form autosubmit{% if filter['user'] != '0' %} used-filter{% endif %}" action="{{ path('pool_linkmotor_pages_index', {type:'all'}) }}" method="get">
+                <input type="hidden" name="from" value="{{ type }}">
+                <select class="chosen" name="changeUserFilter">
+                    <option value="0">{% trans %}All users{% endtrans %}</option>
+                    {% for user in users %}
+                        <option value="{{ user.id }}"{% if user.id == filter['user'] %} selected="selected"{% endif %}>
+                            {{ user.displayName }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </form>
+        </li>
+    {% endif %}
+    {% if filter['status'] != 'all' or filter['domain'] != '0' or filter['vendor'] != '0'
+          or (withUser and filter['user'] != '0') or filter['keyword']
+    %}
+        <li>
+            <a class="uk-button uk-button-danger uk-button-small" href="{{ path('pool_linkmotor_pages_index', {type:'all'}) }}?resetFilter">
+                <i class="uk-icon-times-circle"></i> {% trans %}Reset{% endtrans %}
+            </a>
+        </li>
+    {% endif %}
+</ul>
+
+<form class="uk-search autosubmit{% if filter['keyword'] %} used-filter{% endif %}" action="{{ path('pool_linkmotor_pages_index', {type:'all'}) }}" method="get" data-uk-search>
+    <input type="hidden" name="from" value="{{ type }}">
+    <input class="uk-search-field" name="changeKeywordFilter" type="search" placeholder="{% trans %}Search{% endtrans %}... (URL)" value="{{ filter['keyword'] }}">
+    <button class="uk-search-close" type="reset"></button>
+</form>

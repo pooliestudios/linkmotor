@@ -1,0 +1,66 @@
+{% import "PoolLinkmotorBundle:Default:macros.html.twig" as poolMacros %}
+
+{% render controller('PoolLinkmotorBundle:Page:filter', {withUser:true, type:type}) %}
+
+{% set tableOptions = app.user.tableOptionsPages %}
+
+<div class="uk-button-dropdown uk-float-right" data-uk-dropdown="{mode:'click'}">
+	<a href="#" class="uk-button uk-button-mini"><i class="uk-icon-columns"></i> {% trans %}Edit columns{% endtrans %}</a>
+                    <div class="uk-dropdown">
+                        <ul class="column-options uk-nav uk-nav-dropdown">
+                            <li class="uk-nav-header">{% trans %}Columns{% endtrans %}</li>
+                                {% for tableOption in tableOptions %}
+                                    {{ poolMacros.showPagesInfo(tableOption, type) }}
+                                {% endfor %}
+                            </li>
+                        </ul>
+                    </div>
+</div>
+
+<hr style="clear:both; margin: 10px 0 -20px 0;">
+
+<table class="uk-table uk-table-striped uk-table-hover scrollable draggable">
+    <tr>
+        {% if bulkActionsForm is defined %}
+            <th class="bulk-actions pages">
+                <input type="checkbox" id="set-bulk-actions">
+            </th>
+        {% endif %}
+
+        {% for tableOption in tableOptions %}
+            {{ poolMacros.showPagesHeadCell(tableOption, pages, type) }}
+        {% endfor %}
+    </tr>
+    {% set previousPageId = 0 %}
+    {% for page in pages %}
+        {# Wegen des Alias für die Gesamt-URL #}
+        {% if page[0] is defined %}
+            {% set page = page[0] %}
+        {% endif %}
+        <tr>
+            {% if bulkActionsForm is defined %}
+                <td class="bulk-actions">
+                    <input type="checkbox" data-id="{{ page.id }}" data-has-backlink="{{ page.hasBacklink ? 1 : 0 }}" data-may-change-status="{{ page.statusMayBeChangedByUser(app.user) ? 1 : 0 }}">
+                </td>
+            {% endif %}
+            {% for tableOption in tableOptions %}
+                {{ poolMacros.showPagesBodyCell(tableOption, page, type, previousPageId) }}
+            {% endfor %}
+
+
+            {% set previousPageId = page.id %}
+        </tr>
+    {% endfor %}
+</table>
+
+<div class="table-footer">
+    {% if bulkActionsForm is defined %}
+        <div class="bulk-actions-form">
+            <form class="autosubmit" action="{{ path('pool_linkmotor_pages_bulk_action') }}" method="POST">
+                {{ form_widget(bulkActionsForm.bulkAction) }}
+                {{ form_rest(bulkActionsForm) }}
+            </form>
+        </div>
+    {% endif %}
+    {{ knp_pagination_render(pages) }}
+</div>

@@ -1,0 +1,19 @@
+<div class="uk-panel uk-panel-box">
+    <ul class="uk-breadcrumb">
+        <li>
+            <a href="{{ path('pool_linkmotor_project_dashboard', {id:blacklistItem.project.id}) }}">
+                {{ blacklistItem.project.name }}
+            </a>
+        </li>
+        <li>
+            <a href="{{ path('pool_linkmotor_explorer_blacklist_index') }}">
+                {% trans %}Blacklist{% endtrans %}
+            </a>
+        </li>
+        <li class="uk-active">
+            <span>
+                {{ blacklistItem.domain.name }}
+            </span>
+        </li>
+    </ul>
+</div>

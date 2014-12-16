@@ -1,0 +1,25 @@
+{% extends 'PoolLinkmotorBundle::layout.html.twig' %}
+
+{% block title %}{% trans %}Linkbird{% endtrans %} - {% trans %}Import{% endtrans %} - {% trans %}Backlinks{% endtrans %} - {% endblock %}
+
+{% block subnav %}
+    {% include 'PoolLinkmotorBundle:Import:subnav.html.twig' %}
+{% endblock %}
+
+{% block content %}
+    <h2>{% trans %}Add new Linkbird-Import{% endtrans %}</h2>
+        <p>
+            {% trans %}This is where you can import your .XLSX-File from Linkbird.{% endtrans %}
+        </p>
+
+    <form class="uk-form uk-form-horizontal" action="{{ path('pool_linkmotor_imports_add') }}" method="post" {{ form_enctype(form) }}>
+        {{ form_errors(form) }}
+
+        <fieldset class="filter">
+            {{ form_rest(form) }}
+        </fieldset>
+
+        <input class="uk-button uk-button-primary" type="submit" value="{% trans %}Upload{% endtrans %}" />
+        <a class="uk-button-small uk-button-link lmcancelbutton" href="{{ path('pool_linkmotor_imports_index') }}">{% trans %}Cancel{% endtrans %}</a>
+    </form>
+{% endblock %}

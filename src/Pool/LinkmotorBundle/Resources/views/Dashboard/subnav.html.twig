@@ -1,0 +1,32 @@
+{% if project is defined %}
+    {% set pathMe = path('pool_linkmotor_project_dashboard', {id:project.id, type:'my'}) %}
+    {% set pathAll = path('pool_linkmotor_project_dashboard', {id:project.id, type:'all'}) %}
+{% else %}
+    {% set pathMe = path('pool_linkmotor_dashboard', {type:'my'}) %}
+    {% set pathAll = path('pool_linkmotor_dashboard', {type:'all'}) %}
+{% endif %}
+{% if app.session.get('selectedProjectId') > 0 %}
+    <div class="uk-float-right">
+        <a class="uk-button" href="{{ path('pool_linkmotor_pages_add') }}">
+            <i class="uk-icon-plus"></i> {% trans %}Add page{% endtrans %}
+        </a>
+        <a class="uk-button" href="{{ path('pool_linkmotor_pages_import') }}">
+            <i class="uk-icon-download"></i> {% trans %}Import pages{% endtrans %}
+        </a>
+        <a class="uk-button" href="{{ path('pool_linkmotor_backlinks_add') }}">
+            <i class="uk-icon-plus"></i> {% trans %}Add backlink{% endtrans %}
+        </a>
+    </div>
+{% endif %}
+<ul class="uk-tab">
+    <li{% if active == 'my' %} class="uk-active"{% endif %}>
+        <a href="{{ pathMe }}">
+            {% trans %}My alerts and new pages{% endtrans %}
+        </a>
+    </li>
+    <li{% if active == 'all' %} class="uk-active"{% endif %}>
+        <a href="{{ pathAll }}">
+            {% trans %}All alerts and new pages{% endtrans %}
+        </a>
+    </li>
+</ul>

@@ -1,0 +1,36 @@
+{% extends 'PoolLinkmotorBundle::layout.html.twig' %}
+
+{% block title %}{% trans %}Crawl log{% endtrans %} - {% trans %}Backlinks{% endtrans %} - {% endblock %}
+
+{% block content %}
+
+    {% include 'PoolLinkmotorBundle:Backlink:viewsubnav.html.twig' with {active:'log'} %}
+
+    <ul class="uk-subnav uk-subnav-pill">
+        <li>
+            <strong>{% trans %}Last crawl{% endtrans %}:</strong>
+            {% if not backlink.lastCrawledAt %}
+                {% trans %}not crawled yet{% endtrans %}
+            {% else %}
+                {{ backlink.lastCrawledAt|localeDate('dt') }}
+                {% if backlink.crawlLog|length == 0 %}
+                    <em>(Import)</em>
+                {% endif %}
+            {% endif %}
+        </li>
+        {% if not backlink.isOffline %}
+            <li>
+                <form class="uk-form"> {# needed to have a proper uk-button #}
+                    <a class="uk-button uk-button-small slow" href="{{ path('pool_linkmotor_backlinks_crawl', {id:backlink.id}) }}">
+                        <i class="uk-icon-cogs"></i> {% trans %}Crawl again{% endtrans %}
+                    </a>
+                </form>
+            </li>
+        {% endif %}
+    </ul>
+
+    <p>
+        <strong>{% trans %}Target{% endtrans %}:</strong> {{ backlink.page.fullForDisplay }}
+    </p>
+    {% include 'PoolLinkmotorBundle:Dashboard:crawlerLog.html.twig' with {log:backlink.crawlLog, mode:'backlinkView'} %}
+{% endblock %}

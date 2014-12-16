@@ -1,0 +1,154 @@
+imports:
+    - { resource: parameters.yml }
+    - { resource: security.yml }
+    - { resource: doctrine_extensions.yml }
+
+framework:
+    #esi:             ~
+    translator:      { fallback: %locale% }
+    secret:          %secret%
+    router:
+        resource: "%kernel.root_dir%/config/routing.yml"
+        strict_requirements: ~
+    form:            ~
+    csrf_protection: ~
+    validation:      { enable_annotations: true }
+    templating:
+        engines: ['twig']
+        #assets_version: SomeVersionScheme
+    default_locale:  "%locale%"
+    trusted_proxies: ~
+    session:         ~
+    fragments:       ~
+    http_method_override: true
+
+# Twig Configuration
+twig:
+    debug:            %kernel.debug%
+    strict_variables: %kernel.debug%
+    globals:
+        linkmotorVersion: v1.5
+    form:
+        resources:
+            - 'PoolLinkmotorBundle:Form:fields.html.twig'
+
+# Assetic Configuration
+assetic:
+    debug:          %kernel.debug%
+    use_controller: false
+    bundles:        [ PoolLinkmotorBundle ]
+    #java: /usr/bin/java
+    filters:
+        cssrewrite: ~
+        #less:
+        #    node: /usr/bin/node
+        #    node_paths: [ /opt/lessc/lib, /usr/lib/node_modules, /usr/local/lib/node_modules ]
+        #    apply_to: "\.less$"
+        #closure:
+        #    jar: %kernel.root_dir%/Resources/java/compiler.jar
+        #yui_css:
+        #    jar: %kernel.root_dir%/Resources/java/yuicompressor-2.4.7.jar
+
+# Doctrine Configuration
+doctrine:
+    dbal:
+        driver:   %database_driver%
+        host:     %database_host%
+        port:     %database_port%
+        dbname:   %database_name%
+        user:     %database_user%
+        password: %database_password%
+        charset:  UTF8
+        # if using pdo_sqlite as your database driver, add the path in parameters.yml
+        # e.g. database_path: %kernel.root_dir%/data/data.db3
+        # path:     %database_path%
+
+    orm:
+        auto_generate_proxy_classes: %kernel.debug%
+        auto_mapping: true
+        mappings:
+            loggable:
+                type: annotation
+                alias: Gedmo
+                prefix: Gedmo\Loggable\Entity
+                dir: "%kernel.root_dir%/../vendor/gedmo/doctrine-extensions/lib/Gedmo/Loggable/Entity"
+
+# Swiftmailer Configuration
+swiftmailer:
+    transport: %mailer_transport%
+    host:      %mailer_host%
+    username:  %mailer_user%
+    password:  %mailer_password%
+    #spool:     { type: memory } Muss wegen des mailen des errorlogs auskommentiert werden: http://symfony.com/doc/2.3/cookbook/logging/monolog_email.html
+
+knp_paginator:
+    page_range: 5                      # default page range used in pagination control
+    default_options:
+        page_name: page                # page query parameter name
+        sort_field_name: sort          # sort field query parameter name
+        sort_direction_name: direction # sort direction query parameter name
+        distinct: true                 # ensure distinct results, useful when ORM queries are using GROUP BY statements
+    template:
+        pagination: PoolLinkmotorBundle:Default:pagination.html.twig     # sliding pagination controls template
+        sortable: PoolLinkmotorBundle:Default:sortableLink.html.twig # sort link template
+
+services:
+    worker:
+        class: Pool\LinkmotorBundle\Service\Worker
+        arguments: [@logger]
+    seoservices:
+        class: Pool\LinkmotorBundle\Service\SeoServices
+        arguments: [@linkmotor.options, @crypt, %seoservices.url%]
+    crypt:
+        class: Pool\LinkmotorBundle\Service\Crypt
+        arguments: [@logger,@linkmotor.options]
+    linkmotor.options:
+        class: Pool\LinkmotorBundle\Service\Options
+        arguments: [@doctrine]
+    crawler:
+        class: Pool\LinkmotorBundle\Service\Crawler
+        arguments: [@doctrine, @linkmotor.robotsTxt]
+    page_creator:
+        class: Pool\LinkmotorBundle\Service\PageCreator
+        arguments: [@doctrine]
+    linkmotor.domains:
+        class: Pool\LinkmotorBundle\Service\Domains
+        arguments: [@doctrine]
+    linkmotor.pages:
+        class: Pool\LinkmotorBundle\Service\Pages
+        arguments: [@doctrine, @page_creator, @seoservices]
+    linkmotor.robotsTxt:
+        class: Pool\LinkmotorBundle\Service\RobotsTxt
+        arguments: [@doctrine]
+    linkmotor.limits:
+        class: Pool\LinkmotorBundle\Service\Limits
+        arguments: [@doctrine, @linkmotor.options]
+    listener.alertUpdater:
+        class: Pool\LinkmotorBundle\EventListener\AlertUpdater
+        arguments: [@service_container]
+        tags:
+            - { name: doctrine.event_listener, event: postPersist }
+            - { name: doctrine.event_listener, event: postUpdate }
+    listener.statsUpdater:
+        class: Pool\LinkmotorBundle\EventListener\StatsUpdater
+        tags:
+            - { name: doctrine.event_listener, event: postPersist }
+            - { name: doctrine.event_listener, event: preUpdate }
+            - { name: doctrine.event_listener, event: preRemove }
+    listener.securityListener:
+        class: Pool\LinkmotorBundle\EventListener\SecurityListener
+        tags:
+            - { name: kernel.event_listener, event: security.interactive_login, method: onSecurityInteractiveLogin }
+    handler.authentication:
+        class: Pool\LinkmotorBundle\Handler\AuthenticationHandler
+        arguments: [@router, @linkmotor.limits]
+    twig.extension.changelog:
+        class: Pool\LinkmotorBundle\Twig\ChangelogExtension
+        arguments: [@doctrine]
+        tags:
+            - { name: twig.extension }
+    twig.extension.helper:
+        class: Pool\LinkmotorBundle\Twig\HelperExtension
+        arguments: [@linkmotor.options, @doctrine, @translator, @linkmotor.limits]
+        tags:
+            - { name: twig.extension }

@@ -1,0 +1,44 @@
+{% extends 'PoolLinkmotorBundle::layout.html.twig' %}
+
+{% block title %}{{ competitor.domain.name }} - {% trans %}Competitors{% endtrans %} - {% trans %}Explorer{% endtrans %} - {% endblock %}
+
+{% block subnav %}
+    {% include 'PoolLinkmotorAdminBundle:Competitor:breadcrumb.html.twig' %}
+{% endblock %}
+
+{% block content %}
+    <dl class="uk-description-list uk-description-list-horizontal">
+        <dt>{% trans %}Assign to{% endtrans %}</dt>
+        <dd>{{ competitor.assignedTo.displayName|default('All users')|trans }}</dd>
+
+        <dt>{% trans %}Import limit{% endtrans %}</dt>
+        <dd>
+            {% if competitor.importInterval > 0 %}
+                {{ competitor.importLimit }}
+            {% else %}
+                <em>{% trans %}No automatic import{% endtrans %}</em>
+            {% endif %}
+        </dd>
+
+        <dt>{% trans %}Import interval{% endtrans %}</dt>
+        <dd>
+            {% if competitor.importInterval > 0 %}
+                {{ competitor.importInterval }} {% trans %}days{% endtrans %}
+            {% else %}
+                <em>{% trans %}No automatic import{% endtrans %}</em>
+            {% endif %}
+        </dd>
+
+        <dt>{% trans %}Last import{% endtrans %}</dt>
+        <dd>
+            {% if competitor.lastImportAt %}
+                {{ competitor.lastImportAt|date('d.m.Y H:i') }}
+            {% else %}
+                <em>{% trans %}Not yet{% endtrans %}</em>
+            {% endif %}
+        </dd>
+    </dl>
+
+    <h1>{% trans %}Pages imported{% endtrans %}</h1>
+    {% include 'PoolLinkmotorBundle:Page:list.html.twig' with {type:'subdomain'} %}
+{% endblock %}

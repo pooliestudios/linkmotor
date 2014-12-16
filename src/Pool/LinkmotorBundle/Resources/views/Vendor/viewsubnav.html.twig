@@ -1,0 +1,23 @@
+<ul class="uk-tab">
+    <li{% if active == 'overview' %} class="uk-active"{% endif %}>
+        <a href="{{ path('pool_linkmotor_vendors_view', {id:vendor.id}) }}">
+            {% trans %}Details{% endtrans %}
+        </a>
+    </li>
+    <li{% if active == 'edit' %} class="uk-active"{% endif %}>
+        <a href="{{ path('pool_linkmotor_vendors_edit', {id:vendor.id}) }}">
+            <i class="uk-icon-edit"></i>
+            {% trans %}Edit{% endtrans %}
+        </a>
+    </li>
+    <li{% if active == 'changelog' %} class="uk-active"{% endif %}>
+        <a href="{{ path('pool_linkmotor_vendors_changelog', {id:vendor.id}) }}">
+            {% trans %}Change log{% endtrans %}
+        </a>
+    </li>
+    <li{% if active == 'delete' %} class="uk-active"{% endif %}>
+        <a href="{{ path('pool_linkmotor_vendors_delete', {id:vendor.id}) }}">
+            {% trans %}Delete{% endtrans %}
+        </a>
+    </li>
+</ul>

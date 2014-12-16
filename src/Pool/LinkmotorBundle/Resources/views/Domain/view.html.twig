@@ -1,0 +1,77 @@
+{% extends 'PoolLinkmotorBundle::layout.html.twig' %}
+
+{% block title %}{{ domain.name }} - {% trans %}Domains{% endtrans %} - {% endblock %}
+
+{% block content %}
+    <h2>{% trans %}Overview{% endtrans %}</h2>
+    <dl class="uk-description-list uk-description-list-horizontal">
+        <dt>{% trans %}Name{% endtrans %}</dt>
+        <dd>{{ domain.nameForDisplay }}</dd>
+
+        <dt>{% trans %}Pages{% endtrans %}</dt>
+        <dd>
+            <a href="{{ path('pool_linkmotor_pages_index', {type:'all'}) }}?resetFilter&changeDomainFilter={{ domain.id }}">
+                {{ domain.numPages(project)|localeNumber }}
+            </a>
+        </dd>
+
+        <dt>{% trans %}Backlinks{% endtrans %}</dt>
+        <dd>
+            <a href="{{ path('pool_linkmotor_backlinks_index', {type:'all'}) }}?resetFilter&changeDomainFilter={{ domain.id }}">
+                {{ domain.numBacklinks(project)|localeNumber }}
+            </a>
+        </dd>
+
+        <dt><abbr title="{% trans %}Domain Authority - Data from Moz.com{% endtrans %}" data-uk-tooltip>DA</abbr></dt>
+        <dd>{{ valueOrSpinner(domain.authority, 0) }}</dd>
+
+        <dt>{% trans %}Vendor{% endtrans %}</dt>
+        <dd>
+            {% if not domain.vendor %}
+                <a class="uk-button uk-button-mini" href="{{ path('pool_linkmotor_domains_set_vendor', {id:domain.id}) }}">
+                    <i class="uk-icon-plus-square"></i> {% trans %}add{% endtrans %}
+                </a>
+            {% else %}
+                <a href="{{ path('pool_linkmotor_vendors_view', {id:domain.vendor.id}) }}">
+                    {{ domain.vendor.displayName }}
+                </a>
+            {% endif %}
+        </dd>
+    </dl>
+
+    <h2>{% trans %}Backlinks{% endtrans %}</h2>
+    <table class="uk-table uk-table-striped uk-table-hover">
+        <tr>
+            <th>{% trans %}Page{% endtrans %}</th>
+            <th>{% trans %}Target-URL{% endtrans %}</th>
+            <th>{% trans %}Anchor{% endtrans %}</th>
+            <th>{% trans %}Type{% endtrans %}</th>
+            <th>{% trans %}Follow{% endtrans %}</th>
+        </tr>
+        {% for subdomain in domain.subdomains %}
+            {% for page in subdomain.pages %}
+                {% if page.project == project %}
+                    {% for backlink in page.backlinks %}
+                        {% if backlink.project == project %}
+                            <tr>
+                                <td>
+                                    <a href="{{ path('pool_linkmotor_backlinks_view', {id:backlink.id}) }}">
+                                        {{ backlink.page.fullForDisplay }}
+                                    </a>
+                                </td>
+                                <td>{{ backlink.url }}</td>
+                                <td>{{ backlink.anchor }}</td>
+                                <td>{{ backlink.typeName }}</td>
+                                <td>{{ backlink.follow ? 'Yes'|trans : 'No'|trans }}</td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+            {% endfor %}
+        {% endfor %}
+    </table>
+
+    {% include 'PoolLinkmotorBundle:Page:snippetList.html.twig' with {domain:domain} %}
+    {% include 'PoolLinkmotorBundle:Subdomain:snippetList.html.twig' with {subdomains:domain.subdomains} %}
+
+{% endblock %}

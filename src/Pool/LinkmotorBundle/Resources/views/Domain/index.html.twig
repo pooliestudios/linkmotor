@@ -1,0 +1,58 @@
+{% extends 'PoolLinkmotorBundle::layout.html.twig' %}
+
+{% block title %}{% trans %}Domains{% endtrans %} - {% endblock %}
+
+{% block content %}
+
+    {% render controller('PoolLinkmotorBundle:Domain:filter') %}
+
+    <table class="uk-table uk-table-striped uk-table-hover">
+        <tr>
+            <th>{% trans %}Name{% endtrans %}</th>
+            <th>{% trans %}Pages{% endtrans %}</th>
+            <th>{% trans %}Backlinks{% endtrans %}</th>
+            <th><abbr title="{% trans %}Domain Authority - Data from Moz.com{% endtrans %}" data-uk-tooltip>DA</abbr></th>
+            <th>{% trans %}Vendor{% endtrans %}</th>
+        </tr>
+        {% for domain in domains %}
+            <tr>
+                <td>
+                    <i class="uk-icon-folder-close"></i>
+                    <a href="{{ path('pool_linkmotor_domains_view', {id:domain.id}) }}">
+                        <strong>{{ domain.nameForDisplay }}</strong>
+                    </a>
+                    {% if domain.blacklistedIn(project) %}
+                        <div class="uk-badge">{% trans %}Blacklist{% endtrans %}</div>
+                    {% endif %}
+                    {% if domain.competitorIn(project) %}
+                        <div class="uk-badge">{% trans %}Competitor{% endtrans %}</div>
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="{{ path('pool_linkmotor_pages_index', {type:'all'}) }}?resetFilter&changeDomainFilter={{ domain.id }}">
+                        {{ domain.numPages(project) }}
+                    </a>
+                </td>
+                <td>
+                    <a href="{{ path('pool_linkmotor_backlinks_index', {type:'all'}) }}?resetFilter&changeDomainFilter={{ domain.id }}">
+                        {{ domain.numBacklinks(project) }}
+                    </a>
+                </td>
+                <td>{{ valueOrSpinner(domain.authority, 0) }}</td>
+                <td>
+                    {% if not domain.vendor %}
+                        <a class="uk-text-muted" href="{{ path('pool_linkmotor_domains_set_vendor', {id:domain.id}) }}">
+                            <i class="uk-icon-plus-square"></i> <small>{% trans %}add{% endtrans %}</small>
+                        </a>
+                    {% else %}
+                        <a data-uk-tooltip title="{{ domain.vendor.displayName }} {{ domain.vendor.phone }}" href="{{ path('pool_linkmotor_vendors_view', {id:domain.vendor.id}) }}">
+                            <i class="uk-icon-user"></i> <small>{% trans %}show{% endtrans %}</small>
+                        </a>
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+
+    {{ knp_pagination_render(domains) }}
+{% endblock %}

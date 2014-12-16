@@ -1,0 +1,55 @@
+{% if type == 'my' %}
+    {% set urlNew = path('pool_linkmotor_pages_index', {type:'my-new'}) %}
+    {% set urlRelevant = path('pool_linkmotor_pages_index', {type:'my-relevant'}) %}
+    {% set urlContacted = path('pool_linkmotor_pages_index', {type:'my-contacted'}) %}
+    {% set urlInProgress = path('pool_linkmotor_pages_index', {type:'my-in-progress'}) %}
+    {% set urlAlerts = path('pool_linkmotor_backlinks_index', {type:'my-alerts'}) %}
+{% else %}
+    {% set urlNew = path('pool_linkmotor_pages_index', {type:type, resetFilter:1, changeStatusFilter:'new'}) %}
+    {% set urlRelevant = path('pool_linkmotor_pages_index', {type:type, resetFilter:1, changeStatusFilter:'relevant'}) %}
+    {% set urlContacted = path('pool_linkmotor_pages_index', {type:type, resetFilter:1, changeStatusFilter:'contacted'}) %}
+    {% set urlInProgress = path('pool_linkmotor_pages_index', {type:type, resetFilter:1, changeStatusFilter:'in-progress'}) %}
+    {% set urlAlerts = path('pool_linkmotor_backlinks_index', {type:type, resetFilter:1, changeBacklinkStatusFilter:'alerts'}) %}
+{% endif %}
+<div {% if type == 'all' %}id="lm-alles" {% endif %}class="uk-grid uk-grid-preserve">
+    <div class="uk-width-1-5 uk-animation-scale-up">
+        <a class="lm-normal-link" href="{{ urlAlerts }}">
+            <div class="uk-panel {{  values.alerts > 0 ? 'lm-alert' : 'lm-normal' }}">
+                <p class="obacht">{{ values.alerts|localeNumber }}</p>
+                <p class="obacht-infos"><i class="uk-icon-warning-sign"></i> {% trans %}Alerts{% endtrans %}</p>
+            </div>
+        </a>
+    </div>
+    <div class="uk-width-1-5">
+        <a class="lm-normal-link" href="{{ urlNew }}">
+            <div class="uk-panel {{  values.newPages > 0 ? 'lm-prospects' : 'lm-normal' }}">
+                <p class="obacht">{{ values.newPages|localeNumber }}</p>
+                <p class="obacht-infos">{% trans %}New Pages{% endtrans %}</p>
+            </div>
+        </a>
+    </div>
+    <div class="uk-width-1-5">
+        <a class="lm-normal-link" href="{{ urlRelevant }}">
+            <div class="uk-panel lm-normal">
+                <p class="obacht">{{ values.relevantPages|localeNumber }}</p>
+                <p class="obacht-infos">{% trans %}Relevant{% endtrans %}</p>
+            </div>
+        </a>
+    </div>
+    <div class="uk-width-1-5">
+        <a class="lm-normal-link" href="{{ urlContacted }}">
+            <div class="uk-panel lm-normal">
+                <p class="obacht">{{ values.contactedPages|localeNumber }}</p>
+                <p class="obacht-infos">{% trans %}Contacted{% endtrans %}</p>
+            </div>
+        </a>
+    </div>
+    <div class="uk-width-1-5">
+        <a class="lm-normal-link" href="{{ urlInProgress }}">
+            <div class="uk-panel lm-normal">
+                <p class="obacht">{{ values.inProgressPages|localeNumber }}</p>
+                <p class="obacht-infos">{% trans %}In progress{% endtrans %}</p>
+            </div>
+        </a>
+    </div>
+</div>

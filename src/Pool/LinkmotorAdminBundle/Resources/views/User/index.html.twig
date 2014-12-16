@@ -1,0 +1,57 @@
+{% extends 'PoolLinkmotorBundle::layout.html.twig' %}
+
+{% block title %}{% trans %}Team{% endtrans %} - {% trans %}Administration{% endtrans %} - {% endblock %}
+
+{% block subnav %}
+    {% include 'PoolLinkmotorAdminBundle:Default:subnav.html.twig' with {active:'users'} %}
+{% endblock %}
+
+{% block content %}
+    {% if accountLimitsOverstepped('users') %}
+        {% include 'PoolLinkmotorBundle:Default:limitOverstepped.html.twig' with {which:'users'} %}
+    {% elseif accountLimitsReached('users') %}
+        {% include 'PoolLinkmotorBundle:Default:limitReached.html.twig' with {which:'users'} %}
+    {% endif %}
+
+    <table class="uk-table uk-table-hover">
+        <tr>
+            <th>{% trans %}Name{% endtrans %}</th>
+            <th>{% trans %}E-Mail{% endtrans %}</th>
+            <th>{% trans %}Pages{% endtrans %}</th>
+            <th>{% trans %}Backlinks{% endtrans %}</th>
+            <th>{% trans %}Alerts{% endtrans %}</th>
+            <th>{% trans %}Roles{% endtrans %}</th>
+        </tr>
+        {% for user in users %}
+            <tr>
+                <td>
+                    {% if user.isSupportUser %}
+                        <span data-uk-tooltip="{pos:'right'}" title="{% trans %}This user cannot be edited{% endtrans %}">
+                            <strong>{{ user.name }}</strong>
+                        </span>
+                    {% else %}
+                        {% if user.isInactive %}
+                            <div class="uk-badge uk-badge-danger">{% trans %}Inactive{% endtrans %}</div>
+                        {% endif %}
+                        {% if user.id != app.user.id %}
+                            <a href="{{ path('pool_linkmotor_admin_users_edit', {id:user.id}) }}">
+                                <strong>{{ user.name }}</strong>
+                            </a>
+                        {% else %}
+                            <span data-uk-tooltip="{pos:'right'}" title="{% trans %}You cannot edit yourself{% endtrans %}">
+                                <strong>{{ user.name }}</strong>
+                            </span>
+                        {% endif %}
+                    {% endif %}
+                </td>
+                <td>{{ user.email }}</td>
+                <td class="uk-alert">{{ user.pages.count }}</td>
+                <td class="uk-alert uk-alert-success">{{ user.backlinks.count }}</td>
+                <td class="uk-alert uk-alert-danger">{{ user.alerts.count }}</td>
+                <td>{{ user.displayRoles|join(', ') }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+
+    {{ knp_pagination_render(users) }}
+{% endblock %}

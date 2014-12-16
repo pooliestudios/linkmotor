@@ -1,0 +1,31 @@
+{% if chartId is defined %}
+    <canvas id="{{ chartId }}" width="{{ width }}" height="{{ height }}"></canvas>
+    <div class="uk-text-center" id="{{ chartId }}Legend">
+        <div class="uk-badge legend-badge-green">Domain Authority</div>
+        <div class="uk-badge legend-badge-red">Page Authority</div>
+    </div>
+    <script type="text/javascript">
+        poolCharts.push(function() {
+            var {{ chartId }}Ctx = $('#{{ chartId }}').get(0).getContext('2d');
+            var {{ chartId }}Data = {
+                labels: ['<11', '<21', '<31', '<41', '<51', '<61', '<71', '<81', '<91', '<101'],
+                datasets: [
+                    {
+                        fillColor: "rgba(26, 188, 156, 0.5)",
+                        strokeColor: "rgba(26, 188, 156, 1)",
+                        pointColor: "rgba(26, 188, 156, 1)",
+                        pointStrokeColor: "#fff",
+                        data : [{{ authoritySpread['domain']|join(',') }}]
+                    },
+                    {
+                        fillColor: "rgba(231, 76, 60, 0.5)",
+                        strokeColor: "rgba(231, 76, 60, 1)",
+                        pointColor: "rgba(231, 76, 60, 1)",
+                        pointStrokeColor : "#fff",
+                        data : [{{ authoritySpread['page']|join(',') }}]
+                    }
+            ]};
+            var {{ chartId }}Chart = new Chart({{ chartId }}Ctx).Line({{ chartId }}Data);
+        });
+    </script>
+{% endif %}

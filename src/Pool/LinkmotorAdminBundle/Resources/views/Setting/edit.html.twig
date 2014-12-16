@@ -1,0 +1,55 @@
+{% extends 'PoolLinkmotorBundle::layout.html.twig' %}
+
+{% block subnav %}
+    {% include 'PoolLinkmotorAdminBundle:Default:subnav.html.twig' with {active:'settings'} %}
+{% endblock %}
+
+{% block content %}
+    <form class="uk-form uk-form-horizontal" autocomplete="off" action="{{ path('pool_linkmotor_admin_settings_edit') }}" method="post">
+
+        {{ form_errors(form) }}
+
+        {% if accountOptions('self_hosted') %}
+            <fieldset>
+                <legend>SEO-Services</legend>
+                {% if not form.vars.value.account_id or not form.vars.value.account_secret_key %}
+                    <p>
+                        {% trans %}SEO-Services is a free account provided by the makers of <strong>Linkmotor</strong>.{% endtrans %}
+                    </p>
+                    <p>
+                        {% trans %}You can either create a new account or enter your credentials from a hosted <strong>Linkmotor</strong> account.{% endtrans %}
+                    </p>
+                {% endif %}
+                {{ form_row(form.account_id) }}
+                {{ form_row(form.account_secret_key) }}
+            </fieldset>
+        {% endif %}
+
+        {% if not accountOptions('self_hosted') or (form.vars.value.account_id and form.vars.value.account_secret_key) %}
+            <fieldset>
+                <legend>Sistrix</legend>
+                {{ form_row(form.sistrix_active) }}
+                <div id="toggle-target-sistrix">
+                    {{ form_row(form.sistrix_api_key) }}
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>XOVI</legend>
+                {{ form_row(form.xovi_active) }}
+                <div id="toggle-target-xovi">
+                    {{ form_row(form.xovi_api_key) }}
+                </div>
+            </fieldset>
+        {% endif %}
+
+        {{ form_row(form._token) }}
+
+        <button type="submit" class="uk-button uk-button-primary">{% trans %}Save{% endtrans %}</button>
+        {% if accountOptions('self_hosted') and (not form.vars.value.account_id or not form.vars.value.account_secret_key) %}
+            <a class="uk-button uk-button-secondary slow" href="{{ path('pool_linkmotor_admin_settings_create_seo_service_account') }}">
+                {% trans %}Request new account credentials{% endtrans %} &raquo;
+            </a>
+        {% endif %}
+    </form>
+{% endblock %}

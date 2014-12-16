@@ -1,0 +1,25 @@
+<table class="uk-table uk-table-condensed">
+    <tr>
+        <th>{% trans %}Timestamp {% endtrans%}</th>
+        <th>{% trans %}User{% endtrans %}</th>
+        <th>{% trans %}Action{% endtrans %}</th>
+        <th>{% trans %}Changes{% endtrans %}</th>
+    </tr>
+    {% for item in logEntries %}
+        <tr>
+            <td>{{ item.loggedAt|localeDate('dt') }}</td>
+            <td>{{ item.username|changelogUser }}</td>
+            <td>{{ item.action|trans }}</td>
+            <td>
+                {% for field, value in item.data %}
+                    {{ field }}: {{ value|changelogValue(field) }}<br>
+                {% endfor %}
+            </td>
+        </tr>
+    {% else %}
+        <td colspan="4">
+            <em>{% trans %}No change log available{% endtrans %}</em>
+        </td>
+    {% endfor %}
+</table>
+{{ knp_pagination_render(logEntries) }}

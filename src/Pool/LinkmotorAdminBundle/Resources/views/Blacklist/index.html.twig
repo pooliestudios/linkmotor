@@ -1,0 +1,39 @@
+{% extends 'PoolLinkmotorBundle::layout.html.twig' %}
+
+{% block title %}{% trans %}Blacklist{% endtrans %} - {% trans %}Explorer{% endtrans %} - {% endblock %}
+
+{% block subnav %}
+    {% include 'PoolLinkmotorAdminBundle:Explorer:subnav.html.twig' with {active:'blacklist'} %}
+{% endblock %}
+
+{% block content %}
+    <table class="uk-table uk-table-striped uk-table-hover">
+        <tr>
+            <th>{% trans %}Domain{% endtrans %}</th>
+            <th>{% trans %}Note{% endtrans %}</th>
+            <th></th>
+        </tr>
+        {% for blacklistItem in blacklist %}
+            <tr>
+                <td><a href="{{ path('pool_linkmotor_explorer_blacklist_edit', {id:blacklistItem.id}) }}">{{ blacklistItem.domain.name }}</a></td>
+                <td>
+                    <span{% if blacklistItem.note|length > 100 %} data-uk-tooltip title="{{ blacklistItem.note|nl2br }}"{% endif %}>
+                        {{ blacklistItem.note|slice(0, 100) }}{% if blacklistItem.note|length > 100 %}...{% endif %}
+                    </span>
+                </td>
+                <td>
+                    <div class="uk-button-group">
+                        <a class="uk-button uk-button-small" href="{{ path('pool_linkmotor_explorer_blacklist_edit', {id:blacklistItem.id}) }}">
+                            <i class="uk-icon-edit"></i>
+                        </a>
+                        <a data-uk-tooltip class="uk-button uk-button-small" href="{{ path('pool_linkmotor_explorer_blacklist_delete', {id:blacklistItem.id}) }}" title="{% trans %}Delete{% endtrans %}">
+                            <i class="uk-icon-times-circle"></i>
+                        </a>
+                    </div>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+
+    {{ knp_pagination_render(blacklist) }}
+{% endblock %}

@@ -1,0 +1,20 @@
+Hi {{ user.displayName }},
+
+{% trans %}the following errors occurred while inspecting your links{% endtrans %}:
+{% for item in notificationData %}
+    {{ item.projectName }} - {{ url('pool_linkmotor_project_dashboard', {id:item.projectId, _locale:locale}) }}
+    {% if item.numErrors %}
+        {{ item.numErrors }} {% trans %}Errors{% endtrans %} ({{ item.numNewErrors }} {% trans %}New{% endtrans %})
+    {% endif %}
+    {% if item.numWarnings %}
+        {% if item.numErrors %},{% endif %}
+        {{ item.numWarnings }} {% trans %}Warnings{% endtrans %} ({{ item.numNewWarnings }} {% trans %}New{% endtrans %})
+    {% endif %}
+{% endfor %}
+
+{% trans %}Good luck on fixing those links, we wish you a nice day!{% endtrans %}<br>
+Linkmotor.de
+
+---
+
+{% trans %}Change notification settings{% endtrans %}: {{ url('pool_linkmotor_user_notification_settings', {_locale:locale}) }}

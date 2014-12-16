@@ -1,0 +1,17 @@
+{% extends 'PoolLinkmotorBundle::layout.html.twig' %}
+
+{% block content %}
+
+    <form class="uk-form uk-form-horizontal" action="{{ path('pool_linkmotor_admin_users_edit', {id:user.id}) }}" method="post" {{ form_enctype(form) }}>
+        {{ form_errors(form) }}
+
+        <fieldset>
+            <legend>{% trans %}Edit user{% endtrans %}</legend>
+            {{ form_rest(form) }}
+        </fieldset>
+
+        <input class="uk-button uk-button-primary" type="submit" value="{% trans %}Save{% endtrans %}" />
+        <a class="uk-button-small uk-button-link lmcancelbutton" href="{{ path('pool_linkmotor_admin_users_index') }}">{% trans %}Cancel{% endtrans %}</a>
+    </form>
+
+{% endblock %}

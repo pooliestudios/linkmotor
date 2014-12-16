@@ -1,0 +1,31 @@
+{% extends 'PoolLinkmotorBundle::layout.html.twig' %}
+
+{% block title %}{% trans %}Edit{% endtrans %} - {% trans %}Competitors{% endtrans %} - {% trans %}Explorer{% endtrans %} - {% endblock %}
+
+{% block subnav %}
+    {% include 'PoolLinkmotorAdminBundle:Competitor:breadcrumb.html.twig' %}
+{% endblock %}
+
+{% block content %}
+    <form class="uk-form uk-form-horizontal" action="{{ path('pool_linkmotor_explorer_competitor_edit', {id:competitor.id}) }}" method="post" {{ form_enctype(form) }}>
+        {{ form_errors(form) }}
+
+        <fieldset>
+            <legend>{% trans %}Edit competitor{% endtrans %}</legend>
+            {{ form_row(form.importLimit) }}
+            <div class="uk-form-controls uk-text-muted uk-text-small">
+                <p style="margin-top: 5px;">
+                    {{ 'form.explorer.competitor.importLimit.help'|trans }}
+                </p>
+            </div>
+            {{ form_row(form.importInterval) }}
+            {{ form_row(form.assignedTo) }}
+            {{ form_rest(form) }}
+        </fieldset>
+
+        <input class="uk-button uk-button-primary" type="submit" value="{% trans %}Save{% endtrans %}" />
+        <a class="uk-button" href="{{ path('pool_linkmotor_explorer_competitor_index') }}">
+            {% trans %}Cancel{% endtrans %}
+        </a>
+    </form>
+{% endblock %}

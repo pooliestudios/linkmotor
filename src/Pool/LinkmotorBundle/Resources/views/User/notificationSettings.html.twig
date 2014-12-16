@@ -1,0 +1,68 @@
+{% extends 'PoolLinkmotorBundle::layout.html.twig' %}
+
+{% block subnav %}
+    {% include 'PoolLinkmotorBundle:User:subnav.html.twig' with {active:'notifications'} %}
+{% endblock %}
+
+{% block content %}
+    <form class="uk-form uk-form-horizontal" autocomplete="off" action="{{ path('pool_linkmotor_user_notification_settings') }}" method="post">
+
+        {{ form_errors(form) }}
+
+        <fieldset>
+            <legend>{% trans %}General{% endtrans %}</legend>
+
+            {{ form_row(form.warningNotificationOn) }}
+            <div id="pool-notification-settings-warning-0">
+                {% if form.warningFor is defined %}
+                    {{ form_row(form.warningFor) }}
+                {% endif %}
+                {{ form_row(form.warningWhen) }}
+            </div>
+
+
+            {{ form_row(form.errorNotificationOn) }}
+            <div id="pool-notification-settings-error-0">
+                {% if form.errorFor is defined %}
+                    {{ form_row(form.errorFor) }}
+                {% endif %}
+                {{ form_row(form.errorWhen) }}
+            </div>
+        </fieldset>
+		<br>
+		<legend>{% trans %}On project basis{% endtrans %}</legend>
+
+        {% for project in projects %}
+            <fieldset>
+                <legend>
+                    <img src="//www.google.com/s2/favicons?domain={{ project.name }}" width="16" height="16"> {{ project.name }}
+                    <span class="uk-text-small uk-text-muted">
+                        {% trans %}Custom settings{% endtrans %}
+                        {{ form_widget(attribute(form, 'customSettings-' ~ project.id)) }}
+                    </span>
+                </legend>
+                {# form_row(attribute(form, 'customSettings-' ~ project.id)) #}
+                <div id="pool-notification-settings-custom-{{ project.id }}">
+                    {{ form_row(attribute(form, 'warningNotificationOn-' ~ project.id)) }}
+                    <div id="pool-notification-settings-warning-{{ project.id }}">
+                        {% if attribute(form, 'warningFor-' ~ project.id) is defined %}
+                            {{ form_row(attribute(form, 'warningFor-' ~ project.id)) }}
+                        {% endif %}
+                        {{ form_row(attribute(form, 'warningWhen-' ~ project.id)) }}
+                    </div>
+                    {{ form_row(attribute(form, 'errorNotificationOn-' ~ project.id)) }}
+                    <div id="pool-notification-settings-error-{{ project.id }}">
+                        {% if attribute(form, 'errorFor-' ~ project.id) is defined %}
+                            {{ form_row(attribute(form, 'errorFor-' ~ project.id)) }}
+                        {% endif %}
+                        {{ form_row(attribute(form, 'errorWhen-' ~ project.id)) }}
+                    </div>
+                </div>
+            </fieldset>
+        {% endfor %}
+        {{ form_row(form._token) }}
+
+        <button type="submit" class="uk-button uk-button-primary">{% trans %}Save{% endtrans %}</button>
+        <a class="uk-button-small uk-button-link lmcancelbutton" href="{{ path('pool_linkmotor_index') }}">{% trans %}Cancel{% endtrans %}</a>
+    </form>
+{% endblock %}

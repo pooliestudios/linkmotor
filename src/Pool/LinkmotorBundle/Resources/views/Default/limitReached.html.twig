@@ -1,0 +1,28 @@
+{% if which is not defined %}
+    {% set which = 'general' %}
+{% endif %}
+{% if showLink is not defined %}
+    {% set showLink = true %}
+{% endif %}
+<div class="uk-alert uk-alert-danger">
+    <p class="uk-text-bold">
+        {% trans %}You reached your account limits{% endtrans %}
+    </p>
+    {% if which == 'projects' %}
+        <p>{% trans %}You cannot add new projects.{% endtrans %}</p>
+    {% elseif which == 'users' %}
+        <p>{% trans %}You cannot add new users.{% endtrans %}</p>
+    {% elseif which == 'prospects' %}
+        <p>{% trans %}You cannot add new prospects.{% endtrans %}</p>
+    {% elseif which == 'backlinks' %}
+        <p>{% trans %}You cannot add new backlinks.{% endtrans %}</p>
+    {% endif %}
+    {% if showLink %}
+        <p>
+            <a class="uk-button uk-button-danger" href="{{ path('pool_linkmotor_limits_reached') }}">
+                {% trans %}Please click here for more information{% endtrans %} &raquo;
+            </a>
+        </p>
+    {% endif %}
+</div>
+<p><br></p>

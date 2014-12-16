@@ -1,0 +1,26 @@
+<table class="sortable-table uk-table uk-table-striped uk-table-hover">
+<!--<h3>{{ label|trans }}</h3>-->
+    <thead>
+        <tr>
+            <th>Mitglied</th>
+            <th data-sort="int" data-sort-default="desc">
+                {% trans %}This month{% endtrans %}
+                <span class="arrow">&darr;</span>
+            </th>
+            <th data-sort="int" data-sort-default="desc">
+                {% trans %}Last month{% endtrans %}
+            </th>
+            <th data-sort="int" data-sort-default="desc">
+                {% trans %}Overall{% endtrans %}
+            </th>
+        </tr>
+    </thead>
+    {% for item in data %}
+        <tr>
+            <td>{{ item.user.displayName }}</td>
+            <td><strong class="uk-text-info">{{ attribute(item, field).thisMonth|localeNumber }}</strong></td>
+            <td>{{ attribute(item, field).lastMonth|localeNumber }}</td>
+			<td>{{ attribute(item, field).sum|localeNumber }}</td>
+        </tr>
+    {% endfor %}
+</table>

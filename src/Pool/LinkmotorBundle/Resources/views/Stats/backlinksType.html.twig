@@ -1,0 +1,17 @@
+{% if chartId is defined %}
+    <canvas id="{{ chartId }}" width="{{ width }}" height="{{ height }}"></canvas>
+    <div  class="uk-text-center" id="{{ chartId }}Legend">
+        <div class="uk-badge legend-badge-green">Text: {{ numBacklinksTypeText }}</div>
+        <div class="uk-badge legend-badge-red">Image: {{ numBacklinksTypeImage }}</div>
+    </div>
+    <script type="text/javascript">
+        poolCharts.push(function() {
+            var {{ chartId }}Ctx = $('#{{ chartId }}').get(0).getContext('2d');
+            var {{ chartId }}Data = [
+                { value:{{ numBacklinksTypeText }}, color:"rgba(26, 188, 156, 1)" },
+                { value: {{ numBacklinksTypeImage }}, color : "rgba(231, 76, 60, 1)" }
+            ];
+            var {{ chartId }}Chart = new Chart({{ chartId }}Ctx).Doughnut({{ chartId }}Data);
+        });
+    </script>
+{% endif %}

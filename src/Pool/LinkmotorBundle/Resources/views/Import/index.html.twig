@@ -1,0 +1,28 @@
+{% extends 'PoolLinkmotorBundle::layout.html.twig' %}
+
+{% block title %}{% trans %}Linkbird{% endtrans %} - {% trans %}Import{% endtrans %} - {% trans %}Backlinks{% endtrans %} - {% endblock %}
+
+{% block subnav %}
+    {% include 'PoolLinkmotorBundle:Import:subnav.html.twig' %}
+{% endblock %}
+
+{% block content %}
+    <h2>{% trans %}Import backlinks from Linkbird{% endtrans %}</h2>
+        <a class="uk-button uk-button-primary" href="{{ path('pool_linkmotor_imports_add') }}">
+        <i class="uk-icon-plus"></i> {% trans %}Add new Linkbird-Import{% endtrans %}
+    </a>
+    <table class="uk-table uk-table-striped uk-table-hover">
+        <tr>
+            <th>{% trans %}Filename{% endtrans %}</th>
+            <th>{% trans %}Imported at{% endtrans %}</th>
+            <th>{% trans %}Uploaded by{% endtrans %}</th>
+            <th>{% trans %}Status{% endtrans %}</th>
+            <th></th>
+        </tr>
+        {% for import in imports %}
+            {% include 'PoolLinkmotorBundle:Import:row.html.twig' %}
+        {% else %}
+            <tr><td colspan="5"><em>{% trans %}No imports available{% endtrans %}</em></td></tr>
+        {% endfor %}
+    </table>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% if headline is not defined %}
+    {% set headline = 'Backlinks' %}
+{% endif %}
+{% if excludeBacklinkId is not defined %}
+    {% set excludeBacklinkId = 0 %}
+{% endif %}
+{% set backlinksInProject = page.backlinksForProject(project, excludeBacklinkId) %}
+{% if backlinksInProject %}
+    <h2>{{ headline|trans }}</h2>
+    <table class="uk-table uk-table-striped uk-table-hover">
+        <tr>
+            <th>{% trans %}Target-URL{% endtrans %}</th>
+            <th>{% trans %}Anchor{% endtrans %}</th>
+            <th>{% trans %}Type{% endtrans %}</th>
+            <th>{% trans %}Follow{% endtrans %}</th>
+        </tr>
+        {% for backlink in backlinksInProject %}
+            <tr>
+                <td>
+                    <a href="{{ path('pool_linkmotor_backlinks_view', {id:backlink.id}) }}">
+                        {{ backlink.url }}
+                    </a>
+                    <a class="uk-button uk-button-mini" href="{{ path('pool_linkmotor_anonymizer') ~ '?url=' ~ backlink.url }}" target="_blank">
+                        <i class="uk-icon-external-link"></i> {% trans %}Open{% endtrans %}
+                    </a>
+                </td>
+                <td>{{ backlink.anchor }}</td>
+                <td>{{ backlink.typeName }}</td>
+                <td>{{ backlink.follow ? 'Yes'|trans : 'No'|trans }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endif %}

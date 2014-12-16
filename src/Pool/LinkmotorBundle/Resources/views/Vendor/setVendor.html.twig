@@ -1,0 +1,72 @@
+{% extends 'PoolLinkmotorBundle::layout.html.twig' %}
+
+{% block title %}{% trans %}Set vendor{% endtrans %} - {% trans %}Domains{% endtrans %} - {% endblock %}
+
+{% if type == 'domain' %}
+    {% set domainName = object.name %}
+{% else %}
+    {% set domainName = object.full %}
+{% endif %}
+
+{% block content %}
+
+    <div class="uk-form-row">
+        <p class="project uk-text-muted">
+            {% if type == 'domain' %}
+                {% trans %}Domain{% endtrans %}
+            {% else %}
+                {% trans %}Subdomain{% endtrans %}
+            {% endif %}
+        </p>
+        <h1>{{ domainName }}</h1>
+    </div>
+            
+    <form class="uk-form uk-form-horizontal slow" action="{{ path('pool_linkmotor_domains_set_vendor', {id:object.id, type:type}) }}" method="post" {{ form_enctype(form) }}>
+        {{ form_errors(form) }}
+
+        <fieldset>
+            <legend>{% trans %}Choose vendor{% endtrans %}</legend>
+            {{ form_row(form.vendor) }}
+            <div class="uk-form-row">
+                <em>
+                    - {% trans %}or{% endtrans %} -
+                </em>
+            </div>
+
+            <br>
+
+            <legend>{% trans %}Add vendor{% endtrans %}</legend>
+            <div class="uk-panel uk-width uk-panel-box uk-align-right" style="width: 260px; margin-top: 20px;">
+            <h3>{% trans %}Contact information at your fingertips{% endtrans %}</h3>
+                {% if contactInfoSearched %}
+                    {% if contactInfo.data.sourceUrl is defined and contactInfo.data.sourceUrl %}
+                        {% trans %}Information found on{% endtrans %}:
+                        <a href="{{ path('pool_linkmotor_anonymizer') ~ '?url=' ~ contactInfo.data.sourceUrl }}" target="_blank">
+                            <strong>{{ contactInfo.data.sourceUrl }}</strong>
+                        </a>
+                    {% else %}
+                        {% trans %}No contact information found!{% endtrans %}
+                    {% endif %}
+                {% else %}
+					<p>{% trans with {'%domainName%':domainName} %}contact.finder.info{% endtrans %}</p>
+                    <input class="uk-button uk-button-success" name="set_vendor[search]" type="submit" value="{% trans %}Search for contact information{% endtrans %}">
+                {% endif %}
+				</div>
+
+		<div class="uk-grid">
+			<div class="uk-width-1-2 uk-width" style="width: 65%;">
+            {{ form_row(form.newVendorEmail) }}
+            {{ form_row(form.newVendorName) }}
+            {{ form_row(form.newVendorCompany) }}
+            {{ form_row(form.newVendorPhone) }}
+            {{ form_row(form.newVendorStreet) }}
+            {{ form_row(form.newVendorZipcode) }}
+            {{ form_row(form.newVendorCity) }}
+			</div>
+		</div>
+        </fieldset>
+
+        {{ form_row(form._token) }}
+        <input class="uk-button uk-button-large uk-button-primary" type="submit" value="{% trans %}Save{% endtrans %}">
+    </form>
+{% endblock %}

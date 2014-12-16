@@ -1,0 +1,138 @@
+{% extends 'PoolLinkmotorBundle::layout.html.twig' %}
+
+{% block title %}{% trans %}Details{% endtrans %} - {% trans %}Backlinks{% endtrans %} - {% endblock %}
+
+{% block subnav %}
+</div>
+<div class="lm-wrapper-sub">
+	<div class="uk-container uk-container-center">
+		<div class="uk-panel">
+			<h1>
+		        <a href="{{ path('pool_linkmotor_anonymizer') ~ '?url=' ~ backlink.page.full }}" target="_blank">
+		            <strong>{{ backlink.page.fullForDisplay }}</strong>
+		        </a>
+		        <a class="uk-button uk-button-mini" href="{{ path('pool_linkmotor_anonymizer') ~ '?url=' ~ backlink.page.full }}" target="_blank">
+		            <i class="uk-icon-external-link"></i> {% trans %}Open{% endtrans %}
+		        </a>
+			</h1>
+			<br>
+		</div>
+		{% include 'PoolLinkmotorBundle:Backlink:viewsubnav.html.twig' with {active:'overview'} %}
+
+	</div>
+</div>
+
+<div class="uk-container uk-container-center">
+{% include 'PoolLinkmotorBundle:Backlink:alerts.html.twig' %}
+{# {% include 'PoolLinkmotorBundle:Backlink:breadcrumb.html.twig' %}<br> #}
+
+{% endblock %}
+
+{% block content %}
+<div class="uk-width-1-1">
+    {% include 'PoolLinkmotorBundle:Backlink:info.html.twig' %}
+</div>
+
+<div class="uk-grid">
+    <div class="uk-width-1-2">
+        {% include 'PoolLinkmotorBundle:Backlink:status.html.twig' %}
+    </div>
+    <div class="uk-width-1-2 shortstats">
+        {% include 'PoolLinkmotorBundle:Page:metrics.html.twig' with {page:backlink.page} %}
+        
+        {% if backlink.costType %}
+            <table class="uk-table uk-table-striped">
+                <h3 class="uk-panel-title"><i class="uk-icon-money"></i> {% trans %}Costs{% endtrans %}</h3>
+                <thead>
+                    <tr>
+                        {% if backlink.costType > 0 and backlink.costNote %}
+                        <th></th>
+                        {% endif %}
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        {% if backlink.costType in [1, 2, 3] %}
+                            <td>
+                                {% trans %}Price{% endtrans %}
+                                <br><strong>{{ backlink.price|localeNumber(2) }}</strong> € / {{ backlink.costTypeName|trans }}
+                            </td>
+                        {% endif %}
+
+                        {% if backlink.costType in [4] %}
+                            <td>
+                            {% trans %}Return service{% endtrans %}</dt>
+                            <br>
+                                <strong><abbr title="{{ backlink.costNote }}" data-uk-tooltip>
+                                    {{ backlink.costTypeName|trans }}
+                                </abbr></strong>
+                            </td>
+                        {% endif %}
+
+
+                        {% if backlink.costType > 0 and backlink.costNote %}
+                            <td>
+                            {% trans %}Return service{% endtrans %}</dt>
+                            <br>
+                                <strong><abbr title="{{ backlink.costNote }}" data-uk-tooltip>
+                                    {% trans %}Show{% endtrans %}
+                                </abbr></strong>
+                            </td>
+                        {% endif %}
+                    </tr>
+                </tbody>
+            </table>
+        {% endif %}
+    </div>
+</div>
+</div> {# struktur der divs übergreifend verändert #}
+
+<div class="lm-wrapper">
+    <div class="uk-container uk-container-center">
+        <div class="uk-grid">
+            <div class="uk-width-1-1">
+                <h2>Domain</h2>
+            </div>
+            <div class="uk-width-1-2">
+                {% include 'PoolLinkmotorBundle:Domain:info.html.twig' with {domain:backlink.page.subdomain.domain} %}
+            </div>
+            <div class="uk-width-1-2 shortstats">
+                {% include 'PoolLinkmotorBundle:Subdomain:metrics.html.twig' with {subdomain:backlink.page.subdomain} %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="uk-container uk-container-center">
+    {% include 'PoolLinkmotorBundle:Page:backlinks.html.twig' with {page:backlink.page, headline:'Other backlinks on page', excludeBacklinkId:backlink.id} %}
+    {% include 'PoolLinkmotorBundle:Page:snippetList.html.twig' with {domain:backlink.page.subdomain.domain} %}
+    {% include 'PoolLinkmotorBundle:Subdomain:snippetList.html.twig' with {subdomains:backlink.page.subdomain.domain.subdomains} %}
+
+    {% set otherProjects = [] %}
+    {% set displayedProjects = [project.id] %}
+    {% for subdomain in backlink.page.subdomain.domain.subdomains %}
+        {% for page in subdomain.pages %}
+            {% if page.project.id not in displayedProjects %}
+                {% set displayedProjects = displayedProjects|merge([page.project.id]) %}
+                {% set otherProjects = otherProjects|merge([page.project.name]) %}
+            {% endif %}
+        {% endfor %}
+    {% endfor %}
+    {% if otherProjects %}
+        <h2>{% trans %}Other projects{% endtrans %}</h2>
+        <table class="uk-table uk-table-striped uk-table-hover">
+            <tr>
+                <th>{% trans %}Project{% endtrans %}</th>
+            </tr>
+            {% for otherProjectName in otherProjects %}
+                <tr>
+                    <td>{{ otherProjectName }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <div class="uk-alert uk-alert-warning">{% trans %}Is not present in other projects{% endtrans %}</div>
+    {% endif %}
+</div>
+{% endblock %}

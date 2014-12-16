@@ -1,0 +1,15 @@
+Hi {{ alert.user.displayName }},
+
+{% trans %}the following errors occurred while inspecting your links{% endtrans %}:
+
+Backlink: {{ alert.backlink.url }}
+{% trans %}Target-URL{% endtrans %}: {{ alert.backlink.page.fullForDisplay }}
+
+{% trans %}View alert{% endtrans %}: {{ url('pool_linkmotor_backlinks_view', {id:alert.backlink.id, _locale:locale}) }}
+
+{% trans %}Good luck on fixing those links, we wish you a nice day!{% endtrans %}<br>
+Linkmotor.de
+
+---
+
+{% trans %}Change notification settings{% endtrans %}: {{ url('pool_linkmotor_user_notification_settings', {_locale:locale}) }}

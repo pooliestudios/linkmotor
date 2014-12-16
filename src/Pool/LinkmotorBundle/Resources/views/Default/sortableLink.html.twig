@@ -1,0 +1,1 @@
+<a{% for attr, value in options %}{% if attr == 'class' and value == 'sortable' %}{% set value = 'sortable-link' %}{% endif %} {{ attr }}="{{ value }}"{% endfor %}>{{ title }}</a>

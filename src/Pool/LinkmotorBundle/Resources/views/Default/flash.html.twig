@@ -1,0 +1,19 @@
+{% if app.session.flashbag.peekAll|length > 0 %}
+    {% for type, messages in app.session.flashbag.all %}
+        {% if type == 'success'%}
+            {% set ukType = 'uk-alert-success' %}
+        {% elseif type == 'error' %}
+            {% set ukType = 'uk-alert-danger' %}
+        {% elseif type == 'warning' %}
+            {% set ukType = 'uk-alert-warning' %}
+        {% else %}
+            {% set ukType = '' %}
+        {% endif %}
+        {% for message in messages %}
+            <div class="uk-alert {{ ukType }} uk-animation-slide-top uk-width-1-2 uk-text-center" data-uk-alert>
+                <a href="" class="uk-alert-close uk-close"></a>
+                <p>{{ message|trans|raw }}</p>
+            </div>
+        {% endfor %}
+    {% endfor %}
+{% endif %}

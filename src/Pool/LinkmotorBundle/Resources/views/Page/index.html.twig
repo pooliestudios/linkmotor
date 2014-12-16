@@ -1,0 +1,17 @@
+{% extends 'PoolLinkmotorBundle::layout.html.twig' %}
+
+{% block title %}{% trans %}Pages{% endtrans %} - {% endblock %}
+
+{% block subnav %}
+    {% include 'PoolLinkmotorBundle:Page:subnav.html.twig' with {active:type} %}
+{% endblock %}
+
+{% block content %}
+    {% if accountLimitsOverstepped('prospects') %}
+        {% include 'PoolLinkmotorBundle:Default:limitOverstepped.html.twig' with {which:'prospects'} %}
+    {% elseif accountLimitsReached('prospects') %}
+        {% include 'PoolLinkmotorBundle:Default:limitReached.html.twig' with {which:'prospects'} %}
+    {% endif %}
+
+    {% include 'PoolLinkmotorBundle:Page:list.html.twig' %}
+{% endblock %}

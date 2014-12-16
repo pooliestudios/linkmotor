@@ -1,0 +1,82 @@
+{% extends 'PoolLinkmotorBundle::layout.html.twig' %}
+
+{% block title %}{% trans %}Competitors{% endtrans %} - {% trans %}Explorer{% endtrans %} - {% endblock %}
+
+{% block subnav %}
+    {% include 'PoolLinkmotorAdminBundle:Explorer:subnav.html.twig' with {active:'competitor'} %}
+{% endblock %}
+
+{% block content %}
+    {% if not accountIncludes('competitor-explorer') %}
+        {% include 'PoolLinkmotorBundle:Default:notAvailable.html.twig' %}
+    {% endif %}
+
+    <table class="uk-table uk-table-striped uk-table-hover">
+        <tr>
+            <th>{% trans %}Domain{% endtrans %}</th>
+            <th>DA</th>
+            <th>{% trans %}Pages imported{% endtrans %}</th>
+            <th>{% trans %}Backlinks{% endtrans %}</th>
+            <th>{% trans %}Assign to{% endtrans %}</th>
+            <th>{% trans %}Import limit{% endtrans %}</th>
+            <th>{% trans %}Import interval{% endtrans %}</th>
+            <th>{% trans %}Last import{% endtrans %}</th>
+            <th>{% trans %}Created{% endtrans %}</th>
+            <th></th>
+        </tr>
+        {% for competitor in competitors %}
+            <tr>
+                <td>
+                    <a href="{{ path('pool_linkmotor_explorer_competitor_view', {id:competitor.id}) }}">
+                        {{ competitor.domain.name }}
+                    </a>
+                </td>
+                <td>{{ valueOrSpinner(competitor.domain.authority, 0) }}</td>
+                <td>{{ competitor.pages|length }}</td>
+                <td>
+                    <a href="{{ path('pool_linkmotor_backlinks_index', {type:'all'}) }}?resetFilter&changeDomainFilter={{ competitor.domain.id }}">
+                        {{ competitor.domain.numBacklinks(project)|localeNumber }}
+                    </a>
+                </td>
+                <td>{{ competitor.assignedTo.displayName|default('All users')|trans }}</td>
+                <td>
+                    {% if competitor.importInterval > 0 %}
+                        {{ competitor.importLimit }}
+                    {% else %}
+                        <em>{% trans %}No automatic import{% endtrans %}</em>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if competitor.importInterval > 0 %}
+                        {{ competitor.importInterval }} {% trans %}days{% endtrans %}
+                    {% else %}
+                        <em>{% trans %}No automatic import{% endtrans %}</em>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if competitor.lastImportAt %}
+                        {{ competitor.lastImportAt|date('d.m.Y - H:i') }}
+                    {% else %}
+                        <em>{% trans %}Not yet{% endtrans %}</em>
+                    {% endif %}
+                </td>
+                <td>{{ competitor.createdAt|date('d.m.Y - H:i') }}</td>
+                <td>
+                    <div class="uk-button-group">
+                        <a class="uk-button uk-button-small" href="{{ path('pool_linkmotor_explorer_competitor_edit', {id:competitor.id}) }}">
+                            <i class="uk-icon-edit"></i>
+                        </a>
+                        <a data-uk-tooltip class="uk-button uk-button-small slow" href="{{ path('pool_linkmotor_explorer_competitor_import', {id:competitor.id}) }}" title="{% trans %}Import now{% endtrans %}">
+                            <i class="uk-icon-refresh"></i>
+                        </a>
+                        <a data-uk-tooltip class="uk-button uk-button-small" href="{{ path('pool_linkmotor_explorer_competitor_delete', {id:competitor.id}) }}" title="{% trans %}Delete{% endtrans %}">
+                            <i class="uk-icon-times-circle"></i>
+                        </a>
+                    </div>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+
+    {{ knp_pagination_render(competitors) }}
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends 'PoolLinkmotorBundle::layout.html.twig' %}
+
+{% block subnav %}
+    {% include 'PoolLinkmotorBundle:User:subnav.html.twig' with {active:'settings'} %}
+{% endblock %}
+
+{% block content %}
+    <form class="uk-form uk-form-horizontal" autocomplete="off" action="{{ path('pool_linkmotor_user_settings') }}" method="post">
+
+        {{ form_errors(form) }}
+
+        <fieldset>
+            <legend>{% trans %}Profile{% endtrans %}</legend>
+            {{ form_row(form.name) }}
+            {{ form_row(form.locale) }}
+        </fieldset>
+
+        <fieldset>
+            <legend>Bookmarklet</legend>
+            {% include 'PoolLinkmotorBundle:Bookmarklet:bookmarklet.html.twig' %}
+        </fieldset>
+
+        <fieldset>
+            <legend>{% trans %}Pagination{% endtrans %}</legend>
+            {{ form_row(form.itemsPerPage) }}
+        </fieldset>
+
+        <fieldset>
+            <legend>
+                {% trans %}Navigation{% endtrans %}
+                <span class="uk-text-small uk-text-muted">{% trans %}Default tabs{% endtrans %}</span>
+            </legend>
+            {{ form_rest(form) }}
+        </fieldset>
+
+        <button type="submit" class="uk-button uk-button-primary">{% trans %}Save{% endtrans %}</button>
+        <a class="uk-button-small uk-button-link lmcancelbutton" href="{{ path('pool_linkmotor_index') }}">{% trans %}Cancel{% endtrans %}</a>
+    </form>
+{% endblock %}

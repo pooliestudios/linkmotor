@@ -1,0 +1,15 @@
+<ul class="uk-subnav uk-subnav-pill filter">
+    <li>
+        <form class="uk-search autosubmit {% if filter['keywordVendor'] %} used-filter{% endif %}" action="" method="get" data-uk-search>
+            <input class="uk-search-field" name="changeKeywordVendorFilter" type="search" placeholder="{% trans %}Search for Company, URL or Email{% endtrans %}..." value="{{ filter['keywordVendor']|default('') }}">
+            <button class="uk-search-close" type="reset"></button>
+        </form>
+    </li>
+    {% if filter['keywordVendor'] %}
+        <li>
+            <a class="uk-button uk-button-danger uk-button-small" href="?changeKeywordVendorFilter">
+                <i class="uk-icon-times-circle"></i> {% trans %}Reset{% endtrans %}
+            </a>
+        </li>
+    {% endif %}
+</ul>

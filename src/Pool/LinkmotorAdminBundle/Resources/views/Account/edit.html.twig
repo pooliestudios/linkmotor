@@ -1,0 +1,93 @@
+{% extends 'PoolLinkmotorBundle::layout.html.twig' %}
+
+{% block subnav %}
+    {% include 'PoolLinkmotorAdminBundle:Default:subnav.html.twig' with {active:'account'} %}
+{% endblock %}
+
+{% block content %}
+    {% if accountLimitsOverstepped() %}
+        {% include 'PoolLinkmotorBundle:Default:limitOverstepped.html.twig' with {showLink:false} %}
+    {% elseif accountLimitsReached() %}
+        {% include 'PoolLinkmotorBundle:Default:limitReached.html.twig' with {showLink:false} %}
+    {% endif %}
+
+    <form id="form-account-type" class="uk-form uk-form-horizontal slow" action="{{ path('pool_linkmotor_admin_account_edit') }}" method="post">
+
+        {{ form_errors(form) }}
+
+        <fieldset>
+            <legend>{% trans %}Account Type{% endtrans %}</legend>
+            <div class="uk-alert">
+                {% if accountOptions('pro_account_until') %}
+                    {% if accountOptions('account_type') == 0 %}
+                        {% trans with {'%proAccountActiveUntil%':proAccountActiveUntil()|localeDate} %}Your pro account is valid until <strong>%proAccountActiveUntil%</strong>. You can renew your pro account at any time.{% endtrans %}
+                    {% else %}
+                        {% trans with {'%proAccountActiveUntil%':proAccountActiveUntil()|localeDate} %}Your pro account is valid until <strong>%proAccountActiveUntil%</strong> and then <strong>renews for another 30 days</strong> if you do not switch to the free account type.{% endtrans %}
+                    {% endif %}
+                {% else %}
+                    {% trans %}You are currently using the free account type.{% endtrans %}
+                {% endif %}
+            </div>
+            <div class="uk-form-row">
+                <label class="required uk-form-label">
+                    {% trans %}Account Type{% endtrans %}
+                </label>
+                <div class="uk-form-controls">
+                    <div id="admin_account_account_type">
+                        <div class="uk-form-controls-text">
+                            <input type="radio" id="admin_account_account_type_0" name="admin_account[account_type]" required="required" value="0"{% if form.vars.value.account_type is not defined or form.vars.value.account_type == 0 %} checked="checked"{% endif %} />
+                            <label for="admin_account_account_type_0" class="required uk-form-label">
+                                {% if accountOptions('self_hosted') == 1 %}
+                                    {% trans %}Basic - Unlimited Users and Projects; No Explorer{% endtrans %}
+                                {% else %}
+                                    {% trans %}Basic - 1 User, 1 Project; No Explorer{% endtrans %}
+                                {% endif %}
+                            </label>
+                        </div>
+                        <br>
+                        <div class="uk-form-controls-text">
+                            <input type="radio" id="admin_account_account_type_1" name="admin_account[account_type]" required="required" value="1"{% if form.vars.value.account_type is defined and form.vars.value.account_type == 1 %} checked="checked"{% endif %} />
+                            <label for="admin_account_account_type_1" class="required uk-form-label">
+                                {% trans %}Pro - Unlimited Users, Unlimited Projects; Full access to Explorer{% endtrans %}
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+
+        <div id="account-invoice-address">
+            {% if form.invoice_company is defined %}
+                <fieldset>
+                    <legend>{% trans %}Invoice address{% endtrans %}</legend>
+                    {{ form_row(form.invoice_company) }}
+                    {{ form_row(form.invoice_tax_id) }}
+                    {{ form_row(form.invoice_name) }}
+                    {{ form_row(form.invoice_address) }}
+                    {{ form_row(form.invoice_zipcode) }}
+                    {{ form_row(form.invoice_city) }}
+                    {{ form_row(form.invoice_country) }}
+                    {{ form_row(form.invoice_email) }}
+                </fieldset>
+            {% endif %}
+            {% if accountOptions('account_type') == 0 %}
+                <div class="uk-alert">
+                    {% trans with {'%proAccountActiveUntil%':proAccountActiveUntil()|localeDate} %}If you order now, the pro account will be active until <strong>%proAccountActiveUntil%</strong> and then <strong>renew for another 30 days</strong> if you do not switch back to the free account type.{% endtrans %}
+                </div>
+                <button type="submit" class="uk-button uk-button-primary">{% trans %}Order now{% endtrans %}</button>
+            {% endif %}
+        </div>
+
+        {{ form_row(form._token) }}
+
+        {% if accountOptions('account_type') == 1 %}
+            <button type="submit" class="account-save uk-button uk-button-danger">
+                {% trans %}Cancel Pro-Account{% endtrans %}
+            </button>
+        {% else %}
+            <button type="submit" class="account-save uk-button uk-button-primary">
+                {% trans %}Save{% endtrans %}
+            </button>
+        {% endif %}
+    </form>
+{% endblock %}

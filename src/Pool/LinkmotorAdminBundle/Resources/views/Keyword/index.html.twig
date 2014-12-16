@@ -1,0 +1,72 @@
+{% extends 'PoolLinkmotorBundle::layout.html.twig' %}
+
+{% block title %}{% trans %}Keywords{% endtrans %} - {% trans %}Explorer{% endtrans %} - {% endblock %}
+
+{% block subnav %}
+    {% include 'PoolLinkmotorAdminBundle:Explorer:subnav.html.twig' with {active:'keyword'} %}
+{% endblock %}
+
+{% block content %}
+    {% if not accountIncludes('keyword-explorer') %}
+        {% include 'PoolLinkmotorBundle:Default:notAvailable.html.twig' %}
+    {% endif %}
+
+    <table class="uk-table uk-table-striped uk-table-hover scrollable">
+        <tr>
+            <th>{% trans %}Keyword{% endtrans %}</th>
+            <th>{% trans %}Market{% endtrans %}</th>
+            <th>{% trans %}Pages imported{% endtrans %}</th>
+            <th>{% trans %}Assign to{% endtrans %}</th>
+            <th><abbr title="{% trans %}Search Engine Results Page{% endtrans %}" data-uk-tooltip>SERP</abbr> Position</th>
+            <th>{% trans %}Scheduled imports{% endtrans %}</th>
+            <th>{% trans %}Last import{% endtrans %}</th>
+            <th>{% trans %}Created{% endtrans %}</th>
+            <th></th>
+        </tr>
+        {% for keyword in keywords %}
+            <tr>
+                <td>
+                    <a href="{{ path('pool_linkmotor_explorer_keyword_view', {id:keyword.id}) }}">
+                        {{ keyword.keyword }}
+                    </a>
+                </td>
+                <td>{{ keyword.market.name(app.request.locale) }}</td>
+                <td><div class="uk-badge uk-badge-success">{{ keyword.pages|length|localeNumber }}</div></td>
+                <td>{{ keyword.assignedTo.displayName|default('All users')|trans }}</td>
+                <td>
+                    Top {{ keyword.importLimit }}
+                </td>
+                <td>
+                    {% if keyword.importInterval > 0 %}
+                        {{ keyword.importInterval }} {% trans %}days{% endtrans %}
+                    {% else %}
+                        <em>{% trans %}No scheduled import{% endtrans %}</em>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if keyword.lastImportAt %}
+                        {{ keyword.lastImportAt|date('d.m.Y - H:i') }}
+                    {% else %}
+                        <em>{% trans %}Not yet{% endtrans %}</em>
+                    {% endif %}
+                </td>
+                <td>{{ keyword.createdAt|date('d.m.Y - H:i') }}</td>
+                <td>
+                    <div class="uk-button-group">
+                        <a class="uk-button uk-button-small" href="{{ path('pool_linkmotor_explorer_keyword_edit', {id:keyword.id}) }}">
+                            <i class="uk-icon-edit"></i>
+                        </a>
+                        <a data-uk-tooltip class="uk-button uk-button-small slow" href="{{ path('pool_linkmotor_explorer_keyword_import', {id:keyword.id}) }}" title="{% trans %}Import now{% endtrans %}">
+                            <i class="uk-icon-refresh"></i>
+                        </a>
+						<a data-uk-tooltip class="uk-button uk-button-small" href="{{ path('pool_linkmotor_explorer_keyword_delete', {id:keyword.id}) }}" title="{% trans %}Delete{% endtrans %}">
+                            <i class="uk-icon-times-circle"></i>
+                        </a>
+                    </div>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+
+    {{ knp_pagination_render(keywords) }}
+{% endblock %}

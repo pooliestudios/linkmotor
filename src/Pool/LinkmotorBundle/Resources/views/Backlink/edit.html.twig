@@ -1,0 +1,59 @@
+{% extends 'PoolLinkmotorBundle::layout.html.twig' %}
+
+{% block title %}{% trans %}Edit{% endtrans %} - {% trans %}Backlinks{% endtrans %} - {% endblock %}
+
+{% block content %}
+
+    {% include 'PoolLinkmotorBundle:Backlink:viewsubnav.html.twig' with {active:'edit'} %}
+
+    {% if not loggedInUserMayEdit %}
+        <div class="uk-alert uk-alert-warning">
+            {% trans %}warning.loggedInUserMayNotEdit{% endtrans %}
+        </div>
+    {% elseif backlink.assignedTo != app.user %}
+        <div class="uk-alert uk-alert-warning">
+            {% trans %}warning.loggedInUserMayNotEdit.adminOverride{% endtrans %}
+        </div>
+    {% endif %}
+
+    <form class="uk-form uk-form-horizontal" action="{{ path('pool_linkmotor_backlinks_edit', {id:backlink.id}) }}#edit" method="post" {{ form_enctype(form) }}>
+        {{ form_errors(form) }}
+
+        <fieldset>
+            {{ form_row(form.assignedTo) }}
+            {% if loggedInUserMayEdit %}
+                {{ form_row(form.url) }}
+                {{ form_row(form.isOffline) }}
+                {{ form_row(form.crawlType) }}
+				<hr>
+                <div class="uk-form-row crawltype-container-dom{% if backlink.crawlType == 'text' %} hidden{% endif %}">
+                    {{ form_row(form.type) }}
+                    {{ form_row(form.anchor) }}
+					<hr>
+                    {{ form_row(form.follow) }}
+                    {{ form_row(form.ignorePosition) }}
+                </div>
+
+                {{ form_row(form.statusCode) }}
+                {{ form_row(form.metaIndex) }}
+                {{ form_row(form.metaFollow) }}
+                {{ form_row(form.xRobotsIndex) }}
+                {{ form_row(form.xRobotsFollow) }}
+                {{ form_row(form.robotsGoogle) }}
+				<hr>
+                {{ form_row(form.costType) }}
+                <div id="backlink-cost-type-money" class="uk-form-row">
+                    {{ form_row(form.price) }}
+                </div>
+                <div id="backlink-cost-type-other" class="uk-form-row">
+                    {{ form_row(form.costNote) }}
+                </div>
+            {% endif %}
+
+            {{ form_rest(form) }}
+        </fieldset>
+
+        <input class="uk-button uk-button-large uk-button-primary" type="submit" value="{% trans %}Save{% endtrans %}" />
+    </form>
+
+{% endblock %}

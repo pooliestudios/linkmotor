@@ -1,0 +1,43 @@
+<ul class="uk-tab">
+    <li{% if active == 'overview' %} class="uk-active"{% endif %}>
+        <a href="{{ path('pool_linkmotor_pages_view', {id:page.id}) }}">
+            {% trans %}Details{% endtrans %}
+        </a>
+    </li>
+    <li data-uk-dropdown{% if active == 'add-backlink' or active == 'search-backlinks' %} class="uk-active"{% endif %}>
+        <a href="#"><i class="uk-icon-plus"></i> {% trans %}Add backlink{% endtrans %}</a>
+        <div class="uk-dropdown uk-dropdown-small">
+            <ul class="uk-nav uk-nav-dropdown">
+                <li>
+                    <a class="slow" href="{{ path('pool_linkmotor_pages_search_backlinks', {id:page.id}) }}">
+                        <i class="uk-icon-search"></i> {% trans %}Automatically{% endtrans %}
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ path('pool_linkmotor_backlinks_add_for_page', {id:page.id}) }}">
+                        <i class="uk-icon-link"></i> {% trans %}Manually{% endtrans %}
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </li>
+    <li{% if active == 'notes' %} class="uk-active"{% endif %}>
+        <a href="{{ path('pool_linkmotor_pages_notes', {id:page.id}) }}">
+            <i class="uk-icon-comments"></i>
+            {% trans %}Notes{% endtrans %}
+        </a>
+    </li>
+    <li{% if active == 'changelog' %} class="uk-active"{% endif %}>
+        <a href="{{ path('pool_linkmotor_pages_changelog', {id:page.id}) }}">
+            {% trans %}Change log{% endtrans %}
+        </a>
+    </li>
+    {% if is_granted('ROLE_ADMIN') %}
+        <li{% if active == 'delete' %} class="uk-active"{% endif %}>
+            <a href="{{ path('pool_linkmotor_pages_delete', {id:page.id}) }}">
+                <i class="uk-icon-remove"></i>
+                {% trans %}Delete{% endtrans %}
+            </a>
+        </li>
+    {% endif %}
+</ul>

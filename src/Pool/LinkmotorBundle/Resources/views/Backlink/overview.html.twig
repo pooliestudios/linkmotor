@@ -1,0 +1,22 @@
+<dl class="uk-description-list uk-description-list-horizontal">
+    
+    <dt>{% trans %}Crawl type{% endtrans %}</dt>
+    <dd>{{ backlink.crawlTypeName|trans }}</dd>
+
+    {% if backlink.crawlType == 'dom' %}
+
+        <dt>{% trans %}Ignore position{% endtrans %}</dt>
+        <dd>{{ backlink.ignorePosition ? 'Yes'|trans : 'No'|trans }}</dd>
+
+        <dt>{% trans %}Position{% endtrans %}</dt>
+        <dd>
+            {{ backlink.xPath|default('-') }}
+            {% if not backlink.xPathOk and not backlink.isOffline%}
+                <a class="uk-button uk-button-mini slow" href="{{ path('pool_linkmotor_backlinks_refresh_xpath', {id:backlink.id}) }}">
+                    <i class="uk-icon-refresh"></i> {% trans %}Retrieve from page{% endtrans %}
+                </a>
+            {% endif %}
+        </dd>
+    {% endif %}
+
+</dl>

@@ -1,0 +1,30 @@
+{% extends 'PoolLinkmotorBundle::layout.html.twig' %}
+
+{% block title %}{% trans %}Notes{% endtrans %} - {% trans %}Pages{% endtrans %} - {% endblock %}
+
+{% block content %}
+
+    {% include 'PoolLinkmotorBundle:Page:viewsubnav.html.twig' with {active:'notes'} %}
+
+    <ul class="uk-comment-list">
+        {% for note in page.notes %}
+            <article class="uk-comment">
+                <header class="uk-comment-header">
+                    <div class="uk-comment-meta">
+                        {% trans with {'%name%':note.user.displayName, '%created%':note.createdAt|date('d.m.Y, H:i')} %}Written by %name% on %created%{% endtrans %}
+                    </div>
+                </header>
+                <div class="uk-comment-body">{{ note.content|nl2br|raw }}</div>
+            </article>
+        {% endfor %}
+    </ul>
+    <form class="uk-form" action="{{ path('pool_linkmotor_pages_notes', {id:page.id}) }}" method="post" {{ form_enctype(form) }}>
+        {{ form_errors(form) }}
+
+        <fieldset>
+            {{ form_rest(form) }}
+        </fieldset>
+
+        <input class="uk-button uk-button-primary" type="submit" value="{% trans %}Add note{% endtrans %}" />
+    </form>
+{% endblock %}

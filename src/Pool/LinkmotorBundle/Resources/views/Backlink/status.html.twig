@@ -1,0 +1,26 @@
+{% import 'PoolLinkmotorBundle:Backlink:macrosStatus.html.twig' as macrosStatus %}
+
+<table class="uk-table uk-table-striped">
+    <h3 class="uk-panel-title"><i class="uk-icon-code"></i> Details</h3>
+    <thead>
+        <tr>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {{ macrosStatus.statusRow(backlink, 'Statuscode', 'statusCode', '-', '-', 'danger') }}
+        {% if backlink.crawlType == 'dom' %}
+            {{ macrosStatus.statusRow(backlink, 'Follow', 'follow', 'follow', 'no-follow', 'danger') }}
+        {% endif %}
+        {% if not backlink.ignorePosition %}
+            {{ macrosStatus.statusRow(backlink, 'Position', 'xPath', '-', '-', 'warning') }}
+        {% endif %}
+        {{ macrosStatus.statusRow(backlink, 'Meta-Index', 'metaIndex', 'index', 'noindex', 'danger') }}
+        {{ macrosStatus.statusRow(backlink, 'Meta-Follow', 'metaFollow', 'follow', 'no-follow', 'danger') }}
+        {{ macrosStatus.statusRow(backlink, 'X-Robots-Index', 'xRobotsIndex', 'index', 'noindex', 'danger') }}
+        {{ macrosStatus.statusRow(backlink, 'X-Robots-Follow', 'xRobotsFollow', 'follow', 'no-follow', 'danger') }}
+        {{ macrosStatus.statusRow(backlink, 'robots.txt', 'robotsGoogle', 'allow', 'disallow', 'danger') }}
+    </tbody>
+</table>

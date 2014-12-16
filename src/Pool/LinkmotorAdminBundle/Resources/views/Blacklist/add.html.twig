@@ -1,0 +1,19 @@
+{% extends 'PoolLinkmotorBundle::layout.html.twig' %}
+
+{% block title %}{% trans %}Add a domain to the blacklist{% endtrans %} - {% endblock %}
+
+{% block content %}
+    <form class="uk-form uk-form-horizontal slow" action="{{ path('pool_linkmotor_explorer_blacklist_add') }}" method="post" {{ form_enctype(form) }}>
+        {{ form_errors(form) }}
+
+        <fieldset>
+            <legend>{% trans %}Add a domain to the blacklist{% endtrans %}</legend>
+            {{ form_rest(form) }}
+        </fieldset>
+
+        <input class="uk-button uk-button-primary" type="submit" value="{% trans %}Create{% endtrans %}" />
+        <a class="uk-button-small uk-button-link lmcancelbutton" href="{{ path('pool_linkmotor_explorer_blacklist_index') }}">
+            {% trans %}Cancel{% endtrans %}
+        </a>
+    </form>
+{% endblock %}

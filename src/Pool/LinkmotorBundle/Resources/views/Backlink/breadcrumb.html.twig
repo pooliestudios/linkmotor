@@ -1,0 +1,21 @@
+{% if backlink.assignedTo == app.user and backlink.alerts|length > 0 %}
+    {% set active = 'my-alerts' %}
+    {% set label = 'My alerts'|trans %}
+{% else %}
+    {% set active = 'all' %}
+    {% set label = 'All backlinks'|trans %}
+{% endif %}
+<div class="uk-panel">
+    <ul class="uk-breadcrumb">
+        <li>
+            <a href="{{ path('pool_linkmotor_project_dashboard', {id:backlink.project.id}) }}">
+                {{ backlink.project.name }}
+            </a>
+        </li>
+        <li>
+            <a href="{{ path('pool_linkmotor_backlinks_index', {type:active}) }}">
+                {{ label }}
+            </a>
+        </li>
+    </ul>
+</div>

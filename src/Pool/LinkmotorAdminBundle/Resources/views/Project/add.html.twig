@@ -1,0 +1,46 @@
+{% extends 'PoolLinkmotorBundle::layout.html.twig' %}
+
+{% block title %}{% trans %}Add project{% endtrans %} - {% endblock %}
+
+{% block navigation %}{% endblock %}
+
+{% block content %}
+<br>
+<br>
+    <div class="uk-grid uk-grid-preserve">
+        <div class="uk-width-2-3">
+            <form class="uk-form uk-form-horizontal slow" action="{{ path('pool_linkmotor_admin_projects_add') }}" method="post" {{ form_enctype(form) }}>
+                {{ form_errors(form) }}
+
+                <fieldset>
+                    <legend><h1>{% trans %}Add project{% endtrans %}</h1></legend>
+                    <span>
+                    <strong>{{ form_row(form.domainOrSubdomain, {attr:{placeholder:'Domain (example.com) or Subdomain (www.example.com)'|trans} }) }}</strong>
+                    <p class="uk-text-muted">{% trans %}text.project.add.domain{% endtrans %}</p>
+                </fieldset>
+				<br>
+                <fieldset>
+                    <legend>{% trans %}Competitor{% endtrans %} <small class="uk-text-muted">({% trans %}optional{% endtrans %})</small></legend>
+                    {{ form_row(form.competitorDomain, {attr:{placeholder:'Domain (example.com)'|trans} }) }}
+                    <p class="uk-text-muted">{% trans %}text.project.add.competitor{% endtrans %}</p>
+                </fieldset>
+				<br>
+                <fieldset>
+                    <legend>{% trans %}Keywords{% endtrans %} <small class="uk-text-muted">({% trans %}optional{% endtrans %})</small></legend>
+                    {% trans %}Please chose the keywords you would like to rank for:{% endtrans %}
+                    {{ form_row(form.keyword1) }}
+                    {{ form_row(form.keyword2) }}
+                    {{ form_row(form.keyword3) }}
+					<p class="uk-text-muted">{% trans %}text.project.add.keywords{% endtrans %}</p>
+					<p class="uk-text-muted">{% trans %}<strong>Expert?</strong> Give more gas and use search operators.{% endtrans %}<br>{% trans %}Example: <code>Shoes online</code> or <code>"Shoes online"</code> or <code>Shoes online +forum</code>{% endtrans %}</p>
+
+                </fieldset>
+
+                {{ form_rest(form) }}
+<br>
+                <input class="uk-button uk-button-primary uk-button-large" type="submit" value="{% trans %}Start the engine{% endtrans %}" />
+                <a class="uk-button-small uk-button-link lmcancelbutton" href="{{ path('pool_linkmotor_admin_projects_index') }}">{% trans %}Cancel{% endtrans %}</a>
+            </form>
+        </div>
+    </div>
+{% endblock %}

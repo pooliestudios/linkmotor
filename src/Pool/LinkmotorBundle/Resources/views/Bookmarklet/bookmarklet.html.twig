@@ -1,0 +1,6 @@
+<p class="uk-text-muted">{% trans %}Save this bookmarklet in your browsers bookmarks to save a prospect or backlink directly on a site.{% endtrans %}</p>
+<br>
+    <a class="uk-button" href="javascript:(function(){window.open('{{ url('pool_linkmotor_bookmarklet') }}?url='+encodeURIComponent(location.href));})();">
+        + Linkmotor
+    </a>
+<small style="margin-left:15px;"><i class="uk-icon-arrow-left"></i> {% trans %}Drag this to your browsers bookmarks.{% endtrans %}</small>

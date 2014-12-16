@@ -1,0 +1,35 @@
+{% extends 'PoolLinkmotorBundle::layout.html.twig' %}
+
+{% block title %}{% trans %}Add a new keyword{% endtrans %} - {% endblock %}
+
+{% block content %}
+    <form class="uk-form uk-form-horizontal slow" action="{{ path('pool_linkmotor_explorer_keyword_add') }}" method="post" {{ form_enctype(form) }}>
+        {{ form_errors(form) }}
+
+        <fieldset>
+            <legend>{% trans %}Add a new keyword{% endtrans %}</legend>
+            {{ form_row(form.keyword) }}
+            <div class="uk-form-controls uk-text-small uk-text-muted">
+				<p style="margin-top: 5px;">{% trans %}<strong>Advice!</strong> Try different combinations and search operators.{% endtrans %}<br>{% trans %}Example: <code>Shoes online</code> or <code>"Shoes online"</code> or <code>Shoes online +forum</code>{% endtrans %}
+				</p>
+            </div>
+            {{ form_row(form.market) }}
+            {{ form_row(form.importLimit) }}
+            <div class="uk-form-controls uk-text-muted uk-text-small">
+                <p style="margin-top: 5px;">
+                    {{ 'form.explorer.keyword.importLimit.help'|trans }}
+                </p>
+            </div>
+            {{ form_row(form.importInterval) }}
+            {{ form_row(form.assignedTo) }}
+            {{ form_rest(form) }}
+
+            {{ form_rest(form) }}
+        </fieldset>
+
+        <input class="uk-button uk-button-primary uk-button-large" type="submit" value="{% trans %}Create{% endtrans %}" />
+        <a class="uk-button-small uk-button-link lmcancelbutton" href="{{ path('pool_linkmotor_explorer_keyword_index') }}">
+            {% trans %}Cancel{% endtrans %}
+        </a>
+    </form>
+{% endblock %}

@@ -1,0 +1,104 @@
+<div id="meta" class="uk-navbar-flip">
+    <ul class="uk-subnav uk-subnav-line">
+        {% if not accountOptions('self_hosted') %}
+            <li>
+                <a href="{{ path('pool_linkmotor_pricing') }}">
+                    <strong>{% trans %}Pricing &amp; Beta Phase{% endtrans %}</strong>
+                </a>
+            </li>
+        {% endif %}
+        {% if is_granted('ROLE_ADMIN') %}
+            <li{% if '_admin_' in route %} class="uk-active"{% endif %}>
+                <a href="{{ path('pool_linkmotor_admin_projects_index') }}">{% trans %}Administration{% endtrans %}</a>
+            </li>
+        {% endif %}
+        <li class="{% if '_user_' in route %}uk-active {% endif %}uk-parent" data-uk-dropdown="{mode:'click'}">
+            <a href="#">
+                {{ app.user.displayName }}
+                <i class="uk-icon-caret-down"></i>
+            </a>
+            <div class="uk-dropdown uk-dropdown-navbar">
+                <ul class="uk-nav uk-nav-navbar">
+                    <li>
+                        <a href="{{ path('pool_linkmotor_user_settings') }}">
+                            {% trans %}Settings{% endtrans %}
+                        </a>
+                    </li>
+					<li>
+				        <a href="{{ path('pool_linkmotor_user_change_password') }}">
+				            {% trans %}Change your password{% endtrans %}
+				        </a>
+                    </li>
+					<li>
+				        <a href="{{ path('pool_linkmotor_user_notification_settings') }}">
+				            {% trans %}Notifications{% endtrans %}
+				        </a>
+                    </li>
+                    <li class="uk-nav-divider"></li>
+                    <li>
+                        <a href="{{ path('logout') }}">
+                            {% trans %}Logout{% endtrans %}
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+        
+		<li>
+			<a href="#feedback" data-uk-modal>{% trans %}Feedback / Help{% endtrans %}</a>
+		</li>
+    </ul>
+</div>
+
+<div id="logo">
+    <a href="{{ path('pool_linkmotor_index') }}">
+        <img src="{{ asset('bundles/poollinkmotor/img/logo.png') }}" width="100" class="logo" alt="Linkmotor">
+    </a>
+    <div class="beta">
+    {% if projects %}
+    <ul class="uk-subnav uk-subnav-line">
+        <li class="uk-parent" data-uk-dropdown="{mode:'click'}">
+            <a href="#">
+                <strong>{{ app.session.get('selectedProjectName')|default('<em>------</em>')|raw }}</strong>
+                <i class="uk-icon-caret-down"></i>
+            </a>
+            <div class="uk-dropdown uk-dropdown-navbar">
+                <ul class="uk-nav uk-nav-navbar">
+                    {% for project in projects %}
+                        <li>
+                            {% set isLimited = false %}
+                            {% if limitedProjects %}
+                                {% set isLimited = true %}
+                                {% for limitedProject in limitedProjects %}
+                                    {% if limitedProject.id == project.id %}
+                                        {% set isLimited = false %}
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}
+                            {% if isLimited %}
+                                <a href="{{ path('pool_linkmotor_select_project', {id:project.id}) }}">
+                                    <i class="uk-icon-warning"></i>
+                                    <span class="uk-text-muted">{{ project.name }}</span>
+                                </a>
+                            {% else %}
+                                <a href="{{ path('pool_linkmotor_select_project', {id:project.id}) }}">
+                                    <img src="//www.google.com/s2/favicons?domain={{ project.name }}" width="16" height="16"> {{ project.name }}
+                                </a>
+                            {% endif %}
+                        </li>
+                    {% endfor %}
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <li class="uk-nav-divider"></li>
+                        <li>
+                            <a href="{{ path('pool_linkmotor_admin_projects_add') }}">
+                                <i class="uk-icon-plus"></i> {% trans %}Add project{% endtrans %}
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </li>
+    </ul>
+    {% endif %}
+    </div>
+</div>

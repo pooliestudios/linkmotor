@@ -1,0 +1,15 @@
+{% extends 'PoolLinkmotorBundle::layout.html.twig' %}
+
+{% block title %}{% trans %}Delete{% endtrans %} - {% trans %}Backlinks{% endtrans %} - {% endblock %}
+
+{% block content %}
+    {% include 'PoolLinkmotorBundle:Backlink:viewsubnav.html.twig' with {active:'delete'} %}
+
+    <form class="uk-form uk-form-horizontal" action="{{ path('pool_linkmotor_backlinks_delete', {id:backlink.id}) }}" method="post">
+        <fieldset class="uk-alert-danger uk-alert-large">
+            <h2>{% trans %}Are you sure?{% endtrans %}</h2>
+            <p>{% trans %}Deleting this backlink cannot be undone!{% endtrans %}</p>
+        </fieldset>
+        <input class="uk-button uk-button-danger" type="submit" value="{% trans %}Delete{% endtrans %}" />
+    </form>
+{% endblock %}

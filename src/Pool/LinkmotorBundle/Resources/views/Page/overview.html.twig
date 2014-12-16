@@ -1,0 +1,111 @@
+<h1>
+    <a href="{{ path('pool_linkmotor_anonymizer') ~ '?url=' ~ page.full }}" target="_blank">
+    {{ page.fullForDisplay }}
+    </a>
+    <a class="uk-button uk-button-mini" href="{{ path('pool_linkmotor_anonymizer') ~ '?url=' ~ page.full }}" target="_blank">
+        <i class="uk-icon-external-link"></i> {% trans %}Open{% endtrans %}
+    </a>
+</h1>
+
+{% if not loggedInUserMayEdit %}
+    <div class="uk-alert uk-alert-warning">
+        {% trans %}warning.loggedInUserMayNotEdit{% endtrans %}
+    </div>
+{% elseif page.assignedTo != app.user %}
+    <div class="uk-alert uk-alert-warning">
+        {% trans %}warning.loggedInUserMayNotEdit.adminOverride{% endtrans %}
+    </div>
+{% endif %}
+
+<div class="uk-grid">
+    <div class="uk-width-1-2">
+        <form class="uk-form uk-form-horizontal" action="{{ path('pool_linkmotor_pages_view', {id:page.id}) }}" method="post" {{ form_enctype(form) }}>
+            {{ form_errors(form) }}
+            <table class="uk-table uk-table-striped">
+                <h3 class="uk-panel-title"><i class="uk-icon-link"></i> Kandidateninfos</h3>
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="uk-width-custom" style="width: 150px;">{% trans %}Assigned to{% endtrans %}</td>
+                        <td class="uk-text-bold">
+                            {{ form_widget(form.assignedTo) }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="uk-width-custom" style="width: 150px;">{% trans %}Status{% endtrans %}</td>
+                        <td class="uk-text-bold">
+                            {% if form.status is defined %}
+                                {{ form_widget(form.status) }}
+                            {% else %}
+                                {{ page.status.name|trans }}
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="uk-width-custom" style="width: 150px;">{% trans %}Last modified{% endtrans %}</td>
+                        <td class="uk-text-bold">{{ page.lastModifiedAt|localeDate('dt') }}</td>
+                    </tr>
+                    <tr>
+                        <td class="uk-width-custom" style="width: 150px;">{% trans %}Domain{% endtrans %}</td>
+                        <td class="uk-text-bold"> <a href="{{ path('pool_linkmotor_domains_view', {id:page.subdomain.domain.id}) }}">
+                            {{ page.subdomain.domain.nameForDisplay }}</a>
+                        </td>
+                    </tr>
+                    {% if page.sourceCompetitor %}
+                        <tr>
+                            <td class="uk-width-custom" style="width: 150px;">{% trans %}Source{% endtrans %}</td>
+                            <td class="uk-text-bold">  {% trans %}Explorer{% endtrans %} / {% trans %}Competitor{% endtrans %}:
+                                <a href="{{ path('pool_linkmotor_explorer_competitor_view', {id:page.sourceCompetitor.id}) }}">
+                                    {{ page.sourceCompetitor.domain.name }}
+                                </a>
+                            </td>
+                        </tr>
+                    {% endif %}
+                    {% if page.sourceKeyword %}
+                        <tr>
+                            <td class="uk-width-custom" style="width: 150px;">{% trans %}Source{% endtrans %}</td>
+                            <td class="uk-text-bold">
+                            {% trans %}Explorer{% endtrans %} / {% trans %}Keyword{% endtrans %}:
+                                <a href="{{ path('pool_linkmotor_explorer_keyword_view', {id:page.sourceKeyword.id}) }}">
+                                    {{ page.sourceKeyword.keyword }}
+                                </a>
+                            </td>
+                        </tr>
+                    {% endif %}
+                    <tr>
+                        <td class="uk-width-custom" style="width: 150px;">{% trans %}Vendor{% endtrans %}</td>
+                        <td class="uk-text-bold">
+                            {% if page.subdomain.vendor %}
+                                <a class="uk-text-muted" href="{{ path('pool_linkmotor_vendors_view', {id:page.subdomain.vendor.id}) }}"
+                                   data-uk-tooltip="{pos:'bottom'}" title="Subdomain-{% trans %}Vendor{% endtrans %}"
+                                        >
+                                    {{ page.subdomain.vendor.displayName }}
+                                </a>
+                            {% elseif page.subdomain.domain.vendor %}
+                                <a href="{{ path('pool_linkmotor_vendors_view', {id:page.subdomain.domain.vendor.id}) }}">
+                                    {{ page.subdomain.domain.vendor.displayName }}
+                                </a>
+                            {% else %}
+                                <a class="uk-button uk-button-mini slow" href="{{ path('pool_linkmotor_domains_set_vendor', {id:page.subdomain.domain.id}) }}">
+                                    {% trans %}Search vendor{% endtrans %}
+                                </a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            {{ form_row(form._token) }}
+            <input class="uk-button uk-button-primary" type="submit" value="{% trans %}Save{% endtrans %}" />
+        </form>
+    </div>
+    
+    <div class="uk-width-1-2 shortstats">
+        {% include 'PoolLinkmotorBundle:Page:metrics.html.twig' %}
+        {% include 'PoolLinkmotorBundle:Subdomain:metrics.html.twig' with {subdomain:page.subdomain} %}
+    </div>
+</div>

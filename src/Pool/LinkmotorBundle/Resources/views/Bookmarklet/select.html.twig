@@ -1,0 +1,23 @@
+{% extends 'PoolLinkmotorBundle::layout.html.twig' %}
+
+{% block subnav %}
+    <div class="uk-panel uk-panel-box uk-margin-bottom">
+        <ul class="uk-breadcrumb">
+            <li class="uk-active">
+                <span>Bookmarklet</span>
+            </li>
+        </ul>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <form class="uk-form uk-form-horizontal slow" action="{{ path('pool_linkmotor_bookmarklet') }}" method="post" {{ form_enctype(form) }}>
+        {{ form_errors(form) }}
+
+        <fieldset>
+            {{ form_rest(form) }}
+        </fieldset>
+
+        <input class="uk-button uk-button-primary" type="submit" value="{% trans %}Next{% endtrans %} &raquo;" />
+    </form>
+{% endblock %}

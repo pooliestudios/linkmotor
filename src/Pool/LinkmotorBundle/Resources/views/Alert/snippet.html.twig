@@ -1,0 +1,87 @@
+{% macro badge(label, value, failType) %}
+    {% if value %}
+        <div class="uk-badge uk-badge-success">
+    {% else %}
+        <div class="uk-badge uk-badge-{{ failType|default('danger') }}">
+    {% endif %}
+        {{ label|trans }}
+    </div>
+{% endmacro %}
+{% if showActionLinks is not defined %}
+    {% set showActionLinks = true %}
+{% endif %}
+{% if showBacklinkButtons is not defined %}
+    {% set showBacklinkButtons = true %}
+{% endif %}
+{% if showUser is not defined %}
+    {% set showUser = true %}
+{% endif %}
+<div class="uk-alert {{ alert.typeForView }}">
+    <dl class="uk-description-list uk-description-list-horizontal">
+        <dt>{% trans %}Reported{% endtrans %}</dt>
+        <dd>{{ alert.createdAt|date('d.m.Y') }} - <small>{{ alert.createdAt|date('H:i') }}</small></dd>
+
+        {% if alert.isCurrentlyHidden %}
+            <dt>{% trans %}Hide Until{% endtrans %}</dt>
+            <dd>{{ alert.hideUntil|date('d.m:Y') }} - <small>{{ alert.hideUntil|date('H:i') }}</small></dd>
+        {% endif %}
+
+        {% if app.session.get('selectedProjectId') != alert.project.id %}
+            <dt>{% trans %}Project{% endtrans %}</dt>
+            <dd>{{ alert.project.name }}</dd>
+        {% endif %}
+
+        {% if showUser %}
+            <dt>{% trans %}Assigned to{% endtrans %}</dt>
+            <dd>{{ alert.user.displayName }}</dd>
+        {% endif %}
+<!--
+        <dt>{% trans %}Status{% endtrans %}</dt>
+        <dd>
+            {{ _self.badge('URL', alert.backlink.urlOk) }}
+
+            {% if alert.backlink.crawlType == 'dom' %}
+                {{ _self.badge('Anchor', alert.backlink.anchorOk) }}
+                {{ _self.badge('Type', alert.backlink.typeOk) }}
+                {{ _self.badge('Follow', alert.backlink.followOk) }}
+                {{ _self.badge('URL', alert.backlink.urlOk) }}
+                {% if not alert.backlink.ignorePosition %}
+                    {{ _self.badge('Position', alert.backlink.xPathOk, 'warning') }}
+                {% endif %}
+            {% else %}
+                ({% trans %}Textmatching{% endtrans %})
+            {% endif %}
+            <br>
+            {{ _self.badge('Statuscode', alert.backlink.statusCodeOk) }}
+            {{ _self.badge('Meta-Index', alert.backlink.metaIndexOk) }}
+            {{ _self.badge('Meta-Follow', alert.backlink.metaFollowOk) }}
+            {{ _self.badge('X-Robots-Index', alert.backlink.xRobotsIndexOk) }}
+            {{ _self.badge('X-Robots-Follow', alert.backlink.xRobotsFollowOk) }}
+            {{ _self.badge('robots.txt (Google)', alert.backlink.robotsGoogleOk) }}
+        </dd>
+
+        <dt>{% trans %}Page{% endtrans %}</dt>
+        <dd>{{ alert.backlink.page.fullForDisplay }}</dd>
+
+        <dt>{% trans %}Target-URL{% endtrans %}</dt>
+        <dd>{{ alert.backlink.url }}</dd>
+-->
+    </dl>
+    {% if showActionLinks %}
+        <p>
+            <a class="uk-button uk-button-small uk-button-danger" href="{{ path('pool_linkmotor_alerts_hide_until', {id:alert.id}) }}">
+                <i class="uk-icon-calendar"></i>
+                {% trans %}Hide until{% endtrans %}...
+            </a>
+            {% if showBacklinkButtons %}
+                <a class="uk-button uk-button-small uk-button-danger" href="{{ path('pool_linkmotor_backlinks_crawl', {id:alert.backlink.id}) }}">
+                    <i class="uk-icon-cogs"></i>
+                    {% trans %}Crawl again{% endtrans %}
+                </a>
+                <a class="uk-button uk-button-small uk-button-danger" href="{{ path('pool_linkmotor_backlinks_view', {id:alert.backlink.id}) }}">
+                    {% trans %}Go to backlink{% endtrans %}
+                </a>
+            {% endif %}
+        </p>
+    {% endif %}
+</div>

@@ -1,0 +1,52 @@
+{% extends 'PoolLinkmotorBundle::layout.html.twig' %}
+
+{% block content %}
+
+    {% include 'PoolLinkmotorBundle:Page:viewsubnav.html.twig' with {active:'add-backlink'} %}
+
+    {% if not loggedInUserMayEdit %}
+        <div class="uk-alert uk-alert-warning">
+            {% trans %}warning.loggedInUserMayNotEdit{% endtrans %}
+        </div>
+    {% elseif page.assignedTo != app.user %}
+        <div class="uk-alert uk-alert-warning">
+            {% trans %}warning.loggedInUserMayNotEdit.adminOverride{% endtrans %}
+        </div>
+    {% endif %}
+
+    {% if loggedInUserMayEdit %}
+        <form class="uk-form uk-form-horizontal" action="{{ path('pool_linkmotor_backlinks_add_for_page', {id:page.id}) }}" method="post" {{ form_enctype(form) }}>
+            {{ form_errors(form) }}
+
+            <fieldset>
+                {% if form.url is defined %}
+                    {{ form_row(form.url) }}
+                {% endif %}
+                {{ form_row(form.assignedTo) }}
+                {{ form_row(form.isOffline) }}
+                {{ form_row(form.crawlType) }}
+
+                <div class="uk-form-row crawltype-container-dom{% if backlink.crawlType == 'text' %} hidden{% endif %}">
+                    {{ form_row(form.anchor) }}
+                    {{ form_row(form.type) }}
+                    {{ form_row(form.follow) }}
+                    {{ form_row(form.ignorePosition) }}
+                </div>
+
+                {{ form_row(form.costType) }}
+
+                <div id="backlink-cost-type-money" class="uk-form-row">
+                    {{ form_row(form.price) }}
+                </div>
+
+                <div id="backlink-cost-type-other" class="uk-form-row">
+                    {{ form_row(form.costNote) }}
+                </div>
+
+                {{ form_rest(form) }}
+            </fieldset>
+
+            <input class="uk-button uk-button-primary" type="submit" value="{% trans %}Create{% endtrans %}" />
+        </form>
+    {% endif %}
+{% endblock %}

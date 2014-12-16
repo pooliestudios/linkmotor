@@ -1,0 +1,55 @@
+{% import "PoolLinkmotorBundle:Default:macros.html.twig" as poolMacros %}
+
+{% render controller('PoolLinkmotorBundle:Backlink:filter', {withUser:true, type:type}) %}
+
+{% set tableOptions = app.user.tableOptionsBacklinks %}
+
+<div class="uk-button-dropdown uk-float-right" data-uk-dropdown="{mode:'click'}">
+    <a href="#" class="uk-button uk-button-mini"><i class="uk-icon-columns"></i> {% trans %}Edit columns{% endtrans %}</a>
+    <div class="uk-dropdown">
+        <ul class="column-options uk-nav uk-nav-dropdown">
+            <li class="uk-nav-header">{% trans %}Columns{% endtrans %}</li>
+            {% for tableOption in tableOptions %}
+                {{ poolMacros.showBacklinksInfo(tableOption) }}
+            {% endfor %}
+            </li>
+        </ul>
+    </div>
+</div>
+
+<hr style="clear:both; margin: 10px 0 -20px 0;">
+
+<table class="uk-table uk-table-striped uk-table-hover scrollable draggable">
+    <tr>
+        <th class="bulk-actions backlinks">
+            <input type="checkbox" id="set-bulk-actions">
+        </th>
+        {% for tableOption in tableOptions %}
+            {{ poolMacros.showBacklinksHeadCell(tableOption, backlinks) }}
+        {% endfor %}
+    </tr>
+    {% for backlink in backlinks %}
+        {# Wegen des Alias für die Gesamt-URL #}
+        {% if backlink[0] is defined %}
+            {% set backlink = backlink[0] %}
+        {% endif %}
+        <tr>
+            <td class="bulk-actions">
+                <input type="checkbox" data-id="{{ backlink.id }}" data-has-alert="{{ backlink.hasAlert ? 1 : 0 }}" data-may-change-status="{{ backlink.getIsOfflineMayBeChangedByUser(app.user) ? 1 : 0 }}">
+            </td>
+            {% for tableOption in tableOptions %}
+                {{ poolMacros.showBacklinksBodyCell(tableOption, backlink) }}
+            {% endfor %}
+        </tr>
+    {% endfor %}
+</table>
+
+<div class="table-footer">
+    <div class="bulk-actions-form">
+        <form class="autosubmit" action="{{ path('pool_linkmotor_backlinks_bulk_action') }}" method="POST">
+            {{ form_widget(bulkActionsForm.bulkAction) }}
+            {{ form_rest(bulkActionsForm) }}
+        </form>
+    </div>
+    {{ knp_pagination_render(backlinks) }}
+</div>

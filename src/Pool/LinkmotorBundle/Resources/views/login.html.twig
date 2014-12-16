@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{% block title %}Login - {% endblock %}Linkmotor</title>
+		<meta name="robots" content="noindex, nofollow">
+        <link rel="shortcut icon" type="image/png" href="{{ asset('favicon.ico') }}">
+
+        {% stylesheets filter="cssrewrite"
+            'bundles/poollinkmotor/css/form-password.almost-flat.min.css'
+            'bundles/poollinkmotor/css/uikit.almost-flat.min.css'
+            'bundles/poollinkmotor/css/chosen.css'
+            'bundles/poollinkmotor/css/app.css'
+            'bundles/poollinkmotor/css/login.css'
+        %}
+            <link href="{{ asset_url }}" type="text/css" rel="stylesheet" media="screen" />
+        {% endstylesheets %}
+        <link href="//fonts.googleapis.com/css?family=Raleway:400,300,700" rel="stylesheet" type="text/css">
+
+        {% javascripts
+            'bundles/poollinkmotor/js/jquery.min.js'
+            'bundles/poollinkmotor/js/uikit.min.js'
+            'bundles/poollinkmotor/js/datepicker.min.js'
+            'bundles/poollinkmotor/js/timepicker.min.js'
+            'bundles/poollinkmotor/js/form-password.min.js'
+            'bundles/poollinkmotor/js/notify.min.js'
+            'bundles/poollinkmotor/js/sortable.min.js'
+            'bundles/poollinkmotor/js/sticky.min.js'
+            'bundles/poollinkmotor/js/chosen.jquery.min.js'
+            'bundles/poollinkmotor/js/favico.min.js'
+            'bundles/poollinkmotor/js/Chart.min.js'
+            'bundles/poollinkmotor/js/stupidtable.min.js'
+            'bundles/poollinkmotor/js/app.js'
+        %}
+            <script type="text/javascript" src="{{ asset_url }}"></script>
+        {% endjavascripts %}
+    </head>
+
+<body id="login">
+<div class="uk-container uk-container-center">
+
+            {% block content %}{% endblock %}
+
+</div>
+
+        {% include 'PoolLinkmotorBundle:Default:modals.html.twig' %}
+
+    </body>
+</html>

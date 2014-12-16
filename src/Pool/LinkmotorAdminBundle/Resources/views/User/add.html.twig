@@ -1,0 +1,19 @@
+{% extends 'PoolLinkmotorBundle::layout.html.twig' %}
+
+{% block content %}
+<div class="uk-width-custom uk-alert uk-alert-warning">
+<p><i class="uk-icon-info-sign"></i> {% trans %}New team members will not get automatically notified yet, please invite them manually.{% endtrans %}</p>
+</div>
+    <form class="uk-form uk-form-horizontal" action="{{ path('pool_linkmotor_admin_users_add') }}" method="post" {{ form_enctype(form) }}>
+        {{ form_errors(form) }}
+
+        <fieldset>
+            <legend>{% trans %}Add user{% endtrans %}</legend>
+            {{ form_rest(form) }}
+        </fieldset>
+
+        <input class="uk-button uk-button-primary uk-button-large" type="submit" value="{% trans %}Create{% endtrans %}" />
+        <a class="uk-button-small uk-button-link lmcancelbutton" href="{{ path('pool_linkmotor_admin_users_index') }}">{% trans %}Cancel{% endtrans %}</a>
+    </form>
+
+{% endblock %}

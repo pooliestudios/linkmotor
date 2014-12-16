@@ -1,0 +1,42 @@
+{% extends 'PoolLinkmotorBundle::layout.html.twig' %}
+
+{% block title %}{% trans %}Details{% endtrans %} - {% trans %}Pages{% endtrans %} - {% endblock %}
+
+{% block content %}
+    {% include 'PoolLinkmotorBundle:Page:viewsubnav.html.twig' with {active:'overview'} %}
+    {% include 'PoolLinkmotorBundle:Page:overview.html.twig' %}
+
+    {% include 'PoolLinkmotorBundle:Page:backlinks.html.twig' %}
+
+    <br>
+    <hr>
+    <br>
+
+    {% include 'PoolLinkmotorBundle:Page:snippetList.html.twig' with {domain:page.subdomain.domain, excludePageId:page.id} %}
+    {% include 'PoolLinkmotorBundle:Subdomain:snippetList.html.twig' with {subdomains:page.subdomain.domain.subdomains} %}
+
+    {% set otherProjects = [] %}
+    {% set displayedProjects = [project.id] %}
+    {% for subdomain in page.subdomain.domain.subdomains %}
+        {% for page in subdomain.pages %}
+            {% if page.project.id not in displayedProjects %}
+                {% set displayedProjects = displayedProjects|merge([page.project.id]) %}
+                {% set otherProjects = otherProjects|merge([page.project.name]) %}
+            {% endif %}
+        {% endfor %}
+    {% endfor %}
+    {% if otherProjects %}
+        <h2>{% trans %}Other projects{% endtrans %}</h2>
+        <table class="uk-table uk-table-striped uk-table-hover">
+            <tr>
+                <th>{% trans %}Project{% endtrans %}</th>
+            </tr>
+            {% for otherProjectName in otherProjects %}
+                <tr>
+                    <td>{{ otherProjectName }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+    {% endif %}
+{% endblock %}

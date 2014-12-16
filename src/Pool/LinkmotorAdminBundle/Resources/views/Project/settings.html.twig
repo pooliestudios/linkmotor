@@ -1,0 +1,22 @@
+{% extends 'PoolLinkmotorBundle::layout.html.twig' %}
+
+{% block title %}{% trans %}Settings{% endtrans %} - {% trans %}Projects{% endtrans %} - {% trans %}Administration{% endtrans %} - {% endblock %}
+
+{% block subnav %}
+    {% include 'PoolLinkmotorAdminBundle:Default:subnav.html.twig' with {active:'projects'} %}
+{% endblock %}
+
+{% block content %}
+    <h2>{% trans %}Project settings{% endtrans %}: <strong>{{ project.name }}</strong></h2>
+    <hr>
+
+    <form class="uk-form uk-form-horizontal" autocomplete="off" action="{{ path('pool_linkmotor_admin_projects_settings', {id:project.id}) }}" method="post">
+
+        {{ form_errors(form) }}
+
+        {{ form_rest(form) }}
+		<br>
+        <button type="submit" class="uk-button uk-button-primary">{% trans %}Save{% endtrans %}</button>
+        <a class="uk-button-small uk-button-link lmcancelbutton" href="{{ path('pool_linkmotor_admin_projects_index') }}">{% trans %}Cancel{% endtrans %}</a>
+    </form>
+{% endblock %}

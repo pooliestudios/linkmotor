@@ -1,0 +1,17 @@
+<ul class="uk-subnav uk-subnav-pill filter">
+    <li>
+        <form class="uk-search autosubmit{% if filter['keyword'] %} used-filter{% endif %}" action="" method="get" data-uk-search>
+            <input class="uk-search-field" name="changeKeywordFilter" type="search" placeholder="{% trans %}Search for URL or Email{% endtrans %}..." value="{{ filter['keyword'] }}">
+            <button class="uk-search-close" type="reset"></button>
+        </form>
+    </li>
+    {% if filter['keyword'] %}
+        <li>
+            <a class="uk-button uk-button-danger uk-button-small" href="?resetFilter">
+                <i class="uk-icon-times-circle"></i> {% trans %}Reset{% endtrans %}
+            </a>
+        </li>
+    {% endif %}
+</ul>
+
+

@@ -1,0 +1,39 @@
+{% extends 'PoolLinkmotorBundle::layout.html.twig' %}
+
+{% block content %}
+
+    <h1>{% trans %}Page{% endtrans %}: <small>{{ page.fullForDisplay }}</small></h1>
+    <p class="uk-alert">
+        {% trans %}text.info.after-not-relevant{% endtrans %}
+        <br><br>
+        <a class="uk-button uk-button-primary" href="{{ path('pool_linkmotor_pages_index') }}">
+            {% trans %}Skip{% endtrans %} &raquo;
+        </a>
+    </p>
+    <div class="uk-grid uk-grid-divider">
+        <div class="uk-width-1-2">
+            <form class="uk-form slow" action="{{ path('pool_linkmotor_explorer_blacklist_add') }}" method="post" {{ form_enctype(formBlacklist) }}>
+                {{ form_errors(formBlacklist) }}
+
+                <fieldset>
+                    <legend>{% trans %}Add domain to blacklist{% endtrans %}</legend>
+                    {{ form_rest(formBlacklist) }}
+                </fieldset>
+
+                <input class="uk-button uk-button-primary" type="submit" value="{% trans %}Create{% endtrans %}" />
+            </form>
+        </div>
+        <div class="uk-width-1-2">
+            <form class="uk-form slow" action="{{ path('pool_linkmotor_explorer_competitor_add') }}" method="post" {{ form_enctype(formCompetitor) }}>
+                {{ form_errors(formCompetitor) }}
+
+                <fieldset>
+                    <legend>{% trans %}Add competitor{% endtrans %}</legend>
+                    {{ form_rest(formCompetitor) }}
+                </fieldset>
+
+                <input class="uk-button uk-button-primary" type="submit" value="{% trans %}Create{% endtrans %}" />
+            </form>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,59 @@
+{% extends 'PoolLinkmotorBundle::layout.html.twig' %}
+
+{% block title %}{% trans %}Add a backlink manually{% endtrans %} - {% endblock %}
+
+{% block content %}
+    <ul class="uk-tab">
+        <li>
+            <a id="view" href="{{ path('pool_linkmotor_pages_search_backlinks') }}">
+                {% trans %}Automatically{% endtrans %}
+            </a>
+        </li>
+        <li class="uk-active">
+            <a id="edit" href="{{ path('pool_linkmotor_backlinks_add') }}">
+                {% trans %}Manually{% endtrans %}
+            </a>
+        </li>
+    </ul>
+
+    <h3>{% trans %}Add a backlink manually{% endtrans %}</h3>
+
+    <form class="uk-form uk-form-horizontal" action="{{ path('pool_linkmotor_backlinks_add') }}" method="post" {{ form_enctype(form) }}>
+
+        {{ form_errors(form) }}
+
+        <fieldset>
+            {{ form_row(form.pageUrl) }}
+            <div class="uk-form-controls uk-text-small uk-text-muted"><p>{% trans %}Full URL of the linking site{% endtrans %}</p></div>
+            {{ form_row(form.url) }}
+            <div class="uk-form-controls uk-text-small uk-text-muted"><p>{% trans %}Full URL of the linked site on{% endtrans %} {{ project.name }}</p></div>
+
+            {{ form_row(form.assignedTo) }}
+            {{ form_row(form.isOffline) }}
+            {{ form_row(form.crawlType) }}
+
+            <div class="uk-form-row crawltype-container-dom{% if backlink.crawlType == 'text' %} hidden{% endif %}">
+                {{ form_row(form.anchor) }}
+				<div id="backlink_add_anchor_help" class="uk-form-controls uk-text-small uk-text-muted"><p>{% trans %}Exact Anchor text (including markup){% endtrans %}</p></div>
+                {{ form_row(form.type) }}
+                {{ form_row(form.follow) }}
+                {{ form_row(form.ignorePosition) }}
+            </div>
+
+            {{ form_row(form.costType) }}
+
+            <div id="backlink-cost-type-money" class="uk-form-row">
+                {{ form_row(form.price) }}
+            </div>
+
+            <div id="backlink-cost-type-other" class="uk-form-row">
+                {{ form_row(form.costNote) }}
+            </div>
+
+            {{ form_rest(form) }}
+        </fieldset>
+
+        <input class="uk-button uk-button-primary" type="submit" value="{% trans %}Create{% endtrans %}" />
+    </form>
+
+{% endblock %}

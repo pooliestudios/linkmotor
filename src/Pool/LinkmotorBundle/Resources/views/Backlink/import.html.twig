@@ -1,0 +1,95 @@
+{% extends 'PoolLinkmotorBundle::layout.html.twig' %}
+
+{% block title %}{% trans %}Import{% endtrans %} - {% trans %}Backlinks{% endtrans %} - {% endblock %}
+
+{% block subnav %}
+    <ul class="uk-tab">
+        <li class="uk-active">
+            <a href="{{ path('pool_linkmotor_backlinks_import') }}">
+                {% trans %}CSV-Import{% endtrans %}
+            </a>
+        </li>
+        <li>
+            <a href="{{ path('pool_linkmotor_imports_index') }}">
+                {% trans %}Linkbird Import{% endtrans %}
+            </a>
+        </li>
+    </ul>
+{% endblock %}
+
+{% block content %}
+    <h2>{% trans %}Import backlinks{% endtrans %}</h2>
+    <div class="uk-alert">
+        <p>
+            <i class="uk-icon-info-sign"></i>
+            {% set example = '<a class="uk-button uk-button-small" href="' ~ asset('bundles/poollinkmotor/files/backlink_import_example.csv') ~'"><i class="uk-icon-download"></i> ' ~ 'Download example'|trans ~ '</a>' %}
+            {% trans with {'%example%':example} %}help.backlink.import{% endtrans %}
+        </p>
+    </div>
+    <form class="uk-form uk-form-horizontal slow" action="{{ path('pool_linkmotor_backlinks_import') }}" method="post" {{ form_enctype(form) }}>
+        {{ form_errors(form) }}
+
+        <fieldset>
+            {{ form_rest(form) }}
+        </fieldset>
+
+        <input class="uk-button uk-button-primary" type="submit" value="{% trans %}Import{% endtrans %}" />
+    </form>
+
+    {% if log is defined %}
+        <h2>{% trans %}Import report{% endtrans %}</h2>
+        <div class="uk-alert">
+            <p><i class="uk-icon-info-sign"></i> {% trans %}help.backlink.import.crawlnotice{% endtrans %}</p>
+        </div>
+        <table class="uk-table uk-table-condensed">
+            <tr>
+                <th>{% trans %}URL{% endtrans %}</th>
+                <th>Target-URL</th>
+                <th>{% trans %}Anchor{% endtrans %}</th>
+                <th>{% trans %}Type{% endtrans %}</th>
+                <th>Follow</th>
+                <th>{% trans %}User{% endtrans %}</th>
+                <th>{% trans %}Status{% endtrans %}</th>
+            </tr>
+            {% for invalidRow in invalidRows %}
+                <tr>
+                    <td>{{ invalidRow[0] }}</td>
+                    <td>{{ invalidRow[1] }}</td>
+                    <td>{{ invalidRow[2] }}</td>
+                    <td>{{ invalidRow[3] }}</td>
+                    <td>{{ invalidRow[4] }}</td>
+                    <td>{{ invalidRow[5] }}</td>
+                    <td>
+                        <div class="uk-badge uk-badge-danger">
+                            {% trans %}Wrong encoding{% endtrans %}
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+            {% for item in log %}
+                <tr>
+                    <td>{{ item.0 }}</td>
+                    <td>{{ item.1 }}</td>
+                    <td>{{ item.2 }}</td>
+                    <td>{{ item.3 }}</td>
+                    <td>{{ item.4 }}</td>
+                    <td>
+                        {% if item.5.displayName is defined %}
+                            {{ item.5.displayName }}
+                        {% else %}
+                            {{ item.5 }}
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if item.6 == true%}
+                            <div class="uk-badge uk-badge-success">OK</div>
+                        {% else %}
+                            <div class="uk-badge uk-badge-danger">{{ item.7|trans }}</div>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+
+{% endblock %}

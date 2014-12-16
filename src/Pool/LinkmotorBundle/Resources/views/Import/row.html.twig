@@ -1,0 +1,40 @@
+<tr{% if import.step not in [2, 5] and import.statusIsWaiting %} class="refresh-import" lm-data="{{ import.id }}"{% endif %}>
+    <td>{{ import.filename }}</td>
+    <td>{{ import.createdAt|date('d.m.Y') }}</td>
+    <td>{{ import.createdBy.displayName }}</td>
+    <td>
+        {% if import.step == 2 %}
+            <a class="uk-button uk-button-small uk-button-primary" href="{{ path('pool_linkmotor_backlinks_import_step2', {id:import.id}) }}">
+                {% trans %}Ready for step 2{% endtrans %} &raquo;
+            </a>
+        {% elseif import.step == 5 %}
+            {% trans with {'%num':import.numRowsImported} %}%num rows imported{% endtrans %}
+        {% else %}
+            {% if import.statusIsWaiting %}
+                <i class="uk-icon-spinner uk-icon-spin"></i>
+            {% endif %}
+            <span{% if import.step == 99 %} class="uk-badge uk-badge-danger"{% endif %}>
+                {{ import.displayStatus|trans }}
+            </span>
+            {% if import.progress > 0 %}
+                <div class="uk-progress">
+                    <div class="uk-progress-bar" style="width: {{ import.progress }}%;">
+                        {{ import.progress }}%
+                    </div>
+                </div>
+            {% endif %}
+        {% endif %}
+    </td>
+    <td>
+        {% if import.step == 5 %}
+            <a class="uk-button uk-button-small" href="{{ path('pool_linkmotor_backlinks_import_download_transcript', {id:import.id}) }}">
+                <i class="uk-icon-download"></i> {% trans %}Transcript{% endtrans %}
+            </a>
+        {% endif %}
+        {% if import.step in [2, 5, 99] %}
+            <a class="uk-button uk-button-small" href="{{ path('pool_linkmotor_backlinks_import_delete', {id:import.id}) }}">
+                <i class="uk-icon-trash-o"></i> {% trans %}Delete{% endtrans %}
+            </a>
+        {% endif %}
+    </td>
+</tr>

@@ -1,0 +1,9 @@
+{% extends 'PoolLinkmotorBundle::layout.html.twig' %}
+
+{% block content %}
+    <h2>{% trans %}Backlinks for subdomain{% endtrans %}: {{ subdomain.full }}</h2>
+    <a class="uk-button" href="{{ path('pool_linkmotor_pages_subdomain', {id:subdomain.id}) }}">
+        {% trans %}Switch to pages for this subdomain{% endtrans %} &raquo;
+    </a>
+    {% include 'PoolLinkmotorBundle:Backlink:list.html.twig' %}
+{% endblock %}

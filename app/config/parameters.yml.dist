@@ -1,0 +1,27 @@
+parameters:
+    database_driver:   pdo_mysql
+    database_host:     127.0.0.1
+    database_port:     ~
+    database_name:     linkmotor
+    database_user:     root
+    database_password: ~
+
+    mailer_transport:  smtp
+    mailer_host:       127.0.0.1
+    mailer_user:       ~
+    mailer_password:   ~
+
+    router.request_context.host: localhost
+    router.request_context.scheme: http
+    router.request_context.base_url: ~
+
+    locale:            de
+    secret:            ThisTokenIsNotSoSecretChangeIt
+
+    crawler.backlink.interval: "24 hours"
+    crawler.page.interval: "7 days"
+    crawler.domain.interval: "7 days"
+    crawler.subdomain.interval: "7 days"
+
+    linkmotor.noreplyAddress: noreply@example.com
+    seoservices.url: https://linkmotor.de/services

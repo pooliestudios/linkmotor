@@ -1,0 +1,19 @@
+{% extends 'PoolLinkmotorBundle::layout.html.twig' %}
+
+{% block subnav %}
+    {% include 'PoolLinkmotorAdminBundle:Keyword:breadcrumb.html.twig' %}
+{% endblock %}
+
+{% block content %}
+    <h1>{% trans %}Delete{% endtrans %}</h1>
+    <form class="uk-form uk-form-horizontal slow" action="{{ path('pool_linkmotor_explorer_keyword_delete', {id:keyword.id}) }}" method="post">
+        <fieldset class="uk-alert-danger uk-alert-large">
+            <h2>{% trans %}Are you sure?{% endtrans %}</h2>
+            <p>{% trans %}Deleting this keyword cannot be undone!{% endtrans %}</p>
+        </fieldset>
+        <input class="uk-button uk-button-danger" type="submit" value="{% trans %}Delete{% endtrans %}" />
+        <a class="uk-button" href="{{ path('pool_linkmotor_explorer_keyword_index') }}">
+            {% trans %}Cancel{% endtrans %}
+        </a>
+    </form>
+{% endblock %}

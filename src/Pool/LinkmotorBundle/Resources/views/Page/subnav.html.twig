@@ -1,0 +1,50 @@
+</div>
+<div class="lm-wrapper-sub">
+    <div class="uk-container uk-container-center">
+{% if '_index' in app.request.attributes.get('_route') %}
+    <div class="uk-float-right">
+
+        <a class="uk-button uk-button-primary" href="{{ path('pool_linkmotor_pages_add') }}">
+            <i class="uk-icon-plus"></i> {% trans %}add{% endtrans %}
+        </a>
+		<div class="uk-button-group">
+        <a class="uk-button" href="{{ path('pool_linkmotor_pages_import') }}">
+            {% trans %}Import pages{% endtrans %}
+        </a>
+
+        <a class="uk-button" href="{{ path('pool_linkmotor_pages_export', {type:type}) }}">
+            {% trans %}Export{% endtrans %}
+        </a>
+		</div>
+    </div>
+{% endif %}
+<ul class="uk-tab">
+    <li{% if active == 'my-new' %} class="uk-active"{% endif %}>
+        <a href="{{ path('pool_linkmotor_pages_index', {type:'my-new'}) }}">
+            {% trans %}My new{% endtrans %} <span id="project-new-pages-badge">{% render controller('PoolLinkmotorBundle:Default:newPagesBadge') %}</span>
+        </a>
+    </li>
+    <li{% if active == 'my-contacted' %} class="uk-active"{% endif %}>
+        <a href="{{ path('pool_linkmotor_pages_index', {type:'my-contacted'}) }}">
+            {% trans %}My contacted{% endtrans %}
+        </a>
+    </li>
+    <li{% if active == 'my-relevant' %} class="uk-active"{% endif %}>
+        <a href="{{ path('pool_linkmotor_pages_index', {type:'my-relevant'}) }}">
+            {% trans %}My relevant{% endtrans %}
+        </a>
+    </li>
+    <li{% if active == 'my-in-progress' %} class="uk-active"{% endif %}>
+        <a href="{{ path('pool_linkmotor_pages_index', {type:'my-in-progress'}) }}">
+            {% trans %}My in progress{% endtrans %}
+        </a>
+    </li>
+    <li{% if active == 'all' %} class="uk-active"{% endif %}>
+        <a href="{{ path('pool_linkmotor_pages_index', {type:'all'}) }}">
+            {% trans %}All pages{% endtrans %}
+        </a>
+    </li>
+</ul>
+</div>
+</div>
+<div class="uk-container uk-container-center">

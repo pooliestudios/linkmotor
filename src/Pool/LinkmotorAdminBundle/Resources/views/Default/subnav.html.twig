@@ -1,0 +1,42 @@
+<div class="uk-float-right">
+    <a class="uk-button uk-button-primary" href="{{ path('pool_linkmotor_admin_projects_add') }}">
+        <i class="uk-icon-plus"></i> {% trans %}Add project{% endtrans %}
+    </a>
+    <a class="uk-button uk-button-primary" href="{{ path('pool_linkmotor_admin_users_add') }}">
+        <i class="uk-icon-plus"></i> {% trans %}Add user{% endtrans %}
+    </a>
+</div>
+<ul class="uk-tab">
+    <li{% if active == 'projects' %} class="uk-active"{% endif %}>
+        <a href="{{ path('pool_linkmotor_admin_projects_index') }}">
+            <i class="uk-icon-th"></i> {% trans %}Projects{% endtrans %}
+        </a>
+    </li>
+    <li{% if active == 'users' %} class="uk-active"{% endif %}>
+        <a href="{{ path('pool_linkmotor_admin_users_index') }}">
+            <i class="uk-icon-users"></i> {% trans %}Users{% endtrans %}
+        </a>
+    </li>
+    <li{% if active == 'settings' %} class="uk-active"{% endif %}>
+        <a href="{{ path('pool_linkmotor_admin_settings_edit') }}">
+            <i class="uk-icon-exchange"></i> {% trans %}APIs{% endtrans %}
+        </a>
+    </li>
+    {% if accountOptions('self_hosted') != 1 %}
+        <li{% if active == 'export' %} class="uk-active"{% endif %}>
+            <a href="{{ path('pool_linkmotor_admin_export') }}">
+                <i class="uk-icon-download"></i> {% trans %}Export{% endtrans %}
+            </a>
+        </li>
+    {% endif %}
+    <li{% if active == 'invoice-information' %} class="uk-active"{% endif %}>
+        <a href="{{ path('pool_linkmotor_admin_invoice_information_edit') }}">
+            <i class="uk-icon-money"></i> {% trans %}Invoices{% endtrans %}
+        </a>
+    </li>
+    <li{% if active == 'account' %} class="uk-active"{% endif %}>
+        <a href="{{ path('pool_linkmotor_admin_account_edit') }}">
+            <i class="uk-icon-star"></i> {% trans %}Account{% endtrans %}
+        </a>
+    </li>
+</ul>

@@ -1,0 +1,16 @@
+{% extends 'PoolLinkmotorBundle::login.html.twig' %}
+
+{% block content %}
+    <div class="uk-alert-large uk-alert-danger">
+        <h2>{% trans %}Account limited{% endtrans %}</h2>
+        <p>
+            {% trans %}The action you wanted to perform was not possible, because your account has reached its limits.{% endtrans %}
+        </p>
+        <p>
+            {% trans %}Please contact your team leaders. They will be able to lift the limits by purchasing a more suitable service plan.{% endtrans %}
+        </p>
+        <p>
+            <a class="uk-button uk-button-danger" href="{{ path('login') }}">&laquo; Back to the login page</a>
+        </p>
+    </div>
+{% endblock %}

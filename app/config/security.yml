@@ -1,0 +1,37 @@
+security:
+    providers:
+        main:
+            entity: { class: Pool\LinkmotorBundle\Entity\User, property: email }
+
+    encoders:
+        Pool\LinkmotorBundle\Entity\User: sha512
+
+    role_hierarchy:
+        ROLE_ADMIN:       ROLE_USER
+        ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+
+    firewalls:
+        dev:
+            pattern:  ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+        login:
+            pattern:  ^/login$
+            security: false
+
+        secured_area:
+            pattern:    ^/
+            form_login:
+                success_handler: handler.authentication
+            logout:
+                path:   /logout
+                target: /
+            anonymous: ~
+            remember_me:
+                key: "%secret%"
+                lifetime: 31536000 # 365 days in seconds
+                path:     /
+                domain:   ~ # Defaults to the current domain from $_SERVER
+    access_control:
+        - { path: ^/(de|en)/admin/, roles: ROLE_ADMIN }
+        - { path: ^/(de|en)/app/, roles: ROLE_USER }

@@ -1,0 +1,114 @@
+{% set route = app.request.attributes.get('_route') %}
+{% if route == 'pool_linkmotor_pages_search_backlinks' and app.request.attributes.get('_route_params').id == 0 %}
+    {% set route = 'pool_linkmotor_backlinks_search_backlinks' %}
+{% endif %}
+<nav class="uk-navbar">
+    <ul class="uk-navbar-nav">
+        {% if app.user %}
+            {% if app.session.get('selectedProjectId') %}
+                <li{% if '_project_dashboard' in route %} class="uk-active"{% endif %} id="navi-dashboard">
+                    <a href="{{ path('pool_linkmotor_project_dashboard', {id:app.session.get('selectedProjectId')}) }}">
+                        <i class="uk-icon-th"></i> Dashboard
+                        <span id="project-alert-badge">
+                           {% render controller('PoolLinkmotorBundle:Default:alertBadge') %}
+                        </span>
+                    </a>
+                </li>
+                <li{% if '_pages_' in route %} class="uk-active"{% endif %} id="navi-pages">
+                    <a href="{{ path('pool_linkmotor_pages_index', {type:app.user.optionsPagesType}) }}">
+                        <i class="uk-icon-bookmark"></i> {% trans %}Pages{% endtrans %}
+                        <span id="project-new-pages-badge">
+                           {% render controller('PoolLinkmotorBundle:Default:newPagesBadge') %}
+                        </span>
+                    </a>
+                </li>
+                <li{% if '_backlinks_' in route %} class="uk-active"{% endif %} id="navi-backlinks">
+                    <a href="{{ path('pool_linkmotor_backlinks_index', {type:app.user.optionsBacklinksType}) }}">
+                        <i class="uk-icon-link"></i> {% trans %}Backlinks{% endtrans %}
+                    </a>
+                </li>
+                <li{% if '_domains_' in route %} class="uk-active"{% endif %} id="navi-domains">
+                    <a href="{{ path('pool_linkmotor_domains_index') }}">
+                        <i class="uk-icon-globe"></i> {% trans %}Domains{% endtrans %}
+                    </a>
+                </li>
+                <li{% if '_vendors_' in route %} class="uk-active"{% endif %} id="navi-vendors">
+                    <a href="{{ path('pool_linkmotor_vendors_index') }}">
+                        <i class="uk-icon-group"></i> {% trans %}Vendors{% endtrans %}
+                    </a>
+                </li>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <li{% if '_explorer_' in route %} class="uk-active"{% endif %} id="navi-explorer">
+                        <a href="{{ path('pool_linkmotor_explorer_keyword_index') }}">
+                            <i class="uk-icon-rocket"></i> {% trans %}Explorer{% endtrans %}
+                        </a>
+                    </li>
+                {% endif %}
+            {% endif %}
+        {% endif %}
+    </ul>
+
+    <div class="uk-navbar-flip">
+        <ul class="uk-navbar-nav">
+            {% if app.user %}
+                {%  if app.session.get('selectedProjectId') %}
+                    <li data-uk-dropdown="{mode:'click'}">
+                        <a class="addsomething" href="#">
+                            <i class="uk-icon-plus-square"></i>
+                        </a>
+                        <div class="uk-dropdown uk-dropdown-navbar">
+                            <ul class="uk-nav uk-nav-navbar">
+                                <li>
+                                    <a href="{{ path('pool_linkmotor_pages_add') }}">
+                                        <i class="uk-icon-bookmark"></i> <strong>{% trans %}Add page{% endtrans %}</strong>
+                                    </a>
+                                </li>
+                                <li class="uk-nav-divider"></li>
+                                <li>
+                                    <a href="{{ path('pool_linkmotor_pages_search_backlinks') }}">
+                                        <i class="uk-icon-link"></i> <strong>{% trans %}Add backlink{% endtrans %}</strong>
+                                    </a>
+                                </li>
+                                <!-- <li>
+                                    <a href="{{ path('pool_linkmotor_pages_import') }}">
+                                        <i class="uk-icon-download"></i> {% trans %}Import pages{% endtrans %}
+                                    </a>
+                                </li> -->
+                                {% if is_granted('ROLE_ADMIN') %}
+                                    <li class="uk-nav-divider"></li>
+									<li class="uk-nav-header">{% trans %}Explorer{% endtrans %}</li>
+                                    <li>
+                                        <a href="{{ path('pool_linkmotor_explorer_competitor_add') }}">
+                                            <strong>{% trans %}Add competitor{% endtrans %}</strong>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ path('pool_linkmotor_explorer_keyword_add') }}">
+                                            <strong>{% trans %}Add keyword{% endtrans %}</strong>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ path('pool_linkmotor_explorer_blacklist_add') }}">
+                                            <strong>{% trans %}Add domain to blacklist{% endtrans %}</strong>
+                                        </a>
+                                    </li>
+                                {% endif %}
+                            </ul>
+                        </div>
+                    </li>
+                {% elseif is_granted('ROLE_ADMIN') %}
+                    <li>
+                        <a href="{{ path('pool_linkmotor_admin_projects_add') }}">
+                            <i class="uk-icon-plus"></i> {% trans %}Add project{% endtrans %}
+                        </a>
+                    </li>
+                {% else %}
+                    {# Nur ein Dummy, damit in dem Fall zumindest die blaue Leiste angezeigt wird #}
+                    <li><a href="">&nbsp;</a></li>
+                {% endif %}
+            {% else %}
+                <li><a href="{{ path('login') }}">{% trans %}Login{% endtrans %}</a></li>
+            {% endif %}
+        </ul>
+    </div>
+</nav>

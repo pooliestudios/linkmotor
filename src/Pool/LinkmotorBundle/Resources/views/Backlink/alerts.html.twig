@@ -1,0 +1,5 @@
+{% if backlink.alerts %}
+    {% for alert in backlink.alerts %}
+        {% include 'PoolLinkmotorBundle:Alert:snippet.html.twig' with {showBacklinkButtons:false} %}
+    {% endfor %}
+{% endif %}

@@ -1,0 +1,72 @@
+{# default Sliding pagination control implementation #}
+
+{% if pageCount > 1 %}
+    <ul class="uk-pagination">
+        {% if first is defined and current != first %}
+            <li>
+                <a href="{{ path(route, query|merge({(pageParameterName): first})) }}">
+                    <i class="uk-icon-fast-backward"></i>
+                </a>
+            </li>
+        {% else %}
+            <li class="uk-disabled">
+                <span><i class="uk-icon-fast-backward"></i></span>
+            </li>
+        {% endif %}
+
+        {% if previous is defined %}
+            <li>
+                <a href="{{ path(route, query|merge({(pageParameterName): previous})) }}">
+                    <i class="uk-icon-backward"></i>
+                </a>
+            </li>
+        {% else %}
+            <li class="uk-disabled">
+                <span><i class="uk-icon-backward"></i></span>
+            </li>
+        {% endif %}
+
+        {% for page in pagesInRange %}
+            {% if page != current %}
+                <li>
+                    <a href="{{ path(route, query|merge({(pageParameterName): page})) }}">{{ page }}</a>
+                </li>
+            {% else %}
+                <li class="uk-active">{{ page }}</li>
+            {% endif %}
+
+        {% endfor %}
+
+        {% if next is defined %}
+            <li>
+                <a href="{{ path(route, query|merge({(pageParameterName): next})) }}">
+                    <i class="uk-icon-forward"></i>
+                </a>
+            </li>
+        {% else %}
+            <li class="uk-disabled">
+                <span><i class="uk-icon-forward"></i></span>
+            </li>
+        {% endif %}
+
+        {% if last is defined and current != last %}
+            <li>
+                <a href="{{ path(route, query|merge({(pageParameterName): last})) }}">
+                    <i class="uk-icon-fast-forward"></i>
+                </a>
+            </li>
+        {% else %}
+            <li class="uk-disabled">
+                <span><i class="uk-icon-fast-forward"></i></span>
+            </li>
+        {% endif %}
+    </ul>
+    <ul class="uk-list uk-text-center">
+        {% set start = 1 + (current-1)*numItemsPerPage %}
+        {% set end = (current-1)*numItemsPerPage+numItemsPerPage %}
+        {% if end > totalCount %}
+            {% set end = totalCount %}
+        {% endif %}
+        <li>{% trans with {'%start%':start|localeNumber, '%end%':end|localeNumber, '%sum%':totalCount|localeNumber} %}%start% - %end% of %sum% entries{% endtrans %}</li>
+    </ul>
+{% endif %}

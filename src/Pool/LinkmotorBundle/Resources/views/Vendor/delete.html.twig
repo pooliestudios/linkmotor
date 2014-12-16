@@ -1,0 +1,28 @@
+{% extends 'PoolLinkmotorBundle::layout.html.twig' %}
+
+{% block title %}{% trans %}Delete{% endtrans %} - {% trans %}Vendors{% endtrans %} - {% endblock %}
+
+{% block content %}
+
+    {% include 'PoolLinkmotorBundle:Vendor:viewsubnav.html.twig' with {active:'delete'} %}
+
+    {% if vendor.domains.count > 0 or vendor.subdomains.count > 0 %}
+        <div class="uk-alert-danger uk-alert-large">
+            <p>
+                {% trans %}This contact cannot be deleted, as it is assigned at least once.{% endtrans %}
+            </p>
+            <p>
+                {% trans with { __url__:path('pool_linkmotor_vendors_view', {id:vendor.id})} %}Please refer to the <a href="__url__">details tab</a> to see to which domains and subdomains this contact is assigned.{% endtrans %}
+            </p>
+        </div>
+    {% else %}
+        <form class="uk-form uk-form-horizontal" action="{{ path('pool_linkmotor_vendors_delete', {id:vendor.id}) }}" method="post">
+            <fieldset class="uk-alert-danger uk-alert-large">
+                <h2>{% trans %}Are you sure?{% endtrans %}</h2>
+                <p>{% trans %}Deleting this contact cannot be undone!{% endtrans %}</p>
+            </fieldset>
+            <input class="uk-button uk-button-danger" type="submit" value="{% trans %}Delete{% endtrans %}" />
+        </form>
+    {% endif %}
+
+{% endblock %}

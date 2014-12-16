@@ -1,0 +1,28 @@
+{% extends 'PoolLinkmotorBundle::layout.html.twig' %}
+
+{% block title %}{% trans %}Add a new competitor{% endtrans %} - {% endblock %}
+
+{% block content %}
+    <form class="uk-form uk-form-horizontal slow" action="{{ path('pool_linkmotor_explorer_competitor_add') }}" method="post" {{ form_enctype(form) }}>
+        {{ form_errors(form) }}
+
+        <fieldset>
+            <legend>{% trans %}Add a new competitor{% endtrans %}</legend>
+            {{ form_row(form.domain) }}
+            {{ form_row(form.importLimit) }}
+            <div class="uk-form-controls uk-text-muted uk-text-small">
+                <p style="margin-top: 5px;">
+                    {{ 'form.explorer.competitor.importLimit.help'|trans }}
+                </p>
+            </div>
+            {{ form_row(form.importInterval) }}
+            {{ form_row(form.assignedTo) }}
+            {{ form_rest(form) }}
+        </fieldset>
+
+        <input class="uk-button uk-button-primary uk-button-large" type="submit" value="{% trans %}Create{% endtrans %}" />
+        <a class="uk-button-small uk-button-link lmcancelbutton" href="{{ path('pool_linkmotor_explorer_competitor_index') }}">
+            {% trans %}Cancel{% endtrans %}
+        </a>
+    </form>
+{% endblock %}

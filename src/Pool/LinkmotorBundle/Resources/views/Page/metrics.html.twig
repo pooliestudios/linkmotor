@@ -1,0 +1,43 @@
+<table class="uk-table uk-table-striped">
+    <h3 class="uk-panel-title"><i class="uk-icon-bar-chart-o"></i> Page-Metrik</h3>
+    <thead>
+        <tr>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                <abbr title="{% trans %}LinkPop.Tooltip{% endtrans %}" data-uk-tooltip>LinkPop</abbr>
+                <br><strong>{{ valueOrSpinner(page.linkPop|localeNumber, null) }}</strong>
+            </td>
+            <td>
+                <abbr title="{% trans %}DomainPop.Tooltip{% endtrans %}" data-uk-tooltip>DomainPop</abbr>
+                <br><strong>{{ valueOrSpinner(page.domainPop|localeNumber, null) }}</strong>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <abbr title="{% trans %}Page Authority - Data from Moz.com{% endtrans %}" data-uk-tooltip>
+                    Page Authority
+                </abbr>
+                <br><strong>{{ valueOrSpinner(page.authority, 0) }}</strong><small>/100</small>
+            <td>
+                Facebook<br>
+                <strong>{{ valueOrSpinner(page.facebookCount|localeNumber, null) }}</strong><small>/likes</small>
+            </td>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Twitter<br>
+                <strong>{{ valueOrSpinner(page.twitterCount|localeNumber, null) }}</strong><small>/tweets</small>
+            </td>
+            <td>
+                Google+<br>
+                <strong>{{ valueOrSpinner(page.gplusCount|localeNumber, null) }}</strong><small>/+1</small>
+            </td>
+        </tr>
+    </tbody>
+</table>

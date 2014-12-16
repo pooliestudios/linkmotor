@@ -1,0 +1,58 @@
+</div>
+<div class="lm-wrapper-sub">
+    <div class="uk-container uk-container-center">
+
+<ul class="uk-tab">
+    <li{% if active == 'keyword' %} class="uk-active"{% endif %}>
+        <a href="{{ path('pool_linkmotor_explorer_keyword_index') }}">
+           <i class="uk-icon-tag"></i> {% trans %}Keyword-Explorer{% endtrans %}
+        </a>
+    </li>
+    <li{% if active == 'competitor' %} class="uk-active"{% endif %}>
+        <a href="{{ path('pool_linkmotor_explorer_competitor_index') }}">
+            <i class="uk-icon-users"></i> {% trans %}Competitor-Explorer{% endtrans %}
+        </a>
+    </li>
+    <li{% if active == 'blacklist' %} class="uk-active"{% endif %}>
+        <a href="{{ path('pool_linkmotor_explorer_blacklist_index') }}">
+            <i class="uk-icon-th-list"></i> {% trans %}Blacklist{% endtrans %}
+        </a>
+    </li>
+</ul>
+
+</div>
+</div>
+<div class="uk-container uk-container-center">
+
+{% if active == 'keyword' %}
+<div class="uk-float-right">
+    <a class="uk-button uk-button-primary uk-button-large" href="{{ path('pool_linkmotor_explorer_keyword_add') }}">
+        <i class="uk-icon-plus"></i>
+        {% trans %}Add keyword{% endtrans %}
+    </a>
+</div>
+<p>{% trans %}The <strong>Keyword-Explorer</strong> searches for potential link prospects on the basis of your keywords.{% endtrans %}</p>
+<hr>
+{% endif %}
+{% if active == 'competitor' %}
+<div class="uk-float-right">
+    <a class="uk-button uk-button-primary uk-button-large" href="{{ path('pool_linkmotor_explorer_competitor_add') }}">
+        <i class="uk-icon-plus"></i>
+        {% trans %}Add competitor{% endtrans %}
+    </a>
+</div>
+<p>{% trans %}The <strong>Competitor-Explorer</strong> searches for potential link prospects on the basis of your competitors.{% endtrans %}</p>
+<hr>
+{% endif %}
+{% if active == 'blacklist' %}
+<div class="uk-float-right">
+    <a class="uk-button uk-button-primary uk-button-large" href="{{ path('pool_linkmotor_explorer_blacklist_add') }}">
+        <i class="uk-icon-plus"></i>
+        {% trans %}Add domain to blacklist{% endtrans %}
+    </a>
+</div>
+<p>{% trans %}<strong>Domains on the Blacklist</strong> will be ignored by the explorer, prospects and backlinks will not be imported.{% endtrans %}</p>
+<hr>
+
+{% endif %}
+

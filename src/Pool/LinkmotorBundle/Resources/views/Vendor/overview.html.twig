@@ -1,0 +1,39 @@
+{% if vendor.city %}
+<iframe height="200" frameborder="0" style="border:0; width:350px; float:right;" src="https://www.google.com/maps/embed/v1/place?q={% if vendor.street %}{{ vendor.street }}%20{% endif %}{{ vendor.city }}&key=AIzaSyBX2ei8q_XhfMLAR1CccTbFtFYLznR8zYs"></iframe>
+{% endif %}
+
+<dl class="uk-description-list uk-description-list-horizontal">
+{% if vendor.company %}
+    <dt>{% trans %}Company{% endtrans %}</dt>
+    <dd>{{ vendor.company }}</dd>
+{% endif %}
+{% if vendor.street %}
+    <dt>{% trans %}Street{% endtrans %}</dt>
+    <dd>{{ vendor.street }}</dd>
+{% endif %}
+{% if vendor.zipcode %}
+    <dt>{% trans %}Zipcode{% endtrans %}</dt>
+    <dd>{{ vendor.zipcode }}</dd>
+{% endif %}
+{% if vendor.city %}
+    <dt>{% trans %}City{% endtrans %}</dt>
+    <dd>{{ vendor.city }}</dd>
+{% endif %}
+{% if vendor.country %}
+    <dt>{% trans %}Country{% endtrans %}</dt>
+    <dd>{{ vendor.country }}</dd>
+{% endif %}
+</dl>
+			{% if vendor.comment %}
+			<blockquote>
+	            {{ vendor.comment }}
+			</blockquote>
+	        {% endif %}
+
+{% if vendor.city %}
+<!--
+</div>
+<iframe height="200" frameborder="0" style="border:0; width:100%;" src="https://www.google.com/maps/embed/v1/place?q={% if vendor.street %}{{ vendor.street }}%20{% endif %}{{ vendor.city }}&key=AIzaSyBX2ei8q_XhfMLAR1CccTbFtFYLznR8zYs"></iframe>
+<div class="uk-container uk-container-center">
+-->
+{% endif %}

@@ -1,0 +1,120 @@
+{% extends 'PoolLinkmotorBundle::layout.html.twig' %}
+
+{% block title %}{% trans %}Add a backlink automatically{% endtrans %} - {% endblock %}
+
+{% block content %}
+    {% if error %}
+        <div class="uk-alert uk-alert-danger">
+            <p>{{ error|trans }}</p>
+        </div>
+    {% endif %}
+    {% if page %}
+        {% include 'PoolLinkmotorBundle:Page:viewsubnav.html.twig' with {active:'search-backlinks'} %}
+
+        {% if not loggedInUserMayEdit %}
+            <div class="uk-alert uk-alert-warning">
+                {% trans %}warning.loggedInUserMayNotEdit{% endtrans %}
+            </div>
+        {% elseif page.assignedTo != app.user %}
+            <div class="uk-alert uk-alert-warning">
+                {% trans %}warning.loggedInUserMayNotEdit.adminOverride{% endtrans %}
+            </div>
+        {% endif %}
+    {% endif %}
+
+    {% if not page %}
+        <ul class="uk-tab">
+            <li class="uk-active">
+                <a id="view" href="{{ path('pool_linkmotor_pages_search_backlinks', {id:pageId}) }}">
+                    {% trans %}Automatically{% endtrans %}
+                </a>
+            </li>
+            <li>
+                <a id="edit" href="{{ path('pool_linkmotor_backlinks_add') }}">
+                    <i class="uk-icon-edit"></i>
+                    {% trans %}Manually{% endtrans %}
+                </a>
+            </li>
+        </ul>
+
+        <h3>{% trans %}On which URL is the backlink?{% endtrans %}</h3>
+
+        <form class="uk-form uk-form-row slow" action="{{ path('pool_linkmotor_pages_search_backlinks', {id:pageId}) }}" method="get">
+            <fieldset>
+                <label class="uk-form-label" for="url">{% trans %}URL{% endtrans %}</label>
+                <input type="text" class="uk-form-width-large" id="url" name="url" placeholder="http://…" value="{{ url }}" />
+                <input class="uk-button uk-button-primary uk-display-inline" type="submit" value="{% trans %}Search{% endtrans %}" />
+            </fieldset>
+        </form>
+    {% endif %}
+
+    {% if backlinks %}
+        <div class="uk-alert">
+            <h3>{% trans %}Page information{% endtrans %}</h3>
+            <p>
+                <strong>URL</strong>: {{ url }}<br>
+                <strong>Statuscode</strong>: {{ urlInfo.httpStatusCode }}<br>
+                <strong>Meta-Index</strong>: {{ urlInfo.metaIndex ? 'index' : '<strong>noindex</strong>'}}<br>
+                <strong>Meta-Follow</strong>: {{ urlInfo.metaFollow ? 'follow' : '<strong>nofollow</strong>'}}<br>
+                <strong>X-Robots-Index</strong>: {{ urlInfo.xRobotsIndex ? 'index' : '<strong>noindex</strong>'}}<br>
+                <strong>X-Robots-Follow</strong>: {{ urlInfo.xRobotsFollow ? 'follow' : '<strong>nofollow</strong>'}}<br>
+                <strong>robots.txt (Google)</strong>: {{ urlInfo.robotsGoogle ? 'allow' : '<strong>disallow</strong>'}}<br>
+            </p>
+        </div>
+        <form class="uk-form uk-form-horizontal" action="{{ path('pool_linkmotor_pages_search_backlinks', {id:pageId, url:url}) }}" method="post">
+            <input type="hidden" name="backlinkId" value="">
+            <input type="hidden" name="urlInfo_httpStatusCode" value="{{ urlInfo.httpStatusCode }}">
+            <input type="hidden" name="urlInfo_metaIndex" value="{{ urlInfo.metaIndex }}">
+            <input type="hidden" name="urlInfo_metaFollow" value="{{ urlInfo.metaFollow }}">
+            <input type="hidden" name="urlInfo_xRobotsIndex" value="{{ urlInfo.xRobotsIndex }}">
+            <input type="hidden" name="urlInfo_xRobotsFollow" value="{{ urlInfo.xRobotsFollow }}">
+            <input type="hidden" name="urlInfo_robotsGoogle" value="{{ urlInfo.robotsGoogle }}">
+
+            <table class="uk-table uk-table-striped uk-table-hover">
+                <tr>
+                    <th><span class="uk-text-small uk-text-muted">{% trans %}Selection{% endtrans %}</span></th>
+                    <th>{% trans %}Target-URL{% endtrans %}</th>
+                    <th>{% trans %}Anchor{% endtrans %}</th>
+                    <th>{% trans %}Follow{% endtrans %}</th>
+                    <th>{% trans %}Type{% endtrans %}</th>
+                    <th><span class="uk-text-small uk-text-muted">{% trans %}Position{% endtrans %}</span></th>
+                </tr>
+                {% for backlinkId, backlink in backlinks %}
+                    <tr>
+                        <td>
+                            <input type="radio" name="backlinkId" value="{{ backlinkId }}"{% if (selectedId != '' and selectedId == backlinkId) or backlinks|length == 1%} checked="checked"{% endif %}>
+                        </td>
+                        <td>
+                            {{ backlink.url }}
+                            <input type="hidden" name="data[{{ backlinkId }}][url]" value="{{ backlink.url }}">
+                        </td>
+                        <td>
+                            {{ backlink.anchor }}
+                            <input type="hidden" name="data[{{ backlinkId }}][anchor]" value="{{ backlink.anchor }}">
+                        </td>
+                        <td>
+                            {{ backlink.follow?'Yes'|trans:'No'|trans }}
+                            <input type="hidden" name="data[{{ backlinkId }}][follow]" value="{{ backlink.follow }}">
+                        </td>
+                        <td>
+                            {{ backlink.type=='i'?'Image'|trans:'Text'|trans }}
+                            <input type="hidden" name="data[{{ backlinkId }}][type]" value="{{ backlink.type }}">
+                        </td>
+                        <td>
+                            <span class="uk-text-small uk-text-muted">{{ backlink.xpath }}</span>
+                            <input type="hidden" name="data[{{ backlinkId }}][xpath]" value="{{ backlink.xpath }}">
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+
+            <fieldset>
+                <input class="uk-button uk-button-primary" type="submit" value="{% trans %}Add backlink{% endtrans %}" />
+            </fieldset>
+        </form>
+    {% elseif didSearchForBacklinks %}
+        <div class="uk-alert uk-alert-warning">
+            <p>{% trans %}No backlinks were found{% endtrans %}</p>
+        </div>
+    {% endif %}
+{% endblock %}

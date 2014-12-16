@@ -1,0 +1,22 @@
+{% extends 'PoolLinkmotorBundle::layout.html.twig' %}
+
+{% block title %}{% trans %}Delete{% endtrans %} - {% trans %}Pages{% endtrans %} - {% endblock %}
+
+{% block content %}
+
+    {% include 'PoolLinkmotorBundle:Page:viewsubnav.html.twig' with {active:'delete'} %}
+
+    {% if page.backlinks|length > 0 %}
+        <div class="uk-alert-danger uk-alert-large">
+            <p>{% trans %}This page cannot be deleted, as it has at least one backlink{% endtrans %}</p>
+        </div>
+    {% else %}
+        <form class="uk-form uk-form-horizontal" action="{{ path('pool_linkmotor_pages_delete', {id:page.id}) }}" method="post">
+            <fieldset class="uk-alert-danger uk-alert-large">
+                <h2>{% trans %}Are you sure?{% endtrans %}</h2>
+                <p>{% trans %}Deleting this page cannot be undone!{% endtrans %}</p>
+            </fieldset>
+            <input class="uk-button uk-button-danger" type="submit" value="{% trans %}Delete{% endtrans %}" />
+        </form>
+    {% endif %}
+{% endblock %}

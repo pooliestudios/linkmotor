@@ -1,0 +1,14 @@
+{% extends 'PoolLinkmotorBundle::layout.html.twig' %}
+
+{% block title %}{% trans %}Export{% endtrans %} - {% trans %}Administration{% endtrans %} - {% endblock %}
+
+{% block subnav %}
+    {% include 'PoolLinkmotorAdminBundle:Default:subnav.html.twig' with {active:'export'} %}
+{% endblock %}
+
+{% block content %}
+<img class="uk-float-left" src="//linkmotor.de/img/software.png" alt="Link Management Tool" width="500" style="padding: 20px 20px 0 0;">
+    <h2>Export für den eigenen Server</h2>
+    <p>Sobald der Linkmotor das Beta-Stadium verlassen hat, werden wir die Software zum Download anbieten.</p>
+    <p>Entscheidest du dich für eine eigene Installation des Linkmotors, wird es hier einen kompletten Abzug deiner Datenbank geben. Darin sind dann alle Daten enthalten, so dass du sofort mit der eigenen Installation dort weitermachen können, wo du auf linkmotor.de aufgehört hast.</p>
+{% endblock %}

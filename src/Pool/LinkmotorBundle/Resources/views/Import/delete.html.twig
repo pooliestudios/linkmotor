@@ -1,0 +1,22 @@
+{% extends 'PoolLinkmotorBundle::layout.html.twig' %}
+
+{% block title %}{% trans %}Linkbird{% endtrans %} - {% trans %}Import{% endtrans %} - {% trans %}Backlinks{% endtrans %} - {% endblock %}
+
+{% block subnav %}
+    {% include 'PoolLinkmotorBundle:Import:subnav.html.twig' %}
+{% endblock %}
+
+{% block content %}
+    <h2>{% trans %}Delete import{% endtrans %}</h2>
+
+    <form class="uk-form uk-form-horizontal" action="{{ path('pool_linkmotor_backlinks_import_delete', {id:import.id}) }}" method="post">
+        <fieldset class="uk-alert-danger uk-alert-large">
+            <h2>{% trans %}Are you sure?{% endtrans %}</h2>
+            <p>{% trans %}Deleting this import cannot be undone!{% endtrans %}</p>
+            <p class="uk-text-bold">{% trans %}The imported backlinks will, of course, not be removed from this project!{% endtrans %}</p>
+        </fieldset>
+        <input class="uk-button uk-button-danger" type="submit" value="{% trans %}Delete{% endtrans %}" />
+        <a class="uk-button" href="{{ path('pool_linkmotor_imports_index') }}">{% trans %}Cancel{% endtrans %}</a>
+    </form>
+
+{% endblock %}

@@ -1,0 +1,185 @@
+<ul class="uk-subnav uk-subnav-pill filter">
+    <li>
+        <form class="uk-form autosubmit{% if filter['backlinkStatus'] != 'all' %} used-filter{% endif %}" action="{{ path('pool_linkmotor_backlinks_index', {type:'all'}) }}" method="get">
+            <input type="hidden" name="from" value="{{ type }}">
+            <select class="chosen" name="changeBacklinkStatusFilter">
+                <option value="all">{% trans %}All status{% endtrans %}</option>
+                <option value="online"{% if filter['backlinkStatus'] == 'online' %} selected="selected"{% endif %}>
+                    {% trans %}Online{% endtrans %}
+                </option>
+                <option value="offline"{% if filter['backlinkStatus'] == 'offline' %} selected="selected"{% endif %}>
+                    {% trans %}Offline{% endtrans %}
+                </option>
+                <option value="ok"{% if filter['backlinkStatus'] == 'ok' %} selected="selected"{% endif %}>
+                    {% trans %}OK{% endtrans %}
+                </option>
+                <option value="warning"{% if filter['backlinkStatus'] == 'warning' %} selected="selected"{% endif %}>
+                    {% trans %}Warning{% endtrans %}
+                </option>
+                <option value="error"{% if filter['backlinkStatus'] == 'error' %} selected="selected"{% endif %}>
+                    {% trans %}Error{% endtrans %}
+                </option>
+                <option value="alerts"{% if filter['backlinkStatus'] == 'alerts' %} selected="selected"{% endif %}>
+                    {% trans %}Alerts{% endtrans %}
+                </option>
+                <option value="pending"{% if filter['backlinkStatus'] == 'pending' %} selected="selected"{% endif %}>
+                    {% trans %}Pending{% endtrans %}
+                </option>
+            </select>
+        </form>
+    </li>
+    <li>
+        <form class="uk-form autosubmit{% if filter['crawlType'] != 'all' %} used-filter{% endif %}" action="{{ path('pool_linkmotor_backlinks_index', {type:'all'}) }}" method="get">
+            <input type="hidden" name="from" value="{{ type }}">
+            <select class="chosen" name="changeCrawlTypeFilter">
+                <option value="all">{% trans %}All crawl types{% endtrans %}</option>
+                <option value="dom"{% if filter['crawlType'] == 'dom' %} selected="selected"{% endif %}>
+                    {% trans %}DOM{% endtrans %}
+                </option>
+                <option value="text"{% if filter['crawlType'] == 'text' %} selected="selected"{% endif %}>
+                    {% trans %}Textmatching{% endtrans %}
+                </option>
+            </select>
+        </form>
+    </li>
+    <li>
+        <form class="uk-form autosubmit{% if filter['domain'] != '0' %} used-filter{% endif %}" action="{{ path('pool_linkmotor_backlinks_index', {type:'all'}) }}" method="get">
+            <input type="hidden" name="from" value="{{ type }}">
+            <select class="chosen" name="changeDomainFilter">
+                <option value="0">{% trans %}All domains{% endtrans %}</option>
+                {% for domain in domains %}
+                    <option value="{{ domain.id }}"{% if domain.id == filter['domain'] %} selected="selected"{% endif %}>
+                        {{ domain.name }}
+                    </option>
+                {% endfor %}
+            </select>
+        </form>
+    </li>
+    <li>
+        <form class="uk-form autosubmit{% if filter['vendor'] != '0' %} used-filter{% endif %}" action="{{ path('pool_linkmotor_backlinks_index', {type:'all'}) }}" method="get">
+            <input type="hidden" name="from" value="{{ type }}">
+            <select class="chosen" name="changeVendorFilter">
+                <option value="0">{% trans %}All vendors{% endtrans %}</option>
+                {% for vendor in vendors %}
+                    <option value="{{ vendor.id }}"{% if vendor.id == filter['vendor'] %} selected="selected"{% endif %}>
+                        {{ vendor.displayName }}
+                    </option>
+                {% endfor %}
+            </select>
+        </form>
+    </li>
+    {% if withUser %}
+        <li>
+            <form class="uk-form autosubmit{% if filter['user'] != '0' %} used-filter{% endif %}" action="{{ path('pool_linkmotor_backlinks_index', {type:'all'}) }}" method="get">
+                <input type="hidden" name="from" value="{{ type }}">
+                <select class="chosen" name="changeUserFilter">
+                    <option value="0">{% trans %}All users{% endtrans %}</option>
+                    {% for user in users %}
+                        <option value="{{ user.id }}"{% if user.id == filter['user'] %} selected="selected"{% endif %}>
+                            {{ user.displayName }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </form>
+        </li>
+    {% endif %}
+    <li>
+        <form class="uk-form{% if filter['date'] != 'all' and filter['date'] != '' %} used-filter{% endif %}" action="{{ path('pool_linkmotor_backlinks_index', {type:'all'}) }}" method="get">
+            <input type="hidden" name="from" value="{{ type }}">
+            <select class="chosen" id="changeDateFilter" name="changeDateFilter" x-data-last-value="{{ filter['date'] }}">
+                <option value="all">{% trans %}All dates{% endtrans %}</option>
+                <option value="last-7-days"{% if filter['date'] == 'last-7-days' %} selected="selected"{% endif %}>
+                    {% trans %}Last 7 days{% endtrans %}
+                </option>
+                <option value="last-14-days"{% if filter['date'] == 'last-14-days' %} selected="selected"{% endif %}>
+                    {% trans %}Last 14 days{% endtrans %}
+                </option>
+                <option value="last-30-days"{% if filter['date'] == 'last-30-days' %} selected="selected"{% endif %}>
+                    {% trans %}Last 30 days{% endtrans %}
+                </option>
+                {% if filter['dateFrom'] or filter['dateTo'] %}
+                    <option value="saved"{% if filter['date'] == 'saved' %} selected="selected"{% endif %}>
+                        {{ filter['dateFrom']|default('*') }} - {{ filter['dateTo']|default('*') }}
+                    </option>
+                {% endif %}
+                <option value="manual">
+                    <span id="date-filter-manual-label">
+                        {% trans %}Set range{% endtrans %}...
+                    </span>
+                </option>
+            </select>
+        </form>
+    </li>
+    <li>
+        <form class="uk-form autosubmit{% if filter['costType'] != '' %} used-filter{% endif %}" action="{{ path('pool_linkmotor_backlinks_index', {type:'all'}) }}" method="get">
+            <input type="hidden" name="from" value="{{ type }}">
+            <select class="chosen" id="changeCostTypeFilter" name="changeCostTypeFilter">
+                <option value="">{% trans %}All costs{% endtrans %}</option>
+                <option value="0"{% if filter['costType'] == 0 and filter['costType'] != '' %} selected="selected"{% endif %}>
+                    {% trans %}None{% endtrans %}
+                </option>
+                <option value="1"{% if filter['costType'] == 1 %} selected="selected"{% endif %}>
+                    {% trans %}One-Time{% endtrans %}
+                </option>
+                <option value="2"{% if filter['costType'] == 2 %} selected="selected"{% endif %}>
+                    {% trans %}Monthly{% endtrans %}
+                </option>
+                <option value="3"{% if filter['costType'] == 3 %} selected="selected"{% endif %}>
+                    {% trans %}Annual{% endtrans %}
+                </option>
+                <option value="4"{% if filter['costType'] == 4 %} selected="selected"{% endif %}>
+                    {% trans %}Link exchange{% endtrans %}
+                </option>
+                <option value="5"{% if filter['costType'] == 5 %} selected="selected"{% endif %}>
+                    {% trans %}Other exchange{% endtrans %}
+                </option>
+            </select>
+        </form>
+    </li>
+    {% if filter['backlinkStatus'] != 'all' or filter['crawlType'] != 'all'
+          or filter['domain'] != '0' or filter['vendor'] != '0'
+          or (withUser and filter['user'] != '0') or (filter['date'] != 'all' and filter['date'] != '')
+          or filter['costType'] != '' or filter['keyword']
+    %}
+        <li>
+            <a class="uk-button uk-button-danger uk-button-small" href="{{ path('pool_linkmotor_backlinks_index', {type:'all'}) }}?resetFilter">
+                <i class="uk-icon-times-circle"></i> {% trans %}Reset{% endtrans %}
+            </a>
+        </li>
+    {% endif %}
+</ul>
+<form class="uk-search autosubmit{% if filter['keyword'] %} used-filter{% endif %}" action="{{ path('pool_linkmotor_backlinks_index', {type:'all'}) }}" method="get" data-uk-search>
+    <input type="hidden" name="from" value="{{ type }}">
+    <input class="uk-search-field" name="changeKeywordFilter" type="search" placeholder="{% trans %}Search{% endtrans %}... ({% trans %}Page{% endtrans %})" value="{{ filter['keyword'] }}">
+    <button class="uk-search-close" type="reset"></button>
+</form>
+
+<div id="filter-date-range-modal" class="uk-modal">
+    <div class="uk-modal-dialog">
+        <a class="uk-modal-close uk-close"></a>
+        <h1>{% trans %}Set your own date range{% endtrans %}</h1>
+        <form action="{{ path('pool_linkmotor_backlinks_index', {type:'all'}) }}" method="get" class="uk-form-horizontal">
+            <input type="hidden" name="from" value="{{ type }}">
+            <input type="hidden" name="changeDateFilter" value="manual">
+            <fieldset>
+                <div class="uk-form-row">
+                    <label class="uk-form-label" for="">{% trans %}From date{% endtrans %}</label>
+                    <div class="uk-form-controls">
+                        <input name="date-filter-from" value="{{ filter['dateFrom'] }}" type="text" length="10">
+                        <span class="uk-text-small uk-text-muted uk-form-help-inline">{% trans %}Format: YYYY-MM-DD{% endtrans %}</span>
+                    </div>
+                </div>
+                <div class="uk-form-row">
+                    <label class="uk-form-label" for="">{% trans %}To date{% endtrans %}</label>
+                    <div class="uk-form-controls">
+                        <input name="date-filter-to" value="{{ filter['dateTo'] }}" type="text" length="10">
+                        <span class="uk-text-small uk-text-muted uk-form-help-inline">{% trans %}Format: YYYY-MM-DD{% endtrans %}</span>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset>
+                <input class="uk-button uk-button-primary" type="submit" value="{% trans %}Set{% endtrans %}" />
+            </fieldset>
+        </form>
+    </div>
+</div>

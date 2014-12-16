@@ -1,0 +1,24 @@
+{% import 'PoolLinkmotorBundle:Backlink:macrosStatus.html.twig' as macrosStatus %}
+
+<table class="uk-table uk-table-striped">
+    <h3 class="uk-panel-title"><i class="uk-icon-link"></i> Linkinfos</h3>
+    <thead>
+        <tr>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {{ macrosStatus.statusRow(backlink, 'Target-URL', 'url', '-', '-', 'danger') }}
+        {% if backlink.crawlType == 'dom' %}
+            {% if backlink.type == 'i' %}
+                {% set anchorLabel = 'Alt-Text' %}
+            {% else %}
+                {% set anchorLabel = 'Anchor' %}
+            {% endif %}
+            {{ macrosStatus.statusRow(backlink, anchorLabel, 'anchor', '-', '-', 'danger') }}
+        {% endif %}
+        {{ macrosStatus.statusRow(backlink, 'Type', 'type', '-', '-', 'danger') }}
+    </tbody>
+</table>

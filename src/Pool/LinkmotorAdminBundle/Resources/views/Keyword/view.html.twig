@@ -1,0 +1,41 @@
+{% extends 'PoolLinkmotorBundle::layout.html.twig' %}
+
+{% block title %}{{ keyword.keyword }} - {% trans %}Keywords{% endtrans %} - {% trans %}Explorer{% endtrans %} - {% endblock %}
+
+{% block subnav %}
+    {% include 'PoolLinkmotorAdminBundle:Keyword:breadcrumb.html.twig' %}
+{% endblock %}
+
+{% block content %}
+    <dl class="uk-description-list uk-description-list-horizontal">
+        <dt>{% trans %}Market{% endtrans %}</dt>
+        <dd>{{ keyword.market.name(app.request.locale) }}</dd>
+
+        <dt>{% trans %}SERP Position{% endtrans %}</dt>
+        <dd>Top {{ keyword.importLimit }}</dd>
+
+        <dt>{% trans %}Scheduled imports{% endtrans %}</dt>
+        <dd>
+            {% if keyword.importInterval > 0 %}
+                {% trans %}Every 6 months{% endtrans %}
+            {% else %}
+                <em>{% trans %}No scheduled import{% endtrans %}</em>
+            {% endif %}
+        </dd>
+
+        <dt>{% trans %}Assign to{% endtrans %}</dt>
+        <dd>{{ keyword.assignedTo.displayName|default('All users')|trans }}</dd>
+
+        <dt>{% trans %}Last import{% endtrans %}</dt>
+        <dd>
+            {% if keyword.lastImportAt %}
+                {{ keyword.lastImportAt|date('d.m.Y H:i') }}
+            {% else %}
+                <em>{% trans %}Not yet{% endtrans %}</em>
+            {% endif %}
+        </dd>
+    </dl>
+
+    <h1>{% trans %}Pages imported{% endtrans %}</h1>
+    {% include 'PoolLinkmotorBundle:Page:list.html.twig' with {type:'subdomain'} %}
+{% endblock %}

@@ -1,0 +1,47 @@
+<h2>{% trans %}Subdomains{% endtrans %}</h2>
+<table class="uk-table uk-table-striped uk-table-hover">
+    <tr>
+        <th>{% trans %}Subdomain{% endtrans %}</th>
+        <th>{% trans %}Pages{% endtrans %}</th>
+        <th>{% trans %}Backlinks{% endtrans %}</th>
+        <th>Subdomain-{% trans %}Vendor{% endtrans %}</th>
+        <th>Domain-{% trans %}Vendor{% endtrans %}</th>
+    </tr>
+    {% for subdomain in subdomains %}
+        <tr>
+            <td>{{ subdomain.fullForDisplay }}</td>
+            <td>
+                <a href="{{ path('pool_linkmotor_pages_subdomain', {id:subdomain.id}) }}">
+                    {{ subdomain.numPages(project)|localeNumber }}
+                </a>
+            </td>
+            <td>
+                <a href="{{ path('pool_linkmotor_backlinks_subdomain', {id:subdomain.id}) }}">
+                    {{ subdomain.numBacklinks(project)|localeNumber }}
+                </a>
+            </td>
+            <td>
+                {% if subdomain.vendor %}
+                    <a data-uk-tooltip title="{{ subdomain.vendor.displayName }} {{ subdomain.vendor.phone }}" href="{{ path('pool_linkmotor_vendors_view', {id:subdomain.vendor.id}) }}">
+                        <i class="uk-icon-user"></i> <small>{% trans %}show{% endtrans %}</small>
+                    </a>
+                {% else %}
+                    <a class="uk-text-muted" href="{{ path('pool_linkmotor_domains_set_vendor', {id:subdomain.id, type:'subdomain'}) }}">
+                        <i class="uk-icon-plus-square"></i> <small>{% trans %}add{% endtrans %}</small>
+                    </a>
+                {% endif %}
+            </td>
+            <td>
+                {% if subdomain.domain.vendor %}
+                    <a data-uk-tooltip title="{{ subdomain.domain.vendor.displayName }} {{ subdomain.domain.vendor.phone }}" href="{{ path('pool_linkmotor_vendors_view', {id:subdomain.domain.vendor.id}) }}">
+                        <i class="uk-icon-user"></i> <small>{% trans %}show{% endtrans %}</small>
+                    </a>
+                {% else %}
+                    <a class="uk-text-muted" href="{{ path('pool_linkmotor_domains_set_vendor', {id:subdomain.domain.id}) }}">
+                        <i class="uk-icon-plus-square"></i> <small>{% trans %}add{% endtrans %}</small>
+                    </a>
+                {% endif %}
+            </td>
+        </tr>
+    {% endfor %}
+</table>
