@@ -16,7 +16,7 @@ parameters:
     router.request_context.base_url: ~
 
     locale:            de
-    secret:            ThisTokenIsNotSoSecretChangeIt
+    secret:            PleaseChangeThisToken_f382fg27fg28mgq87g
 
     crawler.backlink.interval: "24 hours"
     crawler.page.interval: "7 days"

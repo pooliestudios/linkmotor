@@ -158,11 +158,6 @@ class BacklinkController extends BaseController
                     }
                 }
                 break;
-            default:
-                var_dump($action);
-                var_dump($backlinkIds);
-                var_dump($form['bulkAction']->getData());
-                exit;
         }
 
         $this->get('session')->getFlashBag()->add(

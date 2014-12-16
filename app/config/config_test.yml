@@ -18,6 +18,6 @@ swiftmailer:
 doctrine:
     dbal:
         host: localhost
-        dbname: linkmotor_testdb
-        user: root
-        password: null
+        dbname: ~
+        user: ~
+        password: ~
