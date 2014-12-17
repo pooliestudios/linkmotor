@@ -13,6 +13,7 @@ use Pool\LinkmotorBundle\Form\Type\PageEditType;
 use Pool\LinkmotorBundle\Form\Type\PageImportType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,6 +24,7 @@ class PageController extends BaseController
     /**
      * @Route("/{_locale}/app/page/{id}/search-backlinks/", defaults={"_locale" = "en", "id" = "0"},
      *        name="pool_linkmotor_pages_search_backlinks")
+     * @Method({"GET", "POST"})
      * @Template()
      */
     public function searchBacklinksAction(Request $request, $id)
@@ -148,6 +150,7 @@ class PageController extends BaseController
     /**
      * @Route("/{_locale}/app/pages/{type}/", defaults={"_locale" = "en", "type" = "my-new"},
      *        name="pool_linkmotor_pages_index")
+     * @Method("GET")
      * @Template()
      */
     public function indexAction(Request $request, $type)
@@ -206,14 +209,11 @@ class PageController extends BaseController
     /**
      * @Route("/{_locale}/app/bulk-actions/pages/", defaults={"_locale" = "en"},
      *        name="pool_linkmotor_pages_bulk_action")
+     * @Method("POST")
      * @Template()
      */
     public function bulkAction(Request $request)
     {
-        if ($request->getMethod() != 'POST') {
-            return $this->redirect($this->generateUrl('pool_linkmotor_pages_index'));
-        }
-
         $bulkActionsType = new PageBulkActionsType();
         $users = $this->getDoctrine()->getRepository('PoolLinkmotorBundle:User')->getAllActiveNonSupportUsers();
         $bulkActionsType->setUsers($users);
@@ -276,6 +276,7 @@ class PageController extends BaseController
     /**
      * @Route("/{_locale}/app/pages/{type}/export/", defaults={"_locale" = "en", "type" = "my"},
      *        name="pool_linkmotor_pages_export")
+     * @Method("GET")
      */
     public function exportAction($type)
     {
@@ -317,6 +318,7 @@ class PageController extends BaseController
     /**
      * @Route("/{_locale}/app/subdomains/{id}/pages/", defaults={"_locale" = "en"},
      *        name="pool_linkmotor_pages_subdomain")
+     * @Method("GET")
      * @Template()
      */
     public function subdomainAction(Subdomain $subdomain)
@@ -346,6 +348,7 @@ class PageController extends BaseController
 
     /**
      * @Route("/{_locale}/app/import/pages/", defaults={"_locale" = "en"}, name="pool_linkmotor_pages_import")
+     * @Method({"GET", "POST"})
      * @Template()
      */
     public function importAction(Request $request)
@@ -453,6 +456,7 @@ class PageController extends BaseController
 
     /**
      * @Route("/{_locale}/app/page/add/", defaults={"_locale" = "en"}, name="pool_linkmotor_pages_add")
+     * @Method({"GET", "POST"})
      * @Template()
      */
     public function addAction(Request $request)
@@ -529,6 +533,7 @@ class PageController extends BaseController
     /**
      * @Route("/{_locale}/app/page/{id}/view/", defaults={"_locale" = "en"}, name="pool_linkmotor_pages_view")
      * @Route("/{_locale}/app/page/{id}/edit/", defaults={"_locale" = "en"}, name="pool_linkmotor_pages_edit")
+     * @Method({"GET", "POST"})
      * @Template()
      */
     public function viewAction(Request $request, Page $page)
@@ -630,6 +635,7 @@ class PageController extends BaseController
 
     /**
      * @Route("/{_locale}/app/page/{id}/delete/", defaults={"_locale" = "en"}, name="pool_linkmotor_pages_delete")
+     * @Method({"GET", "POST"})
      * @Template()
      */
     public function deleteAction(Request $request, Page $page)
@@ -668,6 +674,7 @@ class PageController extends BaseController
 
     /**
      * @Route("/{_locale}/app/page/{id}/changelog/", defaults={"_locale" = "en"}, name="pool_linkmotor_pages_changelog")
+     * @Method("GET")
      * @Template()
      */
     public function changelogAction(Page $page)
@@ -698,6 +705,7 @@ class PageController extends BaseController
     /**
      * @Route("/{_locale}/app/page/{id}/after-not-relevant/", defaults={"_locale" = "en"},
      *        name="pool_linkmotor_pages_after_not_relevant")
+     * @Method("GET")
      * @Template()
      */
     public function afterNotRelevantAction(Page $page)
@@ -724,6 +732,7 @@ class PageController extends BaseController
      *
      * @Route("/{_locale}/app/page/{id}/refresh-authority/", defaults={"_locale" = "en"},
      *        name="pool_linkmotor_pages_refresh_authority")
+     * @Method("GET")
      * @Template()
      */
     public function refreshAuthorityAction(Page $page)
@@ -744,6 +753,7 @@ class PageController extends BaseController
      *
      * @Route("/{_locale}/app/page/{id}/refresh-domain-authority/", defaults={"_locale" = "en"},
      *        name="pool_linkmotor_pages_refresh_domain_authority")
+     * @Method("GET")
      * @Template()
      */
     public function refreshDomainAuthorityAction(Page $page)
