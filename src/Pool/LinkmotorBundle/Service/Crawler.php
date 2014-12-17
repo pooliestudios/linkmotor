@@ -117,7 +117,8 @@ class Crawler
         $regexToSearchFor = '/\/\/' . $regexDomain . '.*/i';
 
         $backlinks = array();
-        for ($i=0; $i<$linkNodes->count(); $i++) {
+        $numNodes = $linkNodes->count();
+        for ($i=0; $i<$numNodes; $i++) {
             $linkNode = $linkNodes->eq($i);
 
             $backlinkUrl = $linkNode->attr('href');
@@ -277,7 +278,8 @@ class Crawler
 
         $domCrawler = new DomCrawler($content);
         $metaNodes = $domCrawler->filter('meta');
-        for ($i=0; $i<$metaNodes->count(); $i++) {
+        $numMetaNodes = $metaNodes->count();
+        for ($i=0; $i<$numMetaNodes; $i++) {
             $metaNode = $metaNodes->eq($i);
             if (strtolower($metaNode->attr('name')) == 'robots') {
                 $content = strtolower($metaNode->attr('content'));
@@ -506,7 +508,8 @@ class Crawler
         }
 
         $results = array();
-        for ($i=0; $i<$linkNodes->count(); $i++) {
+        $numLinkNodes = $linkNodes->count();
+        for ($i=0; $i<$numLinkNodes; $i++) {
             $linkNode = $linkNodes->eq($i);
 
             $linkType = $this->getLinkType($linkNode->html());
@@ -549,7 +552,8 @@ class Crawler
 
         $domCrawler = new DomCrawler($html);
         $imgTags = $domCrawler->filter('img');
-        for ($i=0; $i<$imgTags->count(); $i++) {
+        $numImgTags = $imgTags->count();
+        for ($i=0; $i<$numImgTags; $i++) {
             $imgTag = $imgTags->eq($i);
             if ($imgTag->attr('alt')) {
                 $altText = $imgTag->attr('alt');
