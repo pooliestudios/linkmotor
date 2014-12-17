@@ -15,7 +15,7 @@ class BaseController extends Controller
     /**
      * @return \Pool\LinkmotorBundle\Entity\Project $project
      */
-    public function getSelectedProject()
+    protected function getSelectedProject()
     {
         $projectId = $this->get('session')->get('selectedProjectId');
         if (!$projectId) {
@@ -28,7 +28,7 @@ class BaseController extends Controller
     /**
      * @param Project $project
      */
-    public function setSelectedProject(Project $project = null)
+    protected function setSelectedProject(Project $project = null)
     {
         if ($project) {
             $this->get('session')->set('selectedProjectId', $project->getId());
@@ -42,7 +42,7 @@ class BaseController extends Controller
     /**
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function noProjectSelectedRedirect()
+    protected function noProjectSelectedRedirect()
     {
         return $this->redirect($this->generateUrl('pool_linkmotor_index'));
     }
