@@ -5,13 +5,13 @@ namespace Pool\LinkmotorBundle\Controller;
 use Pool\LinkmotorBundle\Entity\Backlink;
 use Pool\LinkmotorBundle\Entity\Page;
 use Pool\LinkmotorBundle\Entity\Subdomain;
-use Pool\LinkmotorBundle\Entity\Vendor;
 use Pool\LinkmotorBundle\Form\Type\BacklinkAddType;
 use Pool\LinkmotorBundle\Form\Type\BacklinkBulkActionsType;
 use Pool\LinkmotorBundle\Form\Type\BacklinkImportType;
 use Pool\LinkmotorBundle\Form\Type\BacklinkType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,6 +22,7 @@ class BacklinkController extends BaseController
     /**
      * @Route("/{_locale}/app/backlinks/{type}/", defaults={"_locale" = "en", "type" = "my-alerts"},
      *        name="pool_linkmotor_backlinks_index")
+     * @Method("GET")
      * @Template()
      */
     public function indexAction(Request $request, $type)
@@ -80,14 +81,11 @@ class BacklinkController extends BaseController
     /**
      * @Route("/{_locale}/app/bulk-actions/backlinks/", defaults={"_locale" = "en"},
      *        name="pool_linkmotor_backlinks_bulk_action")
+     * @Method("POST")
      * @Template()
      */
     public function bulkAction(Request $request)
     {
-        if ($request->getMethod() != 'POST') {
-            return $this->redirect($this->generateUrl('pool_linkmotor_backlinks_index'));
-        }
-
         $bulkActionsType = new BacklinkBulkActionsType();
         $users = $this->getDoctrine()->getRepository('PoolLinkmotorBundle:User')->getAllActiveNonSupportUsers();
         $bulkActionsType->setUsers($users);
@@ -170,6 +168,7 @@ class BacklinkController extends BaseController
 
     /**
      * @Route("/{_locale}/app/import/backlinks/", defaults={"_locale" = "en"}, name="pool_linkmotor_backlinks_import")
+     * @Method({"GET", "POST"})
      * @Template()
      */
     public function importAction(Request $request)
@@ -312,6 +311,7 @@ class BacklinkController extends BaseController
     /**
      * @Route("/{_locale}/app/backlinks/{type}/export/", defaults={"_locale" = "en", "type" = "my"},
      *        name="pool_linkmotor_backlinks_export")
+     * @Method("GET")
      */
     public function exportAction($type)
     {
@@ -353,6 +353,7 @@ class BacklinkController extends BaseController
     /**
      * @Route("/{_locale}/app/subdomains/{id}/backlinks/", defaults={"_locale" = "en"},
      *        name="pool_linkmotor_backlinks_subdomain")
+     * @Method("GET")
      * @Template()
      */
     public function subdomainAction(Subdomain $subdomain)
@@ -382,6 +383,7 @@ class BacklinkController extends BaseController
 
     /**
      * @Route("/{_locale}/app/backlink/add/", defaults={"_locale" = "en"}, name="pool_linkmotor_backlinks_add")
+     * @Method({"GET", "POST"})
      * @Template()
      */
     public function addAction(Request $request)
@@ -464,6 +466,7 @@ class BacklinkController extends BaseController
     /**
      * @Route("/{_locale}/app/page/{id}/backlinks/add/", defaults={"_locale" = "en"},
      *        name="pool_linkmotor_backlinks_add_for_page")
+     * @Method({"GET", "POST"})
      * @Template()
      */
     public function addForPageAction(Request $request, Page $page)
@@ -528,6 +531,7 @@ class BacklinkController extends BaseController
 
     /**
      * @Route("/{_locale}/app/backlink/{id}/view/", defaults={"_locale" = "en"}, name="pool_linkmotor_backlinks_view")
+     * @Method("GET")
      * @Template()
      */
     public function viewAction(Backlink $backlink)
@@ -546,6 +550,7 @@ class BacklinkController extends BaseController
 
     /**
      * @Route("/{_locale}/app/backlink/{id}/delete/", defaults={"_locale" = "en"}, name="pool_linkmotor_backlinks_delete")
+     * @Method({"GET", "POST"})
      * @Template()
      */
     public function deleteAction(Request $request, Backlink $backlink)
@@ -591,6 +596,7 @@ class BacklinkController extends BaseController
     /**
      * @Route("/{_locale}/app/backlink/{id}/changelog/", defaults={"_locale" = "en"},
      *        name="pool_linkmotor_backlinks_changelog")
+     * @Method("GET")
      * @Template()
      */
     public function changelogAction(Backlink $backlink)
@@ -620,6 +626,7 @@ class BacklinkController extends BaseController
 
     /**
      * @Route("/{_locale}/app/backlink/{id}/edit/", defaults={"_locale" = "en"}, name="pool_linkmotor_backlinks_edit")
+     * @Method({"GET", "POST"})
      * @Template()
      */
     public function editAction(Request $request, Backlink $backlink)
@@ -687,6 +694,7 @@ class BacklinkController extends BaseController
     /**
      * @Route("/{_locale}/app/backlink/{id}/crawl-log/", defaults={"_locale" = "en"},
      *        name="pool_linkmotor_backlinks_crawl_log")
+     * @Method("GET")
      * @Template()
      */
     public function crawlLogAction(Backlink $backlink)
@@ -705,6 +713,7 @@ class BacklinkController extends BaseController
 
     /**
      * @Route("/{_locale}/app/backlink/{id}/crawl/", defaults={"_locale" = "en"}, name="pool_linkmotor_backlinks_crawl")
+     * @Method("GET")
      * @Template()
      */
     public function crawlAction(Backlink $backlink)

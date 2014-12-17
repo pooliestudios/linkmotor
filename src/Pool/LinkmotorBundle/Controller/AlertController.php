@@ -6,6 +6,7 @@ use Pool\LinkmotorBundle\Entity\Alert;
 use Pool\LinkmotorBundle\Form\Type\AlertHideUntilType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Request;
 
 class AlertController extends BaseController
@@ -13,6 +14,7 @@ class AlertController extends BaseController
     /**
      * @Route("/{_locale}/app/alerts/{id}/hide-until/", defaults={"_locale" = "en"},
      *        name="pool_linkmotor_alerts_hide_until")
+     * @Method({"GET", "POST"})
      * @Template()
      */
     public function hideUntilAction(Request $request, Alert $alert)
@@ -42,6 +44,7 @@ class AlertController extends BaseController
 
     /**
      * @Route("/ajax/alerts/hide-until/form-row/", name="pool_linkmotor_ajax_alerts_hide_until_form_row")
+     * @Method("GET")
      * @Template()
      */
     public function hideUntilFormRowAction(Request $request)
