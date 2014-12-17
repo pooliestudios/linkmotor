@@ -25,14 +25,12 @@ class RobotsTxt
     private $robotUserAgentPattern;
     private $state;
     private $disallowedPaths;
-    private $debug;
 
     private $userAgent = 'Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; Win64; x64; Trident/6.0; MASEJS)';
 
     public function __construct($doctrine)
     {
         $this->doctrine = $doctrine;
-        $this->debug = false;
     }
 
     public function isGoogleBotAllowedForPage(Page $page)

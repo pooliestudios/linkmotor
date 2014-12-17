@@ -5,17 +5,11 @@ use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Pool\LinkmotorBundle\Service\Crawler;
 use Pool\LinkmotorBundle\Service\SeoServices;
 use Pool\LinkmotorBundle\Entity\Page;
 
 class CrawlPagesCommand extends ContainerAwareCommand
 {
-    /**
-     * @var crawler
-     */
-    private $crawler;
-
     /**
      * @var SeoServices
      */
@@ -35,7 +29,6 @@ class CrawlPagesCommand extends ContainerAwareCommand
         $doctrine = $this->getContainer()->get('doctrine');
         $pageRepository = $doctrine->getRepository('PoolLinkmotorBundle:Page');
         $this->em = $doctrine->getManager();
-        $this->crawler = $this->getContainer()->get('crawler');
         $this->seoservices = $this->getContainer()->get('seoservices');
 
         $id = $input->getArgument('id');

@@ -65,7 +65,8 @@ class Crypt
         $decrypted = mdecrypt_generic($this->module, $encrypted);
 
         // resolve padding
-        $pad = ord($decrypted[($len = strlen($decrypted)) - 1]);
+        $len = strlen($decrypted);
+        $pad = ord($decrypted[$len - 1]);
         $decrypted = substr($decrypted, 0, strlen($decrypted) - $pad);
 
         return $decrypted;

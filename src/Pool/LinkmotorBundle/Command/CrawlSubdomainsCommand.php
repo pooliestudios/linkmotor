@@ -6,17 +6,11 @@ use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Pool\LinkmotorBundle\Service\Crawler;
 use Pool\LinkmotorBundle\Service\SeoServices;
 use Symfony\Component\OptionsResolver\Options;
 
 class CrawlSubdomainsCommand extends ContainerAwareCommand
 {
-    /**
-     * @var Crawler
-     */
-    private $crawler;
-
     /**
      * @var SeoServices
      */
@@ -41,7 +35,6 @@ class CrawlSubdomainsCommand extends ContainerAwareCommand
         $doctrine = $this->getContainer()->get('doctrine');
         $subdomainRepository = $doctrine->getRepository('PoolLinkmotorBundle:Subdomain');
         $this->em = $doctrine->getManager();
-        $this->crawler = $this->getContainer()->get('crawler');
         $this->seoservices = $this->getContainer()->get('seoservices');
         $this->options = $this->getContainer()->get('linkmotor.options');
 
