@@ -732,26 +732,6 @@ class PageController extends BaseController
      */
     public function filterAction($withUser, $type)
     {
-        $project = $this->getSelectedProject();
-        if (!$project) {
-            // @todo Wenn nur ein Projekt vorhanden ist, dieses sofort auswählen
-            return $this->noProjectSelectedRedirect();
-        }
-        if ($this->isLimitedProject($project)) {
-            return $this->redirect($this->generateUrl('pool_linkmotor_limits_reached'));
-        }
-
-        $domains = $this->getDoctrine()->getRepository('PoolLinkmotorBundle:Domain')->getForProject($project);
-        $vendors = $this->getDoctrine()->getRepository('PoolLinkmotorBundle:Vendor')->getForProject($project);
-        $users = $this->getDoctrine()->getRepository('PoolLinkmotorBundle:User')->getAllNonSupportUsers();
-
-        return array(
-            'type' => $type,
-            'domains' => $domains,
-            'vendors' => $vendors,
-            'users' => $users,
-            'filter' => $this->getFilter($type),
-            'withUser' => $withUser
-        );
+        return $this->getFilterData($withUser, $type);
     }
 }
