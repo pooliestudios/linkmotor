@@ -5,12 +5,14 @@ namespace Pool\LinkmotorBundle\Controller;
 use Pool\LinkmotorBundle\Entity\Project;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Request;
 
 class DefaultController extends BaseController
 {
     /**
      * @Route("/anonymizer/", name="pool_linkmotor_anonymizer")
+     * @Method("GET")
      */
     public function anonymizerAction(Request $request)
     {
@@ -24,6 +26,7 @@ class DefaultController extends BaseController
 
     /**
      * @Route("/", name="pool_linkmotor_no_language_index")
+     * @Method("GET")
      * @Template()
      */
     public function indexNoLanguageAction(Request $request)
@@ -44,6 +47,7 @@ class DefaultController extends BaseController
 
     /**
      * @Route("/{_locale}/", defaults={"_locale" = "en"}, name="pool_linkmotor_index")
+     * @Method("GET")
      */
     public function indexAction()
     {
@@ -72,6 +76,7 @@ class DefaultController extends BaseController
 
     /**
      * @Route("/{_locale}/account/limited/", name="pool_linkmotor_account_limited")
+     * @Method("GET")
      * @Template()
      */
     public function accountLimitedPageAction(Request $request)
@@ -84,6 +89,7 @@ class DefaultController extends BaseController
 
     /**
      * @Route("/{_locale}/app/limits/reached/", name="pool_linkmotor_limits_reached")
+     * @Method("GET")
      * @Template()
      */
     public function limitsReachedPageAction()
@@ -97,6 +103,7 @@ class DefaultController extends BaseController
 
     /**
      * @Route("/{_locale}/app/limits/overstepped/", name="pool_linkmotor_limits_overstepped")
+     * @Method("GET")
      * @Template()
      */
     public function limitsOversteppedPageAction()
@@ -144,6 +151,7 @@ class DefaultController extends BaseController
 
     /**
      * @Route("/ajax/project-alert-badge/", name="pool_linkmotor_ajax_project_alert_badge")
+     * @Method("GET")
      * @Template()
      */
     public function alertBadgeAction()
@@ -165,6 +173,7 @@ class DefaultController extends BaseController
 
     /**
      * @Route("/ajax/project-new-pages-badge/", name="pool_linkmotor_ajax_project_new_pages_badge")
+     * @Method("GET")
      * @Template()
      */
     public function newPagesBadgeAction()

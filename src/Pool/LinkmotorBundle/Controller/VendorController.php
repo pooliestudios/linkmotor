@@ -7,6 +7,7 @@ use Pool\LinkmotorBundle\Form\Type\SetVendorType;
 use Pool\LinkmotorBundle\Form\Type\VendorEditType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -14,6 +15,7 @@ class VendorController extends BaseController
 {
     /**
      * @Route("/{_locale}/app/vendors/", defaults={"_locale" = "en"}, name="pool_linkmotor_vendors_index")
+     * @Method("GET")
      * @Template()
      */
     public function indexAction(Request $request)
@@ -50,6 +52,7 @@ class VendorController extends BaseController
 
     /**
      * @Route("/{_locale}/app/vendor/{id}/view/", defaults={"_locale" = "en"}, name="pool_linkmotor_vendors_view")
+     * @Method("GET")
      * @Template()
      */
     public function viewAction(Vendor $vendor)
@@ -70,6 +73,7 @@ class VendorController extends BaseController
 
     /**
      * @Route("/{_locale}/app/vendor/{id}/delete/", defaults={"_locale" = "en"}, name="pool_linkmotor_vendors_delete")
+     * @Method({"GET", "POST"})
      * @Template()
      */
     public function deleteAction(Request $request, Vendor $vendor)
@@ -107,6 +111,7 @@ class VendorController extends BaseController
     /**
      * @Route("/{_locale}/app/vendor/{id}/changelog/", defaults={"_locale" = "en"},
      *        name="pool_linkmotor_vendors_changelog")
+     * @Method("GET")
      * @Template()
      */
     public function changelogAction(Vendor $vendor)
@@ -138,6 +143,7 @@ class VendorController extends BaseController
 
     /**
      * @Route("/{_locale}/app/vendor/{id}/edit/", defaults={"_locale" = "en"}, name="pool_linkmotor_vendors_edit")
+     * @Method({"GET", "POST"})
      * @Template()
      */
     public function editAction(Request $request, Vendor $vendor)
@@ -168,6 +174,7 @@ class VendorController extends BaseController
     /**
      * @Route("/{_locale}/app/vendors/{type}/{id}/set-vendor/", defaults={"_locale" = "en", "type" = "domain"},
      *        name="pool_linkmotor_domains_set_vendor")
+     * @Method({"GET", "POST"})
      * @Template()
      */
     public function setVendorAction(Request $request, $type, $id)

@@ -5,6 +5,7 @@ namespace Pool\LinkmotorBundle\Controller;
 use Pool\LinkmotorBundle\Form\Type\BookmarkletSelect;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -13,6 +14,7 @@ class BookmarkletController extends BaseController
     /**
      * @Route("/{_locale}/app/bookmarklet/", defaults={"_locale" = "en"},
      *        name="pool_linkmotor_bookmarklet")
+     * @Method({"GET", "POST"})
      * @Template()
      */
     public function selectAction(Request $request)

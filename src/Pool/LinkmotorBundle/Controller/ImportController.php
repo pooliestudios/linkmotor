@@ -7,6 +7,7 @@ use Pool\LinkmotorBundle\Form\Type\LinkbirdImportStep2Type;
 use Pool\LinkmotorBundle\Form\Type\LinkbirdImportType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,6 +17,7 @@ class ImportController extends BaseController
     /**
      * @Route("/{_locale}/app/imports/", defaults={"_locale" = "en"},
      *        name="pool_linkmotor_imports_index")
+     * @Method("GET")
      * @Template()
      */
     public function indexAction(Request $request)
@@ -39,6 +41,7 @@ class ImportController extends BaseController
     /**
      * @Route("/{_locale}/app/imports/add/", defaults={"_locale" = "en"},
      *        name="pool_linkmotor_imports_add")
+     * @Method({"GET", "POST"})
      * @Template()
      */
     public function addAction(Request $request)
@@ -92,6 +95,7 @@ class ImportController extends BaseController
     /**
      * @Route("/{_locale}/app/imports/{id}/step-2/", defaults={"_locale" = "en"},
      *        name="pool_linkmotor_backlinks_import_step2")
+     * @Method({"GET", "POST"})
      * @Template()
      */
     public function step2Action(Request $request, Import $import)
@@ -148,6 +152,7 @@ class ImportController extends BaseController
      * @todo die Entity durch das Löschen des Projektes entfernt wird
      * @Route("/{_locale}/app/imports/{id}/delete/", defaults={"_locale" = "en"},
      *        name="pool_linkmotor_backlinks_import_delete")
+     * @Method({"GET", "POST"})
      * @Template()
      */
     public function deleteAction(Request $request, Import $import)
@@ -184,6 +189,7 @@ class ImportController extends BaseController
     /**
      * @Route("/{_locale}/app/imports/{id}/download-transcript/", defaults={"_locale" = "en"},
      *        name="pool_linkmotor_backlinks_import_download_transcript")
+     * @Method("GET")
      */
     public function downloadTranscriptAction(Import $import)
     {
@@ -210,6 +216,7 @@ class ImportController extends BaseController
     /**
      * @Route("/{_locale}/app/imports/{id}/ajax-refresh/", defaults={"_locale" = "en"},
      *        name="pool_linkmotor_backlinks_import_ajax_refresh")
+     * @Method("GET")
      * @Template()
      */
     public function ajaxRefreshAction(Import $import)

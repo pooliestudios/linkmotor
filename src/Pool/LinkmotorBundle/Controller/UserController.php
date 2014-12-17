@@ -11,6 +11,7 @@ use Pool\LinkmotorBundle\Form\Type\UserNotificationSettingsType;
 use Pool\LinkmotorBundle\Form\Type\UserSettingsType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\SecurityContext;
@@ -53,6 +54,7 @@ class UserController extends BaseController
 
     /**
      * @Route("/{_locale}/forgot-password/", defaults={"_locale" = "en"}, name="pool_linkmotor_forgot_password")
+     * @Method({"GET", "POST"})
      * @Template()
      */
     public function forgotPasswordAction(Request $request)
@@ -134,6 +136,7 @@ class UserController extends BaseController
 
     /**
      * @Route("/{_locale}/forgot-password-sent/", defaults={"_locale" = "en"}, name="pool_linkmotor_forgot_password_sent")
+     * @Method("GET")
      * @Template()
      */
     public function forgotPasswordSentAction(Request $request)
@@ -146,6 +149,7 @@ class UserController extends BaseController
     /**
      * @Route("/{_locale}/reset-password/{userId}/{validationId}/",
      *        defaults={"_locale" = "en"}, name="pool_linkmotor_reset_password")
+     * @Method({"GET", "POST"})
      * @Template()
      */
     public function resetPasswordAction(Request $request, $userId, $validationId)
@@ -209,6 +213,7 @@ class UserController extends BaseController
 
     /**
      * @Route("/{_locale}/app/settings/", defaults={"_locale" = "en"}, name="pool_linkmotor_user_settings")
+     * @Method({"GET", "POST"})
      * @Template()
      */
     public function settingsAction(Request $request)
@@ -237,6 +242,7 @@ class UserController extends BaseController
     /**
      * @Route("/{_locale}/app/notification-settings/", defaults={"_locale" = "en"},
      *        name="pool_linkmotor_user_notification_settings")
+     * @Method({"GET", "POST"})
      * @Template()
      */
     public function notificationSettingsAction(Request $request)
@@ -337,6 +343,7 @@ class UserController extends BaseController
     /**
      * @Route("/{_locale}/app/settings/change-password/", defaults={"_locale" = "en"},
      *        name="pool_linkmotor_user_change_password")
+     * @Method({"GET", "POST"})
      * @Template()
      */
     public function changePasswordAction(Request $request)
@@ -391,6 +398,7 @@ class UserController extends BaseController
 
     /**
      * @Route("/ajax/table-options/{which}/{action}/", name="pool_linkmotor_ajax_users_table_options")
+     * @Method("POST")
      * @Template()
      */
     public function tableOptionsAction(Request $request, $which, $action)

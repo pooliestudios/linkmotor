@@ -5,12 +5,14 @@ namespace Pool\LinkmotorBundle\Controller;
 use Pool\LinkmotorBundle\Entity\Domain;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Request;
 
 class DomainController extends BaseController
 {
     /**
      * @Route("/{_locale}/app/domains/", defaults={"_locale" = "en"}, name="pool_linkmotor_domains_index")
+     * @Method("GET")
      * @Template()
      */
     public function indexAction(Request $request)
@@ -46,6 +48,7 @@ class DomainController extends BaseController
 
     /**
      * @Route("/{_locale}/app/domains/view/{id}/", defaults={"_locale" = "en"}, name="pool_linkmotor_domains_view")
+     * @Method("GET")
      * @Template()
      */
     public function viewAction(Domain $domain)

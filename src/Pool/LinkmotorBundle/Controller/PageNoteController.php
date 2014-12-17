@@ -7,6 +7,7 @@ use Pool\LinkmotorBundle\Entity\PageNote;
 use Pool\LinkmotorBundle\Form\Type\PageNoteAddType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Request;
 
 class PageNoteController extends BaseController
@@ -14,6 +15,7 @@ class PageNoteController extends BaseController
 
     /**
      * @Route("/{_locale}/app/page/{id}/notes/", defaults={"_locale" = "en"}, name="pool_linkmotor_pages_notes")
+     * @Method({"GET", "POST"})
      * @Template()
      */
     public function indexAction(Request $request, Page $page)

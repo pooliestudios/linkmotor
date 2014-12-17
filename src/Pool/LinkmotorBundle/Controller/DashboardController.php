@@ -6,6 +6,7 @@ use Pool\LinkmotorBundle\Entity\Project;
 use Pool\LinkmotorBundle\Entity\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 class DashboardController extends BaseController
 {
@@ -14,6 +15,7 @@ class DashboardController extends BaseController
     /**
      * @Route("/{_locale}/app/dashboard/{id}/", defaults={"_locale" = "en"},
      *        name="pool_linkmotor_project_dashboard")
+     * @Method("GET")
      * @Template()
      */
     public function projectDashboardAction(Project $project)
@@ -70,6 +72,7 @@ class DashboardController extends BaseController
     /**
      * @Route("/{_locale}/app/dashboard/", defaults={"_locale" = "en"},
      *         name="pool_linkmotor_dashboard")
+     * @Method("GET")
      * @Template()
      */
     public function dashboardAction()
