@@ -334,6 +334,8 @@ class UserController extends BaseController
                 $em->flush();
 
                 $this->get('session')->getFlashBag()->add('success', 'Your changes have been saved');
+
+                return $this->redirect($this->generateUrl('pool_linkmotor_user_notification_settings'));
             }
         }
 
