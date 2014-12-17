@@ -728,49 +728,6 @@ class PageController extends BaseController
     }
 
     /**
-     * @todo Zusätzlich als Ajax-Request realisieren
-     *
-     * @Route("/{_locale}/app/page/{id}/refresh-authority/", defaults={"_locale" = "en"},
-     *        name="pool_linkmotor_pages_refresh_authority")
-     * @Method("GET")
-     * @Template()
-     */
-    public function refreshAuthorityAction(Page $page)
-    {
-        $authority = $this->get('seoservices')->getPageAuthority($page->getFull());
-        if ($authority !== '') {
-            $em = $this->getDoctrine()->getManager();
-            $page->setAuthority($authority);
-            $em->persist($page);
-            $em->flush();
-        }
-
-        return $this->redirect($this->generateUrl('pool_linkmotor_pages_view', array('id' => $page->getId())));
-    }
-
-    /**
-     * @todo Zusätzlich als Ajax-Request realisieren
-     *
-     * @Route("/{_locale}/app/page/{id}/refresh-domain-authority/", defaults={"_locale" = "en"},
-     *        name="pool_linkmotor_pages_refresh_domain_authority")
-     * @Method("GET")
-     * @Template()
-     */
-    public function refreshDomainAuthorityAction(Page $page)
-    {
-        $authority = $this->get('seoservices')->getDomainAuthority($page->getFull());
-        if ($authority !== '') {
-            $em = $this->getDoctrine()->getManager();
-            $domain = $page->getSubdomain()->getDomain();
-            $domain->setAuthority($authority);
-            $em->persist($domain);
-            $em->flush();
-        }
-
-        return $this->redirect($this->generateUrl('pool_linkmotor_pages_view', array('id' => $page->getId())));
-    }
-
-    /**
      * @Template()
      */
     public function filterAction($withUser, $type)
