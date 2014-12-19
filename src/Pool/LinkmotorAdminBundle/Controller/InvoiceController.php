@@ -32,6 +32,8 @@ class InvoiceController extends BaseController
                     'Your changes have been saved'
                 );
             }
+
+            $this->redirect($this->generateUrl('pool_linkmotor_admin_invoice_information_edit'));
         }
 
         return array('form' => $form->createView());
