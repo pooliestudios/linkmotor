@@ -33,7 +33,7 @@ class InvoiceController extends BaseController
                 );
             }
 
-            $this->redirect($this->generateUrl('pool_linkmotor_admin_invoice_information_edit'));
+            return $this->redirect($this->generateUrl('pool_linkmotor_admin_invoice_information_edit'));
         }
 
         return array('form' => $form->createView());
