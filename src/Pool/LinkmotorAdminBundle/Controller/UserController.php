@@ -8,12 +8,14 @@ use Pool\LinkmotorAdminBundle\Form\Type\UserAddType;
 use Pool\LinkmotorAdminBundle\Form\Type\UserEditType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Request;
 
 class UserController extends BaseController
 {
     /**
      * @Route("/{_locale}/admin/users/", defaults={"_locale" = "en"}, name="pool_linkmotor_admin_users_index")
+     * @Method("GET")
      * @Template()
      */
     public function indexAction()
@@ -32,6 +34,7 @@ class UserController extends BaseController
 
     /**
      * @Route("/{_locale}/admin/users/add/", defaults={"_locale" = "en"}, name="pool_linkmotor_admin_users_add")
+     * @Method({"GET", "POST"})
      * @Template()
      */
     public function addAction(Request $request)
@@ -68,6 +71,7 @@ class UserController extends BaseController
 
     /**
      * @Route("/{_locale}/admin/users/edit/{id}/", defaults={"_locale" = "en"}, name="pool_linkmotor_admin_users_edit")
+     * @Method({"GET", "POST"})
      * @Template()
      */
     public function editAction(Request $request, User $user)

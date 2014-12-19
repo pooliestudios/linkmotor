@@ -10,6 +10,7 @@ use Pool\LinkmotorBundle\Entity\Project;
 use Pool\LinkmotorAdminBundle\Form\Type\ProjectAddType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -17,6 +18,7 @@ class ProjectController extends BaseController
 {
     /**
      * @Route("/{_locale}/admin/projects/", defaults={"_locale" = "en"}, name="pool_linkmotor_admin_projects_index")
+     * @Method("GET")
      * @Template()
      */
     public function indexAction()
@@ -36,6 +38,7 @@ class ProjectController extends BaseController
 
     /**
      * @Route("/{_locale}/admin/export/", defaults={"_locale" = "en"}, name="pool_linkmotor_admin_export")
+     * @Method("GET")
      * @Template()
      */
     public function exportAction()
@@ -45,6 +48,7 @@ class ProjectController extends BaseController
 
     /**
      * @Route("/{_locale}/admin/projects/add/", defaults={"_locale" = "en"}, name="pool_linkmotor_admin_projects_add")
+     * @Method({"GET", "POST"})
      * @Template()
      */
     public function addAction(Request $request)
@@ -165,6 +169,7 @@ class ProjectController extends BaseController
     /**
      * @Route("/{_locale}/admin/projects/{id}/settings", defaults={"_locale" = "en"},
      *        name="pool_linkmotor_admin_projects_settings")
+     * @Method({"GET", "POST"})
      * @Template()
      */
     public function settingsAction(Request $request, Project $project)
@@ -193,6 +198,7 @@ class ProjectController extends BaseController
     /**
      * @Route("/{_locale}/admin/projects/{id}/delete", defaults={"_locale" = "en"},
      *        name="pool_linkmotor_admin_projects_delete")
+     * @Method({"GET", "POST"})
      * @Template()
      */
     public function deleteAction(Request $request, Project $project)

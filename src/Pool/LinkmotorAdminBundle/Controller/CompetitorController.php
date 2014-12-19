@@ -8,6 +8,7 @@ use Pool\LinkmotorAdminBundle\Form\Type\CompetitorAddType;
 use Pool\LinkmotorAdminBundle\Form\Type\CompetitorEditType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -16,6 +17,7 @@ class CompetitorController extends BaseController
     /**
      * @Route("/{_locale}/admin/explorer/competitors/", defaults={"_locale" = "en"},
      *        name="pool_linkmotor_explorer_competitor_index")
+     * @Method("GET")
      * @Template()
      */
     public function indexAction(Request $request)
@@ -47,6 +49,7 @@ class CompetitorController extends BaseController
     /**
      * @Route("/{_locale}/admin/explorer/competitors/add/", defaults={"_locale" = "en"},
      *        name="pool_linkmotor_explorer_competitor_add")
+     * @Method({"GET", "POST"})
      * @Template()
      */
     public function addAction(Request $request)
@@ -142,6 +145,7 @@ class CompetitorController extends BaseController
     /**
      * @Route("/{_locale}/admin/explorer/competitors/{id}/edit/", defaults={"_locale" = "en"},
      *        name="pool_linkmotor_explorer_competitor_edit")
+     * @Method({"GET", "POST"})
      * @Template()
      */
     public function editAction(Request $request, Competitor $competitor)
@@ -181,6 +185,7 @@ class CompetitorController extends BaseController
     /**
      * @Route("/{_locale}/admin/explorer/competitors/{id}/view/", defaults={"_locale" = "en"},
      *        name="pool_linkmotor_explorer_competitor_view")
+     * @Method("GET")
      * @Template()
      */
     public function viewAction(Competitor $competitor)
@@ -208,6 +213,7 @@ class CompetitorController extends BaseController
     /**
      * @Route("/{_locale}/admin/explorer/competitors/{id}/delete/", defaults={"_locale" = "en"},
      *        name="pool_linkmotor_explorer_competitor_delete")
+     * @Method({"GET", "POST"})
      * @Template()
      */
     public function deleteAction(Request $request, Competitor $competitor)
@@ -247,6 +253,7 @@ class CompetitorController extends BaseController
     /**
      * @Route("/{_locale}/admin/explorer/competitors/{id}/import/", defaults={"_locale" = "en"},
      *        name="pool_linkmotor_explorer_competitor_import")
+     * @Method("GET")
      * @Template()
      */
     public function importAction(Competitor $competitor)

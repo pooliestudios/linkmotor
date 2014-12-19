@@ -8,6 +8,7 @@ use Pool\LinkmotorAdminBundle\Form\Type\KeywordAddType;
 use Pool\LinkmotorAdminBundle\Form\Type\KeywordEditType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -16,6 +17,7 @@ class KeywordController extends BaseController
     /**
      * @Route("/{_locale}/admin/explorer/keywords/", defaults={"_locale" = "en"},
      *        name="pool_linkmotor_explorer_keyword_index")
+     * @Method("GET")
      * @Template()
      */
     public function indexAction(Request $request)
@@ -47,6 +49,7 @@ class KeywordController extends BaseController
     /**
      * @Route("/{_locale}/admin/explorer/keywords/add/", defaults={"_locale" = "en"},
      *        name="pool_linkmotor_explorer_keyword_add")
+     * @Method({"GET", "POST"})
      * @Template()
      */
     public function addAction($_locale, Request $request)
@@ -118,6 +121,7 @@ class KeywordController extends BaseController
     /**
      * @Route("/{_locale}/admin/explorer/keywords/{id}/edit/", defaults={"_locale" = "en"},
      *        name="pool_linkmotor_explorer_keyword_edit")
+     * @Method({"GET", "POST"})
      * @Template()
      */
     public function editAction($_locale, Request $request, Keyword $keyword)
@@ -157,6 +161,7 @@ class KeywordController extends BaseController
     /**
      * @Route("/{_locale}/admin/explorer/keywords/{id}/view/", defaults={"_locale" = "en"},
      *        name="pool_linkmotor_explorer_keyword_view")
+     * @Method("GET")
      * @Template()
      */
     public function viewAction(Keyword $keyword)
@@ -184,6 +189,7 @@ class KeywordController extends BaseController
     /**
      * @Route("/{_locale}/admin/explorer/keywords/{id}/delete/", defaults={"_locale" = "en"},
      *        name="pool_linkmotor_explorer_keyword_delete")
+     * @Method({"GET", "POST"})
      * @Template()
      */
     public function deleteAction(Request $request, Keyword $keyword)
@@ -223,6 +229,7 @@ class KeywordController extends BaseController
     /**
      * @Route("/{_locale}/admin/explorer/keywords/{id}/import/", defaults={"_locale" = "en"},
      *        name="pool_linkmotor_explorer_keyword_import")
+     * @Method("GET")
      * @Template()
      */
     public function importAction(Keyword $keyword)

@@ -6,6 +6,7 @@ use Pool\LinkmotorBundle\Controller\BaseController;
 use Pool\LinkmotorAdminBundle\Form\Type\AccountType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Request;
 
 class AccountController extends BaseController
@@ -13,6 +14,7 @@ class AccountController extends BaseController
     /**
      * @Route("/{_locale}/admin/account/", defaults={"_locale" = "en"},
      *        name="pool_linkmotor_admin_account_edit")
+     * @Method({"GET", "POST"})
      * @Template()
      */
     public function editAction(Request $request)

@@ -8,6 +8,7 @@ use Pool\LinkmotorAdminBundle\Form\Type\BlacklistAddType;
 use Pool\LinkmotorAdminBundle\Form\Type\BlacklistEditType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -16,6 +17,7 @@ class BlacklistController extends BaseController
     /**
      * @Route("/{_locale}/admin/explorer/blacklist/", defaults={"_locale" = "en"},
      *        name="pool_linkmotor_explorer_blacklist_index")
+     * @Method("GET")
      * @Template()
      */
     public function indexAction(Request $request)
@@ -47,6 +49,7 @@ class BlacklistController extends BaseController
     /**
      * @Route("/{_locale}/admin/explorer/blacklist/add/", defaults={"_locale" = "en"},
      *        name="pool_linkmotor_explorer_blacklist_add")
+     * @Method({"GET", "POST"})
      * @Template()
      */
     public function addAction(Request $request)
@@ -117,6 +120,7 @@ class BlacklistController extends BaseController
     /**
      * @Route("/{_locale}/admin/explorer/blacklist/{id}/edit/", defaults={"_locale" = "en"},
      *        name="pool_linkmotor_explorer_blacklist_edit")
+     * @Method({"GET", "POST"})
      * @Template()
      */
     public function editAction(Request $request, Blacklist $blacklistItem)
@@ -150,6 +154,7 @@ class BlacklistController extends BaseController
     /**
      * @Route("/{_locale}/admin/explorer/blacklist/{id}/delete/", defaults={"_locale" = "en"},
      *        name="pool_linkmotor_explorer_blacklist_delete")
+     * @Method({"GET", "POST"})
      * @Template()
      */
     public function deleteAction(Request $request, Blacklist $blacklist)
