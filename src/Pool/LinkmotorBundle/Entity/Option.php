@@ -4,7 +4,6 @@ namespace Pool\LinkmotorBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Option
@@ -14,6 +13,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *         @ORM\Index(name="name_idx", columns={"name"}),
  *     })
  * @ORM\Entity(repositoryClass="Pool\LinkmotorBundle\Entity\OptionRepository")
+ * @UniqueEntity(fields={"name"}, message="This name is already taken!")
  */
 class Option
 {

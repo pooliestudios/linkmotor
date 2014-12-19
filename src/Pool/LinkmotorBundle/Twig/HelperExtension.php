@@ -3,7 +3,6 @@
 namespace Pool\LinkmotorBundle\Twig;
 
 use Pool\LinkmotorBundle\Service\Options;
-use Symfony\Component\Intl\Intl;
 
 class HelperExtension extends \Twig_Extension
 {

@@ -6,7 +6,6 @@ use Doctrine\ORM\Event\LifecycleEventArgs;
 use \Doctrine\ORM\EntityManager;
 use Pool\LinkmotorBundle\Entity\Backlink;
 use Pool\LinkmotorBundle\Entity\Alert;
-use Symfony\Bundle\TwigBundle\TwigEngine;
 
 class AlertUpdater
 {

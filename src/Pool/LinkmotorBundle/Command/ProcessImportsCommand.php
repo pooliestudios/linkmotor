@@ -57,7 +57,7 @@ class ProcessImportsCommand extends ContainerAwareCommand
         }
     }
 
-    protected function processStep0($import)
+    protected function processStep0(Import $import)
     {
         $import->setStep(1);
         $import->setProgress(1);
@@ -87,7 +87,7 @@ class ProcessImportsCommand extends ContainerAwareCommand
         $this->em->flush();
     }
 
-    protected function processStep3($import)
+    protected function processStep3(Import $import)
     {
         $importId = $import->getId();
         $this->importData = $import->getData();
@@ -315,7 +315,7 @@ class ProcessImportsCommand extends ContainerAwareCommand
 
     // @todo Die Importe sollten in einen Service und außerdem so gestaltet werden, dass
     // @todo neue Importformate leicht hinzuzufügen sind.
-    protected function analyzeLinkbirdImport($import)
+    protected function analyzeLinkbirdImport(Import $import)
     {
         $filename = $import->getUploadRootDir() . '/' . $import->getImportFilename();
 
