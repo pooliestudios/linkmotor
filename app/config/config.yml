@@ -64,7 +64,7 @@ doctrine:
         # e.g. database_path: %kernel.root_dir%/data/data.db3
         # path:     %database_path%
         platform_service: doctrine_dbal_platform
-        
+
     orm:
         auto_generate_proxy_classes: %kernel.debug%
         auto_mapping: true

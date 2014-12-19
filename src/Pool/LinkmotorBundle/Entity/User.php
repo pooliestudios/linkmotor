@@ -167,7 +167,7 @@ class User implements AdvancedUserInterface
     public function getRoles()
     {
         $roles = array('ROLE_USER');
-        if ($this->getIsAdmin()) {
+        if ($this->isAdmin()) {
             $roles[] = 'ROLE_ADMIN';
         }
 

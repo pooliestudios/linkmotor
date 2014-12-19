@@ -27,7 +27,7 @@ class AuthenticationHandler extends ContainerAware implements AuthenticationSucc
     public function onAuthenticationSuccess(Request $request, TokenInterface $token)
     {
         if (!$this->limits->userMayLogIn($token->getUser())) {
-            return new RedirectResponse($this->router->generate('pool_linkmotor_account_limitedq>q'));
+            return new RedirectResponse($this->router->generate('pool_linkmotor_account_limited'));
         }
 
         $session = $request->getSession();
