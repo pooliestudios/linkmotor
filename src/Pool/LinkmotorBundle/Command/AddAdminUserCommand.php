@@ -42,8 +42,8 @@ class AddAdminUserCommand extends ContainerAwareCommand
         $user = new \Pool\LinkmotorBundle\Entity\User();
         $user->setEmail($email);
         $user->setName($name);
-        $user->setIsAdmin(true);
-        $user->setIsInactive(false);
+        $user->setAdmin(true);
+        $user->setInactive(false);
 
         $encoder = $factory->getEncoder($user);
         $encodedPassword = $encoder->encodePassword($password, $user->getSalt());

@@ -275,7 +275,7 @@ class UserController extends BaseController
         $userNotificationSettingsType = new UserNotificationSettingsType();
         $userNotificationSettingsType
             ->setProjects($projects)
-            ->setIsAdmin($user->getIsAdmin());
+            ->setAdmin($user->isAdmin());
         $form =  $this->createForm($userNotificationSettingsType, $notificationSettings);
         if ($request->isMethod('POST')) {
             $form->submit($request);

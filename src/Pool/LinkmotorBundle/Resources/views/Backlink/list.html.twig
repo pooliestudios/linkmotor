@@ -35,7 +35,7 @@
         {% endif %}
         <tr>
             <td class="bulk-actions">
-                <input type="checkbox" data-id="{{ backlink.id }}" data-has-alert="{{ backlink.hasAlert ? 1 : 0 }}" data-may-change-status="{{ backlink.getIsOfflineMayBeChangedByUser(app.user) ? 1 : 0 }}">
+                <input type="checkbox" data-id="{{ backlink.id }}" data-has-alert="{{ backlink.hasAlert ? 1 : 0 }}" data-may-change-status="{{ backlink.isOfflineMayBeChangedByUser(app.user) ? 1 : 0 }}">
             </td>
             {% for tableOption in tableOptions %}
                 {{ poolMacros.showBacklinksBodyCell(tableOption, backlink) }}

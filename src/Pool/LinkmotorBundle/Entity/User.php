@@ -124,8 +124,8 @@ class User implements AdvancedUserInterface
         $this->email = '';
         $this->password = '';
         $this->name = '';
-        $this->setIsInactive(false);
-        $this->setIsAdmin(false);
+        $this->setInactive(false);
+        $this->setAdmin(false);
         $this->itemsPerPage = 50;
         $this->setOptions(array());
         $this->alerts = new \Doctrine\Common\Collections\ArrayCollection();
@@ -271,7 +271,7 @@ class User implements AdvancedUserInterface
      */
     public function isEnabled()
     {
-        return $this->getIsInactive() == false;
+        return $this->isInactive() == false;
     }
 
 
@@ -335,16 +335,11 @@ class User implements AdvancedUserInterface
      * @param boolean $isAdmin
      * @return User
      */
-    public function setIsAdmin($isAdmin)
+    public function setAdmin($isAdmin)
     {
         $this->isAdmin = $isAdmin;
 
         return $this;
-    }
-
-    public function isAdmin()
-    {
-        return $this->getIsAdmin();
     }
 
     /**
@@ -352,7 +347,7 @@ class User implements AdvancedUserInterface
      *
      * @return boolean
      */
-    public function getIsAdmin()
+    public function isAdmin()
     {
         return $this->isAdmin;
     }
@@ -840,36 +835,13 @@ class User implements AdvancedUserInterface
     }
 
     /**
-     * Set inactive
-     *
-     * @param boolean $inactive
-     * @return User
-     */
-    public function setIsInactive($inactive)
-    {
-        $this->setInactive($inactive);
-
-        return $this;
-    }
-
-    /**
      * Get inactive
      *
      * @return boolean 
      */
-    public function getInactive()
+    public function isInactive()
     {
         return $this->inactive;
-    }
-
-    /**
-     * Get inactive
-     *
-     * @return boolean
-     */
-    public function getIsInactive()
-    {
-        return $this->getInactive();
     }
 
     public function getLocale()

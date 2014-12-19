@@ -70,7 +70,7 @@ class BacklinkController extends BaseController
         $bulkActionsType = new BacklinkBulkActionsType();
         $users = $this->getDoctrine()->getRepository('PoolLinkmotorBundle:User')->getAllActiveNonSupportUsers();
         $bulkActionsType->setUsers($users);
-        $bulkActionsType->setIsAdmin($this->get('security.context')->isGranted('ROLE_ADMIN'));
+        $bulkActionsType->setAdmin($this->get('security.context')->isGranted('ROLE_ADMIN'));
         $bulkActionsForm = $this->createForm($bulkActionsType, $bulkData);
 
         return array(
@@ -89,6 +89,7 @@ class BacklinkController extends BaseController
         $bulkActionsType = new BacklinkBulkActionsType();
         $users = $this->getDoctrine()->getRepository('PoolLinkmotorBundle:User')->getAllActiveNonSupportUsers();
         $bulkActionsType->setUsers($users);
+        $bulkActionsType->setAdmin($this->get('security.context')->isGranted('ROLE_ADMIN'));
         $form = $this->createForm($bulkActionsType);
 
         $form->submit($request);
@@ -106,8 +107,8 @@ class BacklinkController extends BaseController
                 $user = $this->getUser();
                 foreach ($backlinkIds as $backlinkId) {
                     $backlink = $em->getRepository('PoolLinkmotorBundle:Backlink')->find($backlinkId);
-                    if ($backlink->getIsOfflineMayBeChangedByUser($user)) {
-                        $backlink->setIsOffline($action[1] == 2 ? true : false);
+                    if ($backlink->isOfflineMayBeChangedByUser($user)) {
+                        $backlink->setOffline($action[1] == 2 ? true : false);
                         $em->persist($backlink);
                         $em->flush();
                     }

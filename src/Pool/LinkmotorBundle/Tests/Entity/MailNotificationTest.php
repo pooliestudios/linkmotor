@@ -173,7 +173,7 @@ class MailNotificationTest extends \PHPUnit_Framework_TestCase
 
         $user2 = new User();
         $user2->setEmail('test@test.com');
-        $user2->setIsAdmin(false);
+        $user2->setAdmin(false);
         $notificationSetting = new NotificationSetting();
         $notificationSetting->setErrors(true);
         $notificationSetting->setAllErrors(true);
@@ -198,7 +198,7 @@ class MailNotificationTest extends \PHPUnit_Framework_TestCase
 
         $user2 = new User();
         $user2->setEmail('test@test.com');
-        $user2->setIsAdmin(true);
+        $user2->setAdmin(true);
         $notificationSetting = new NotificationSetting();
         $notificationSetting->setErrors(true);
         $notificationSetting->setAllErrors(true);
@@ -223,7 +223,7 @@ class MailNotificationTest extends \PHPUnit_Framework_TestCase
 
         $user2 = new User();
         $user2->setEmail('test@test.com');
-        $user2->setIsAdmin(true);
+        $user2->setAdmin(true);
         $notificationSetting = new NotificationSetting();
         $notificationSetting->setWarnings(true);
         $notificationSetting->setAllWarnings(true);
@@ -284,7 +284,7 @@ class MailNotificationTest extends \PHPUnit_Framework_TestCase
     public function testAllWarningsOrErrorsReturnsAlwaysFalseOnNonAdmin()
     {
         $user = new User();
-        $user->setIsAdmin(false);
+        $user->setAdmin(false);
 
         $notificationSetting = new NotificationSetting();
         $notificationSetting->setUser($user);
@@ -300,7 +300,7 @@ class MailNotificationTest extends \PHPUnit_Framework_TestCase
     public function testAllWarningsOrErrorsReturnsAlwaysFalseWhenWarningOrErrorsAreSwitchedOff()
     {
         $user = new User();
-        $user->setIsAdmin(true);
+        $user->setAdmin(true);
 
         $notificationSetting = new NotificationSetting();
         $notificationSetting->setUser($user);

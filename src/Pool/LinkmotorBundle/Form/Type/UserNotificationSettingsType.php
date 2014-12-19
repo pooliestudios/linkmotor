@@ -35,7 +35,7 @@ class UserNotificationSettingsType extends AbstractType
         return $this;
     }
 
-    public function setIsAdmin($value)
+    public function setAdmin($value)
     {
         $this->isAdmin = $value;
 

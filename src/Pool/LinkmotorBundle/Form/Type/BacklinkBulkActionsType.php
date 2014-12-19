@@ -9,7 +9,7 @@ class BacklinkBulkActionsType extends AbstractType
     protected $isAdmin = false;
     protected $userList;
 
-    public function setIsAdmin($newValue)
+    public function setAdmin($newValue)
     {
         $this->isAdmin = $newValue;
     }

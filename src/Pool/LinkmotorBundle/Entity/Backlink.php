@@ -322,7 +322,7 @@ class Backlink
 
     public function __construct()
     {
-        $this->setIsOffline(false);
+        $this->setOffline(false);
         $this->setAnchor('');
         $this->setType('t');
         $this->setCrawlType('dom');
@@ -966,7 +966,7 @@ class Backlink
 
     public function getStatus()
     {
-        if ($this->getIsOffline()) {
+        if ($this->isOffline()) {
             return 'offline';
         }
 
@@ -987,7 +987,7 @@ class Backlink
         return 'warning';
     }
 
-    public function getIsOfflineMayBeChangedByUser(User $user)
+    public function isOfflineMayBeChangedByUser(User $user)
     {
         return $user->getId() == $this->getAssignedTo()->getId()
                || $user->isAdmin();
@@ -999,7 +999,7 @@ class Backlink
      * @param boolean $isOffline
      * @return Backlink
      */
-    public function setIsOffline($isOffline)
+    public function setOffline($isOffline)
     {
         $this->isOffline = $isOffline ? 1 : 0;
     
@@ -1011,7 +1011,7 @@ class Backlink
      *
      * @return boolean 
      */
-    public function getIsOffline()
+    public function isOffline()
     {
         return $this->isOffline;
     }

@@ -67,13 +67,13 @@ class AlertUpdater
 
     public function checkPageStatus(Backlink $backlink)
     {
-        if ($backlink->getIsOffline() && $backlink->getPage()->getStatus()->getId() != 7) {
+        if ($backlink->isOffline() && $backlink->getPage()->getStatus()->getId() != 7) {
             $status = $this->entityManager->getRepository('PoolLinkmotorBundle:Status')->find(7);
             $backlink->getPage()->setStatus($status);
             $backlink->getPage()->setLastModifiedAt(new \DateTime());
             $this->entityManager->persist($backlink);
             $this->entityManager->flush();
-        } elseif (!$backlink->getIsOffline() && $backlink->getPage()->getStatus()->getId() == 7) {
+        } elseif (!$backlink->isOffline() && $backlink->getPage()->getStatus()->getId() == 7) {
             $status = $this->entityManager->getRepository('PoolLinkmotorBundle:Status')->find(6);
             $backlink->getPage()->setStatus($status);
             $backlink->getPage()->setLastModifiedAt(new \DateTime());
@@ -108,7 +108,7 @@ class AlertUpdater
         $alerts = $this->entityManager->getRepository('PoolLinkmotorBundle:Alert')
             ->findBy(array('backlink' => $backlink));
 
-        if (($status == 'ok' && $alerts) || $backlink->getIsOffline()) {
+        if (($status == 'ok' && $alerts) || $backlink->isOffline()) {
             foreach ($alerts as $alert) {
                 $this->entityManager->remove($alert);
             }

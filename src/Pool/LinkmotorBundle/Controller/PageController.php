@@ -200,7 +200,7 @@ class PageController extends BaseController
         $bulkActionsType = new PageBulkActionsType();
         $users = $this->getDoctrine()->getRepository('PoolLinkmotorBundle:User')->getAllActiveNonSupportUsers();
         $bulkActionsType->setUsers($users);
-        $bulkActionsType->setIsAdmin($this->get('security.context')->isGranted('ROLE_ADMIN'));
+        $bulkActionsType->setAdmin($this->get('security.context')->isGranted('ROLE_ADMIN'));
         $bulkActionsForm = $this->createForm($bulkActionsType, $bulkData);
 
         return array('type' => $type, 'pages' => $pages, 'bulkActionsForm' => $bulkActionsForm->createView());
@@ -217,6 +217,7 @@ class PageController extends BaseController
         $bulkActionsType = new PageBulkActionsType();
         $users = $this->getDoctrine()->getRepository('PoolLinkmotorBundle:User')->getAllActiveNonSupportUsers();
         $bulkActionsType->setUsers($users);
+        $bulkActionsType->setAdmin($this->get('security.context')->isGranted('ROLE_ADMIN'));
         $form = $this->createForm($bulkActionsType);
 
         $form->submit($request);

@@ -128,7 +128,7 @@ class NotificationSettingRepository extends EntityRepository
         $resultingUsers = array();
         $excludeUserIds = array();
         foreach ($projectSettings as $settings) {
-            if ($settings->getUser()->getIsInactive()) {
+            if ($settings->getUser()->isInactive()) {
                 continue;
             }
             $user = $settings->getUser();
@@ -142,7 +142,7 @@ class NotificationSettingRepository extends EntityRepository
 
         foreach ($defaultSettings as $settings) {
             $user = $settings->getUser();
-            if ($user->getIsInactive()) {
+            if ($user->iIsInactive()) {
                 continue;
             }
             $userId = $user->getId();

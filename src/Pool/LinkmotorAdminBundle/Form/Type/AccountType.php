@@ -14,7 +14,7 @@ class AccountType extends InvoiceInformationType
         $this->withInvoiceInformation = $value;
     }
 
-    public function setIsSelfHosted($value)
+    public function setSelfHosted($value)
     {
         $this->isSelfHosted = $value;
         if ($this->isSelfHosted) {
@@ -26,7 +26,7 @@ class AccountType extends InvoiceInformationType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->setIsSelfHosted($this->isSelfHosted);
+        $this->setSelfHosted($this->isSelfHosted);
         $builder->add('account_type', 'choice', array(
             'required' => true,
             'label' => 'Account Type',

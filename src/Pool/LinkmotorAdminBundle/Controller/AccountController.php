@@ -21,16 +21,17 @@ class AccountController extends BaseController
     {
         $linkmotorOptions = $this->get('linkmotor.options');
         $options = $linkmotorOptions->getAll();
-        $accountTypeBefore = $this->get('linkmotor.options')->get('account_type');
+        $accountTypeBefore = $linkmotorOptions->get('account_type');
         $accountTypeForm = new AccountType();
+        $accountTypeForm->setSelfHosted($linkmotorOptions->get('self_hosted'));
         $accountTypeForm->setWithInvoiceInformation($accountTypeBefore == 0);
         $form = $this->createForm($accountTypeForm, $options);
 
         if ($request->getMethod() == 'POST') {
             $form->submit($request);
             if ($form->isValid()) {
-                $this->get('linkmotor.options')->setAll($form->getData());
-                $accountTypeAfter = $this->get('linkmotor.options')->get('account_type');
+                $linkmotorOptions->setAll($form->getData());
+                $accountTypeAfter = $linkmotorOptions->get('account_type');
                 if ($accountTypeAfter != $accountTypeBefore) {
                     $updatedData = $this->get('seoservices')->updateAccountType($accountTypeAfter);
                     if ($updatedData) {
@@ -46,7 +47,6 @@ class AccountController extends BaseController
                     'Your changes have been saved'
                 );
 
-                // Redirect, damit die Account-Warnungen korrekt angezeigt werden
                 return $this->redirect($this->generateUrl('pool_linkmotor_admin_account_edit'));
             }
         }
