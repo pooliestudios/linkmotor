@@ -29,6 +29,7 @@ heruntergeladen werden. Die neuste lauffähige Version wird sich immer im Master
 des Projektes befinden. Auf folgendem Weg erhält man also immer die neuste Version:
 
     git clone https://github.com/pooliestudios/linkmotor.git linkmotor
+    git checkout v1.5.1
 
 Anschließend in das neu erstellte Verzeichnis `linkmotor` wechseln und per composer
 die benötigten Pakete (in erster Linie Symfony) installieren:
@@ -43,6 +44,7 @@ Die Installation der Komponenten kann je nach Netzwerkverbindung etwas dauern. A
 werden einige Einstellungen abgefragt. Die meisten dieser Werte können so übernommen werden.
 Die folgenden Werte sollten jedoch an die Gegebenheiten auf dem System, auf das der Linkmotor
 installiert werden soll, angepasst werden:
+
     database_host:     127.0.0.1
     database_port:     ~
     database_name:     linkmotor
@@ -93,12 +95,14 @@ Dazu kann auf der Konsole der folgende Befehl ausgeführt werden:
 
 Zuerst wird die Datenbank erstellt, anschließend die Struktur der Datenbank angelegt und Defaultdaten
 aufgespielt:
+
     app/console doctrine:database:create
     app/console doctrine:migrations:migrate
     app/console doctrine:fixtures:load
 
 Unter den "Assets" versteht man alle CSS- und JS-Dateien, sowie zugehörige Grafiken. Diese werden
 über den folgenden Befehl installiert:
+
     app/console assetic:dump --env=prod
 
 
