@@ -33,4 +33,33 @@ class SubDomainTest extends \PHPUnit_Framework_TestCase
 
         $this->assertFalse($domain->urlMatches($url));
     }
+
+    public function testRobotsTxtNeedsRefreshNo()
+    {
+        $domain = new Domain();
+        $domain->setName('ausbildung.de');
+
+        $subdomain = new Subdomain();
+        $subdomain->setName('www');
+        $subdomain->setDomain($domain);
+        $subdomain->setRobotsTxt(' ');
+        $subdomain->setRobotsTxtLastFetched(new \DateTime());
+
+        $this->assertFalse($subdomain->robotsTxtNeedsRefresh());
+    }
+
+    public function testRobotsTxtNeedsRefreshYes()
+    {
+        $domain = new Domain();
+        $domain->setName('ausbildung.de');
+
+        $subdomain = new Subdomain();
+        $subdomain->setName('www');
+        $subdomain->setDomain($domain);
+        $subdomain->setRobotsTxt(' ');
+        $subdomain->setRobotsTxtLastFetched(new \DateTime('2012-01-01 00:00:01'));
+
+        $this->assertTrue($subdomain->robotsTxtNeedsRefresh());
+    }
+
 }

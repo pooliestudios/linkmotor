@@ -135,7 +135,7 @@ Crawl-delay: 3');
         $robotsTxt = new RobotsTxt(null);
 
         $domain = new Domain();
-        $domain->setName('mathes.de');
+        $domain->setName('test.irregular'); // Just make sure no real robots.txt is fetched
 
         $subdomain = new Subdomain();
         $subdomain->setName('');
