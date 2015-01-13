@@ -128,6 +128,7 @@ Die Installation ist nun abgeschlossen, der Linkmotor kann unter
 
 aufgerufen werden. Ggf. ist es noch notwendig die beiden folgenden Verzeichnisse mit
 Schreibrechten für den Webserver auszustatten:
+
     app/cache
     app/logs
 
@@ -145,6 +146,7 @@ liegen z.B. in `app/config/parameters.yml` ggf. sicherheitskritische Daten.
 Der Linkmotor muss im Hintergrund in regelmäßigen Abständen bestimmte Arbeiten ausführen um z.B. die Aktualität
 der Backlinks zu gewährleisten. Aber auch um zusätzliche Informationen zu Domains, Kandidaten, etc. abzuholen.
 Dafür sind folgende Kommandos auszuführen - am Besten per cronjob:
+
     `app/console seo:crawl:subdomains`
     `app/console seo:crawl:pages`
     `app/console seo:crawl:domains`
@@ -167,7 +169,6 @@ Sollten im laufenden Betrieb Fehler auftauchen, sollte der erste Blick der Datei
 Hier werden alle Applikationsfehler protokolliert. Taucht hier kein Fehler auf, sollte im Error-Log des
 Apache nachgesehen werden. Das sind dann meistens Fehler, die grundsätzlich mit der Installation des Webservers
 oder PHP auf dem Server zu tun haben.
-
 
 Dieses Dokument ist noch ein ziemlich früher Entwurf. Aufgrund der Vielzahl der möglichen Konfigurationen
 von Webservern und der unterschiedlichen Kenntnisstände bei der Benutzung von Git, Composer und Symfony
