@@ -29,7 +29,7 @@ class UserEditType extends AbstractType
                 'attr' => array('class' => 'uk-form-width-medium'))
         );
         $builder->add(
-            'isAdmin',
+            'admin',
             'choice',
             array(
                 'choices' => array(
@@ -42,7 +42,7 @@ class UserEditType extends AbstractType
             )
         );
         $builder->add(
-            'isInactive',
+            'inactive',
             'choice',
             array(
                 'choices' => array(

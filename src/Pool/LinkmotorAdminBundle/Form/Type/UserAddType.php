@@ -25,7 +25,7 @@ class UserAddType extends AbstractType
             array('required' => true, 'label' => 'Password', 'attr' => array('class' => 'uk-form-width-medium'))
         );
         $builder->add(
-            'isAdmin',
+            'admin',
             'choice',
             array(
                 'choices' => array(
@@ -38,7 +38,7 @@ class UserAddType extends AbstractType
             )
         );
         $builder->add(
-            'isInactive',
+            'inactive',
             'choice',
             array(
                 'choices' => array(
