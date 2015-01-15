@@ -60,7 +60,7 @@ class BacklinkAddType extends AbstractType
 
         if ($this->loggedInUserMayEdit) {
             $builder->add(
-                'isOffline',
+                'offline',
                 'choice',
                 array(
                     'choices' => array(true => 'Offline', false => 'Online'),

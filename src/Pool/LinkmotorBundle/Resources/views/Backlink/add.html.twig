@@ -29,7 +29,7 @@
             <div class="uk-form-controls uk-text-small uk-text-muted"><p>{% trans %}Full URL of the linked site on{% endtrans %} {{ project.name }}</p></div>
 
             {{ form_row(form.assignedTo) }}
-            {{ form_row(form.isOffline) }}
+            {{ form_row(form.offline) }}
             {{ form_row(form.crawlType) }}
 
             <div class="uk-form-row crawltype-container-dom{% if backlink.crawlType == 'text' %} hidden{% endif %}">
