@@ -4,13 +4,13 @@ namespace Pool\LinkmotorApiBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 class InfoController extends Controller
 {
     /**
      * @Route("/systeminfo/")
-     * @Template("PoolLinkmotorApi::default.plain.twig")
+     * @Method("GET")
      */
     public function indexAction()
     {
@@ -27,6 +27,6 @@ class InfoController extends Controller
         $data = json_encode($data);
         $data = $this->get('crypt')->encrypt($data, 'base64');
 
-        return array('data' => $data);
+        return $this->render('@PoolLinkmotorApi/default.plain.twig', array('data' => $data));
     }
 }
