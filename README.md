@@ -12,7 +12,7 @@ Edition des Linkmotors beschrieben.
 -------------------------------------------------
 
 Für die Installation sollten Grundkenntnisse in Git, Composer, PHP und der Kommandozeile
-vorhanden sein. Die Installation sollte auf einem Linux-, oder MacOS-System efolgen.
+vorhanden sein. Die Installation sollte auf einem Linux-, oder MacOS-System erfolgen.
 
 Folgende Voraussetzungen müssen erfüllt sein:
  Apache
