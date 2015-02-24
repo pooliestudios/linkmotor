@@ -76,7 +76,11 @@ class Options
         }
 
         foreach ($defaultOptions as $key => $value) {
-            if (!isset($options[$key]) && strpos($key, $startingWith) === 0) {
+            $startsWith = true;
+            if ($startingWith && strpos($key, $startingWith) !== 0) {
+                $startsWith = false;
+            }
+            if (!isset($options[$key]) && $startsWith) {
                 $options[$key] = $value;
             }
         }
