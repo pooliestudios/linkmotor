@@ -142,7 +142,7 @@ class NotificationSettingRepository extends EntityRepository
 
         foreach ($defaultSettings as $settings) {
             $user = $settings->getUser();
-            if ($user->iIsInactive()) {
+            if ($user->isInactive()) {
                 continue;
             }
             $userId = $user->getId();
