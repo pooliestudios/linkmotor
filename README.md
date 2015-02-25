@@ -1,6 +1,8 @@
 Linkmotor Community Edition
 ===========================
 
+[![Build Status](https://travis-ci.org/pooliestudios/linkmotor.svg?branch=master)](https://travis-ci.org/pooliestudios/linkmotor)
+
 Herzlich Willkommen bei der Linkmotor Community Edition. Hierbei handelt
 es sich um die selbe Software, die auch auf https://linkmotor.de als
 gehostete Version zur Verfügung steht.
@@ -29,7 +31,7 @@ heruntergeladen werden. Die neuste lauffähige Version wird sich immer im Master
 des Projektes befinden. Auf folgendem Weg erhält man also immer die neuste Version:
 
     git clone https://github.com/pooliestudios/linkmotor.git linkmotor
-    git checkout v1.5.4
+    git checkout v1.5.5
 
 Anschließend in das neu erstellte Verzeichnis `linkmotor` wechseln und per composer
 die benötigten Pakete (in erster Linie Symfony) installieren:
@@ -147,12 +149,12 @@ Der Linkmotor muss im Hintergrund in regelmäßigen Abständen bestimmte Arbeite
 der Backlinks zu gewährleisten. Aber auch um zusätzliche Informationen zu Domains, Kandidaten, etc. abzuholen.
 Dafür sind folgende Kommandos auszuführen - am Besten per cronjob:
 
-    `app/console seo:crawl:subdomains`
-    `app/console seo:crawl:pages`
-    `app/console seo:crawl:domains`
-    `app/console seo:crawl:backlinks`
-    `app/console seo:notifications:daily`
-    `app/console seo:imports:process`
+    app/console seo:crawl:subdomains
+    app/console seo:crawl:pages
+    app/console seo:crawl:domains
+    app/console seo:crawl:backlinks
+    app/console seo:notifications:daily
+    app/console seo:imports:process
 
 Wie häufig Subdomains, Kandidaten (Pages), Domains und Backlinks tatsächlich aktualisiert werden, wird in der Datei
 `app/config/parameters.yml` festgelegt. Die cronjobs können ruhig stündlich laufen. Sobald es etwas zu tun gibt,

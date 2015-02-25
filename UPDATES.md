@@ -5,7 +5,7 @@ Um ein Update einer vorhandenen Installation der Linkmotor Community Edition auf
 die aktuellste Version durchzuführen, sind folgende Schritte erforderlich:
 
     git fetch
-    git checkout v1.5.4
+    git checkout v1.5.5
     php composer.phar install
     app/console doctrine:migrations:migrate
     app/console assetic:dump --env=prod
@@ -31,12 +31,12 @@ Der Linkmotor muss im Hintergrund in regelmäßigen Abständen bestimmte Arbeite
 der Backlinks zu gewährleisten. Aber auch um zusätzliche Informationen zu Domains, Kandidaten, etc. abzuholen.
 Dafür sind folgende Kommandos auszuführen - am Besten per cronjob:
 
-    `app/console seo:crawl:subdomains`
-    `app/console seo:crawl:pages`
-    `app/console seo:crawl:domains`
-    `app/console seo:crawl:backlinks`
-    `app/console seo:notifications:daily`
-    `app/console seo:imports:process`
+    app/console seo:crawl:subdomains
+    app/console seo:crawl:pages
+    app/console seo:crawl:domains
+    app/console seo:crawl:backlinks
+    app/console seo:notifications:daily
+    app/console seo:imports:process
 
 Wie häufig Subdomains, Kandidaten (Pages), Domains und Backlinks tatsächlich aktualisiert werden, wird in der Datei
 `app/config/parameters.yml` festgelegt. Die cronjobs können ruhig stündlich laufen. Sobald es etwas zu tun gibt,

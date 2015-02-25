@@ -28,7 +28,7 @@ twig:
     debug:            %kernel.debug%
     strict_variables: %kernel.debug%
     globals:
-        linkmotorVersion: v1.5.4
+        linkmotorVersion: v1.5.5
     form:
         resources:
             - 'PoolLinkmotorBundle:Form:fields.html.twig'
