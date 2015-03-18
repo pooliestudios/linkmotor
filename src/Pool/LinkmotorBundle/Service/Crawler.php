@@ -269,7 +269,7 @@ class Crawler
 
     protected function updateMetaInfo($header, $content, $info)
     {
-        if ($info['http_code'] != 200) {
+        if ($info['http_code'] != 200 || !$content) {
             return;
         }
 
