@@ -5,11 +5,12 @@ Um ein Update einer vorhandenen Installation der Linkmotor Community Edition auf
 die aktuellste Version durchzuführen, sind folgende Schritte erforderlich:
 
     git fetch
-    git checkout v1.5.6
+    git checkout v1.5.7
     php composer.phar install
     app/console doctrine:migrations:migrate
     app/console assetic:dump --env=prod
-
+    app/console cache:clear --env=prod
+    
 Ggf. ist es noch notwendig die beiden folgenden Verzeichnisse wieder mit
 Schreibrechten für den Webserver auszustatten:
 
