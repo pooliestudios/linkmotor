@@ -876,15 +876,18 @@ class User implements AdvancedUserInterface
 
     private function getTableOptions($which)
     {
-        $maxIndexes = array('pages' => 14, 'backlinks' => 16);
+        $maxIndexes = array('pages' => 14, 'backlinks' => 21);
+        $defaultOffs = array('pages' => array(), 'backlinks' => array(17, 18, 19, 20, 21));
+
         $maxIndex = $maxIndexes[$which];
+        $defaultOff = $defaultOffs[$which];
 
         $options = $this->getOptionValue("table_options_{$which}", array());
-
         if (count($options) != $maxIndex) {
             for ($i = 1; $i <= $maxIndex; $i++) {
                 if (!isset($options[$i])) {
-                    $options[$i] = array('id' => $i, 'class' => '');
+                    $class = in_array($i, $defaultOff) ? 'hidden' : '';
+                    $options[$i] = array('id' => $i, 'class' => $class);
                 }
             }
         }

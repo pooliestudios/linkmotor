@@ -93,6 +93,16 @@
         <li><a href="" data-id="{{ id }}"><i class="{{ icon }}"></i> {{ 'Costs'|trans }}</a></li>
     {% elseif id == 16 %}
         <li><a href="" data-id="{{ id }}"><i class="{{ icon }}"></i> {{ 'Price'|trans }}</a></li>
+    {% elseif id == 17 %}
+        <li><a href="" data-id="{{ id }}"><i class="{{ icon }}"></i> {{ 'Extra1'|trans }}</a></li>
+    {% elseif id == 18 %}
+        <li><a href="" data-id="{{ id }}"><i class="{{ icon }}"></i> {{ 'Extra2'|trans }}</a></li>
+    {% elseif id == 19 %}
+        <li><a href="" data-id="{{ id }}"><i class="{{ icon }}"></i> {{ 'Extra3'|trans }}</a></li>
+    {% elseif id == 20 %}
+        <li><a href="" data-id="{{ id }}"><i class="{{ icon }}"></i> {{ 'Extra4'|trans }}</a></li>
+    {% elseif id == 21 %}
+        <li><a href="" data-id="{{ id }}"><i class="{{ icon }}"></i> {{ 'Extra5'|trans }}</a></li>
     {% endif %}
 {% endmacro %}
 {% macro showPagesHeadCell(tableOption, pages, type) %}
@@ -180,6 +190,31 @@
         <th id="row-{{ id }}" class="draggable-column {{ class }}">
             {{ _self.dragHandler }}
             {% trans %}Price{% endtrans %}
+        </th>
+    {% elseif id == 17 %}
+        <th id="row-{{ id }}" class="draggable-column {{ class }}">
+            {{ _self.dragHandler }}
+            Extra1
+        </th>
+    {% elseif id == 18 %}
+        <th id="row-{{ id }}" class="draggable-column {{ class }}">
+            {{ _self.dragHandler }}
+            Extra2
+        </th>
+    {% elseif id == 19 %}
+        <th id="row-{{ id }}" class="draggable-column {{ class }}">
+            {{ _self.dragHandler }}
+            Extra3
+        </th>
+    {% elseif id == 20 %}
+        <th id="row-{{ id }}" class="draggable-column {{ class }}">
+            {{ _self.dragHandler }}
+            Extra4
+        </th>
+    {% elseif id == 21 %}
+        <th id="row-{{ id }}" class="draggable-column {{ class }}">
+            {{ _self.dragHandler }}
+            Extra5
         </th>
     {% endif %}
 {% endmacro %}
@@ -390,6 +425,51 @@
             {% if backlink.costType > 0 and backlink.costNote %}
                 <span data-uk-tooltip="{pos:'bottom'}" title="{{ backlink.costNote }}">
                     <i class="uk-icon-comment"></i>
+                </span>
+            {% endif %}
+        </td>
+    {% elseif id == 17 %}
+        <td class="{{ class }}">
+            {% if backlink.extra1 %}
+                <span data-uk-tooltip="{pos:'bottom'}" title="{{ backlink.extra1 }}">
+                    <i class="uk-icon-comment"></i>
+                    {{ backlink.extra1|slice(0, 20) }}
+                </span>
+            {% endif %}
+        </td>
+    {% elseif id == 18 %}
+        <td class="{{ class }}">
+            {% if backlink.extra2 %}
+                <span data-uk-tooltip="{pos:'bottom'}" title="{{ backlink.extra2 }}">
+                    <i class="uk-icon-comment"></i>
+                    {{ backlink.extra2|slice(0, 20) }}
+                </span>
+            {% endif %}
+        </td>
+    {% elseif id == 19 %}
+        <td class="{{ class }}">
+            {% if backlink.extra3 %}
+                <span data-uk-tooltip="{pos:'bottom'}" title="{{ backlink.extra3 }}">
+                    <i class="uk-icon-comment"></i>
+                    {{ backlink.extra3|slice(0, 20) }}
+                </span>
+            {% endif %}
+        </td>
+    {% elseif id == 20 %}
+        <td class="{{ class }}">
+            {% if backlink.extra4 %}
+                <span data-uk-tooltip="{pos:'bottom'}" title="{{ backlink.extra4 }}">
+                    <i class="uk-icon-comment"></i>
+                    {{ backlink.extra4|slice(0, 20) }}
+                </span>
+            {% endif %}
+        </td>
+    {% elseif id == 21 %}
+        <td class="{{ class }}">
+            {% if backlink.extra5 %}
+                <span data-uk-tooltip="{pos:'bottom'}" title="{{ backlink.extra5 }}">
+                    <i class="uk-icon-comment"></i>
+                    {{ backlink.extra5|slice(0, 20) }}
                 </span>
             {% endif %}
         </td>

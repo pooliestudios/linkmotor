@@ -31,7 +31,7 @@ heruntergeladen werden. Die neuste lauffähige Version wird sich immer im Master
 des Projektes befinden. Auf folgendem Weg erhält man also immer die neuste Version:
 
     git clone https://github.com/pooliestudios/linkmotor.git linkmotor
-    git checkout v1.5.6
+    git checkout v1.6.0
 
 Anschließend in das neu erstellte Verzeichnis `linkmotor` wechseln und per composer
 die benötigten Pakete (in erster Linie Symfony) installieren:

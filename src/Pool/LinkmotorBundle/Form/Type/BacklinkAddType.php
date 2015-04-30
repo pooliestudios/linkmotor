@@ -182,6 +182,11 @@ class BacklinkAddType extends AbstractType
                     'attr' => array('rows' => 10, 'class' => 'uk-form-width-large')
                 )
             );
+            $builder->add('extra1', 'text', array('required' => false, 'label' => 'Extra1'));
+            $builder->add('extra2', 'text', array('required' => false, 'label' => 'Extra2'));
+            $builder->add('extra3', 'text', array('required' => false, 'label' => 'Extra3'));
+            $builder->add('extra4', 'text', array('required' => false, 'label' => 'Extra4'));
+            $builder->add('extra5', 'text', array('required' => false, 'label' => 'Extra5'));
         }
     }
 

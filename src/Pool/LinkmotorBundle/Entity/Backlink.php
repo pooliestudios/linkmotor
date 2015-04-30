@@ -279,6 +279,36 @@ class Backlink
     protected $costNote;
 
     /**
+     * @ORM\Column(name="extra1", type="text", nullable=true)
+     * @Gedmo\Versioned
+     */
+    protected $extra1;
+
+    /**
+     * @ORM\Column(name="extra2", type="text", nullable=true)
+     * @Gedmo\Versioned
+     */
+    protected $extra2;
+
+    /**
+     * @ORM\Column(name="extra3", type="text", nullable=true)
+     * @Gedmo\Versioned
+     */
+    protected $extra3;
+
+    /**
+     * @ORM\Column(name="extra4", type="text", nullable=true)
+     * @Gedmo\Versioned
+     */
+    protected $extra4;
+
+    /**
+     * @ORM\Column(name="extra5", type="text", nullable=true)
+     * @Gedmo\Versioned
+     */
+    protected $extra5;
+
+    /**
      * @ORM\Column(name="last_crawled_at", type="datetime", nullable=true)
      */
     protected $lastCrawledAt;
@@ -1640,5 +1670,143 @@ class Backlink
     public function getRobotsGoogleOk()
     {
         return $this->robotsGoogleOk;
+    }
+
+    /**
+     * Set isOffline
+     *
+     * @param integer $isOffline
+     * @return Backlink
+     */
+    public function setIsOffline($isOffline)
+    {
+        $this->isOffline = $isOffline;
+
+        return $this;
+    }
+
+    /**
+     * Get isOffline
+     *
+     * @return integer 
+     */
+    public function getIsOffline()
+    {
+        return $this->isOffline;
+    }
+
+    /**
+     * Set extra1
+     *
+     * @param string $extra1
+     * @return Backlink
+     */
+    public function setExtra1($extra1)
+    {
+        $this->extra1 = $extra1;
+
+        return $this;
+    }
+
+    /**
+     * Get extra1
+     *
+     * @return string 
+     */
+    public function getExtra1()
+    {
+        return $this->extra1;
+    }
+
+    /**
+     * Set extra2
+     *
+     * @param string $extra2
+     * @return Backlink
+     */
+    public function setExtra2($extra2)
+    {
+        $this->extra2 = $extra2;
+
+        return $this;
+    }
+
+    /**
+     * Get extra2
+     *
+     * @return string 
+     */
+    public function getExtra2()
+    {
+        return $this->extra2;
+    }
+
+    /**
+     * Set extra3
+     *
+     * @param string $extra3
+     * @return Backlink
+     */
+    public function setExtra3($extra3)
+    {
+        $this->extra3 = $extra3;
+
+        return $this;
+    }
+
+    /**
+     * Get extra3
+     *
+     * @return string 
+     */
+    public function getExtra3()
+    {
+        return $this->extra3;
+    }
+
+    /**
+     * Set extra4
+     *
+     * @param string $extra4
+     * @return Backlink
+     */
+    public function setExtra4($extra4)
+    {
+        $this->extra4 = $extra4;
+
+        return $this;
+    }
+
+    /**
+     * Get extra4
+     *
+     * @return string 
+     */
+    public function getExtra4()
+    {
+        return $this->extra4;
+    }
+
+    /**
+     * Set extra5
+     *
+     * @param string $extra5
+     * @return Backlink
+     */
+    public function setExtra5($extra5)
+    {
+        $this->extra5 = $extra5;
+
+        return $this;
+    }
+
+    /**
+     * Get extra5
+     *
+     * @return string 
+     */
+    public function getExtra5()
+    {
+        return $this->extra5;
     }
 }
