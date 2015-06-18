@@ -241,4 +241,127 @@ Disallow: *?replytocom');
 
         $this->assertTrue($robotsTxt->isGoogleBotAllowedForPage($page));
     }
+
+    public function testIsGoogleBotAllowedWithCrawlDelay()
+    {
+        $robotsTxt = new RobotsTxt(null);
+
+        $domain = new Domain();
+        $domain->setName('offenburg.de');
+
+        $subdomain = new Subdomain();
+        $subdomain->setName('www');
+        $subdomain->setDomain($domain);
+        $subdomain->setRobotsTxt('User-agent: Googlebot
+Crawl-delay: 5
+Disallow: /admintools/
+Disallow: /application/
+Disallow: /awstats/
+Disallow: /logs/
+Disallow: /reports/
+Disallow: /html/tiles/
+Disallow: /html/layout/
+Disallow: /html/templates/
+
+User-agent: msnbot
+Crawl-delay: 5
+Disallow: /admintools/
+Disallow: /application/
+Disallow: /awstats/
+Disallow: /logs/
+Disallow: /reports/
+Disallow: /html/tiles/
+Disallow: /html/layout/
+Disallow: /html/templates/
+
+User-agent: Slurp
+Crawl-delay: 5
+Disallow: /admintools/
+Disallow: /application/
+Disallow: /awstats/
+Disallow: /logs/
+Disallow: /reports/
+Disallow: /html/tiles/
+Disallow: /html/layout/
+Disallow: /html/templates/
+
+User-agent: EdithSolrCrawler
+Disallow: /admintools/
+Disallow: /application/
+Disallow: /awstats/
+Disallow: /logs/
+Disallow: /reports/
+Disallow: /html/tiles/
+Disallow: /html/layout/
+Disallow: /html/templates/
+
+User-agent: *
+Disallow: /
+');
+        $subdomain->setRobotsTxtLastFetched(new \DateTime());
+
+        $page = new Page();
+        $page->setSubdomain($subdomain);
+        $page->setUrl('/html/partner/links532.html?kategorie=65');
+
+        $this->assertTrue($robotsTxt->isGoogleBotAllowedForPage($page));
+    }
+
+    public function testIsGoogleBotAllowedMultipleGoogleSections()
+    {
+        $robotsTxt = new RobotsTxt(null);
+
+        $domain = new Domain();
+        $domain->setName('offenburg.de');
+
+        $subdomain = new Subdomain();
+        $subdomain->setName('www');
+        $subdomain->setDomain($domain);
+        $subdomain->setRobotsTxt('User-agent: Googlebot
+Disallow: /admintools/
+Disallow: /application/
+Disallow: /awstats/
+Disallow: /logs/
+Disallow: /reports/
+Disallow: /html/tiles/
+Disallow: /html/layout/
+Disallow: /html/templates/
+
+User-agent: msnbot
+Disallow: /admintools/
+Disallow: /application/
+Disallow: /awstats/
+Disallow: /logs/
+Disallow: /reports/
+Disallow: /html/tiles/
+Disallow: /html/layout/
+Disallow: /html/templates/
+
+User-agent: Googlebot
+Disallow: /test/
+
+User-agent: EdithSolrCrawler
+Disallow: /admintools/
+Disallow: /application/
+Disallow: /awstats/
+Disallow: /logs/
+Disallow: /reports/
+Disallow: /html/tiles/
+Disallow: /html/layout/
+Disallow: /html/templates/
+
+User-agent: *
+Disallow: /
+');
+        $subdomain->setRobotsTxtLastFetched(new \DateTime());
+
+        $page = new Page();
+        $page->setSubdomain($subdomain);
+
+        $page->setUrl('/logs/links532.html?kategorie=65');
+        $this->assertFalse($robotsTxt->isGoogleBotAllowedForPage($page));
+
+        $page->setUrl('/test/links532.html?kategorie=65');
+        $this->assertFalse($robotsTxt->isGoogleBotAllowedForPage($page));
+    }
 }

@@ -21,8 +21,10 @@ class RobotsTxt
     const PROCESS_STATE_USER_AGENT = 0;
     const PROCESS_STATE_USER_AGENT_MATCHED = 1;
     const PROCESS_STATE_DISALLOW = 2;
+    const PROCESS_STATE_JOKER_USER_AGENT_MATCHED_AFTER_EXACT_MATCH = 3;
 
     private $robotUserAgentPattern;
+    private $foundExactMatch;
     private $state;
     private $disallowedPaths;
 
@@ -117,6 +119,7 @@ class RobotsTxt
     {
         $this->robotUserAgentPattern = $robotUserAgentPattern;
         $this->state = RobotsTxt::PROCESS_STATE_USER_AGENT;
+        $this->foundExactMatch = false;
         $this->disallowedPaths = array();
         $this->doParse($content);
     }
@@ -158,10 +161,16 @@ class RobotsTxt
     {
         switch ($this->state) {
             case RobotsTxt::PROCESS_STATE_USER_AGENT:
-                if ((strtolower($key) == "user-agent" && $value == "*") ||
-                    preg_match($this->robotUserAgentPattern, $value)) {
-
+                if (strtolower($key) == "user-agent" && $value == "*") {
+                    if ($this->foundExactMatch) {
+                        $this->state = RobotsTxt::PROCESS_STATE_JOKER_USER_AGENT_MATCHED_AFTER_EXACT_MATCH;
+                    } else {
+                        $this->state = RobotsTxt::PROCESS_STATE_USER_AGENT_MATCHED;
+                        $this->foundExactMatch = true;
+                    }
+                } elseif (preg_match($this->robotUserAgentPattern, $value)) {
                     $this->state = RobotsTxt::PROCESS_STATE_USER_AGENT_MATCHED;
+                    $this->foundExactMatch = true;
                 }
                 break;
             case RobotsTxt::PROCESS_STATE_USER_AGENT_MATCHED:
