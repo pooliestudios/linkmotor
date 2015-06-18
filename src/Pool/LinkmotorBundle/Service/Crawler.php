@@ -392,7 +392,10 @@ class Crawler
         $header = substr($response, 0, $headerSize);
         $content = substr($response, $headerSize);
         if (stripos($header, 'Content-Encoding: gzip') !== false) {
-            $content = gzinflate(substr($content, 10, -8));
+            $inflatedContent = @gzinflate(substr($content, 10, -8));
+            if ($inflatedContent) {
+                $content = $inflatedContent;
+            }
         }
 
         $this->updateMetaInfo($header, $content, $info);
