@@ -219,7 +219,7 @@ class Domain
      */
     public function setName($name)
     {
-        $this->name = strtolower($name);
+        $this->name = mb_strtolower($name, 'UTF-8');
 
         return $this;
     }
