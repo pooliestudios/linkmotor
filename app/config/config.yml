@@ -114,7 +114,7 @@ services:
         arguments: [@doctrine, @linkmotor.robotsTxt]
     page_creator:
         class: Pool\LinkmotorBundle\Service\PageCreator
-        arguments: [@doctrine]
+        arguments: [@doctrine, @linkmotor.domains]
     linkmotor.domains:
         class: Pool\LinkmotorBundle\Service\Domains
         arguments: [@doctrine]

@@ -2,6 +2,7 @@
 
 namespace Pool\LinkmotorBundle\Service;
 
+use Doctrine\Bundle\DoctrineBundle\Registry;
 use Pool\LinkmotorBundle\Entity\Domain;
 use Pool\LinkmotorBundle\Entity\Page;
 use Pool\LinkmotorBundle\Entity\Project;
@@ -15,9 +16,15 @@ class PageCreator
      */
     private $doctrine;
 
-    public function __construct($doctrine)
+    /**
+     * @var Domains
+     */
+    private $domains;
+
+    public function __construct(Registry $doctrine = null, Domains $domains = null)
     {
         $this->doctrine = $doctrine;
+        $this->domains = $domains;
     }
 
     /**
@@ -188,15 +195,9 @@ class PageCreator
         }
 
         $urlParts['host'] = isset($urlParts['host']) ? $urlParts['host'] : '';
-        $urlParts['host'] = strtolower($urlParts['host']);
-        $parts = explode('.', $urlParts['host']);
-        if (count($parts) == 2) {
-            $domain = $urlParts['host'];
-            $subdomain = '';
-        } else {
-            $subdomain = array_shift($parts);
-            $domain = implode('.', $parts);
-        }
+
+        $domain = $this->domains->getDomain($urlParts['host']);
+        $subdomain = $this->domains->getSubdomain($urlParts['host']);
 
         return array(
             'scheme' => isset($urlParts['scheme']) ? $urlParts['scheme'] : '',

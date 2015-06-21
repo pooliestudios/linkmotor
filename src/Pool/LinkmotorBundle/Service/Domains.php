@@ -2,6 +2,7 @@
 
 namespace Pool\LinkmotorBundle\Service;
 
+use Doctrine\Bundle\DoctrineBundle\Registry;
 use Pool\LinkmotorBundle\Entity\Domain;
 use Pool\LinkmotorBundle\Entity\Project;
 use Pool\LinkmotorBundle\Entity\Subdomain;
@@ -23,7 +24,7 @@ class Domains
         'com.ar' => array('com', 'ar'),
     );
 
-    public function __construct($doctrine)
+    public function __construct(Registry $doctrine = null)
     {
         $this->doctrine = $doctrine;
     }
