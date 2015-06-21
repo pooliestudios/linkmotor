@@ -101,6 +101,11 @@ class BacklinkAddType extends AbstractType
                     'label' => 'Follow'
                 )
             );
+            $builder->add('createdAt', 'date', array(
+                'required' => true,
+                'years' => range(2010, date('Y') + 1),
+                'label' => 'Created'
+            ));
             if ($this->getName() != 'backlink_add') {
                 $builder->add(
                     'statusCode',

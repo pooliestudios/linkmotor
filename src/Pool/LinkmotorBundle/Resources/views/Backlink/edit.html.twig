@@ -24,6 +24,7 @@
             {% if loggedInUserMayEdit %}
                 {{ form_row(form.url) }}
                 {{ form_row(form.offline) }}
+                {{ form_row(form.createdAt) }}
                 {{ form_row(form.crawlType) }}
 				<hr>
                 <div class="uk-form-row crawltype-container-dom{% if backlink.crawlType == 'text' %} hidden{% endif %}">
