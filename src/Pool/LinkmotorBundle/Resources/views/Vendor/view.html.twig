@@ -15,15 +15,15 @@
 			-->
 			<h1>{{ vendor.name|default('-') }}</h1>
 			{% if vendor.email %}
-			<a href="mailto:{{ vendor.email }}">
-				<i class="uk-icon-envelope"></i> {{ vendor.email }}
-			</a>
+                <a href="mailto:{{ vendor.email }}">
+                    <i class="uk-icon-envelope"></i> {{ vendor.email }}
+                </a>
 			{% endif %}
 			{% if vendor.phone %}
-			<br>
-			<a href="tel:{{ vendor.phone }}">
-				<i class="uk-icon-phone"></i> {{ vendor.phone }}
-			</a>
+                <br>
+                <a href="tel:{{ vendor.phone }}">
+                    <i class="uk-icon-phone"></i> {{ vendor.phone }}
+                </a>
 			{% endif %}
 		</div>
     {% include 'PoolLinkmotorBundle:Vendor:viewsubnav.html.twig' with {active:'overview'} %}

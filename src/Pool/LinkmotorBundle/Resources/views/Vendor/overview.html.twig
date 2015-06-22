@@ -7,6 +7,10 @@
     <dt>{% trans %}Company{% endtrans %}</dt>
     <dd>{{ vendor.company }}</dd>
 {% endif %}
+{% if vendor.position %}
+    <dt>{% trans %}Position{% endtrans %}</dt>
+    <dd>{{ vendor.position }}</dd>
+{% endif %}
 {% if vendor.street %}
     <dt>{% trans %}Street{% endtrans %}</dt>
     <dd>{{ vendor.street }}</dd>
@@ -24,11 +28,9 @@
     <dd>{{ vendor.country }}</dd>
 {% endif %}
 </dl>
-			{% if vendor.comment %}
-			<blockquote>
-	            {{ vendor.comment }}
-			</blockquote>
-	        {% endif %}
+{% if vendor.comment %}
+    <blockquote>{{ vendor.comment }}</blockquote>
+{% endif %}
 
 {% if vendor.city %}
 <!--

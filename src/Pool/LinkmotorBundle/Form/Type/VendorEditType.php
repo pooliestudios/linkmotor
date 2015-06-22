@@ -33,12 +33,17 @@ class VendorEditType extends AbstractType
             'email',
             array('required' => true,'label' => 'E-Mail', 'attr' => array('class' => 'uk-form-width-medium'))
         );
-        $builder->add(
-            'company',
-            'text',
-            array('required' => false, 'label' => 'Company', 'attr' => array('class' => 'uk-form-width-medium'))
-        );
-        $builder->add('phone', 'text', array('required' => false,'label' => 'Phone'));
+        $builder->add('company', 'text', array(
+                'required' => false,
+                'label' => 'Company',
+                'attr' => array('class' => 'uk-form-width-medium')
+        ));
+        $builder->add('position', 'text', array(
+            'required' => false,
+            'label' => 'Position',
+            'attr' => array('class' => 'uk-form-width-medium')
+        ));
+        $builder->add('phone', 'text', array('required' => false, 'label' => 'Phone'));
         $builder->add(
             'street',
             'text',

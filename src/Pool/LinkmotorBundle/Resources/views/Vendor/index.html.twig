@@ -10,7 +10,7 @@
         <tr>
             <th>{% trans %}Name{% endtrans %}</th>
             <th>{% trans %}E-Mail{% endtrans %}</th>
-            <th>{% trans %}Domains{% endtrans %}</th>
+            <th>{% trans %}Position{% endtrans %}</th>
             <th>{% trans %}Subdomains{% endtrans %}</th>
             <th>{% trans %}Company{% endtrans %}</th>
             <th>{% trans %}Comment{% endtrans %}</th>
@@ -29,9 +29,9 @@
                         <i class="uk-icon-envelope"></i> {{ vendor.email }}<br>
 					</a>
 					{% if vendor.phone %}
-                    <a href="tel:{{ vendor.phone }}">
-                         <i class="uk-icon-phone"></i> {{ vendor.phone }}
-                    </a>
+                        <a href="tel:{{ vendor.phone }}">
+                             <i class="uk-icon-phone"></i> {{ vendor.phone }}
+                        </a>
 					{% endif %}
                 </td>
                 <td>
@@ -40,7 +40,10 @@
                     </a>
                 </td>
                 <td>{{ vendor.subdomains.count|localeNumber }}</td>
-                <td>{{ vendor.company }}</td>
+                <td>
+                    {{ vendor.company }}
+                    {% if vendor.position %}(<small>{{ vendor.position }}</small>){% endif %}
+                </td>
                 <td>
                     {% if vendor.comment %}
                         <span data-uk-tooltip="{pos:'bottom'}" title="{{ vendor.comment }}">

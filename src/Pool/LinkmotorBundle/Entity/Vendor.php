@@ -51,6 +51,12 @@ class Vendor
     protected $title;
 
     /**
+     * @ORM\Column(name="position", type="string", length=128, nullable=true)
+     * @Gedmo\Versioned
+     */
+    protected $position;
+
+    /**
      * @ORM\Column(name="company", type="string", length=64, nullable=true)
      * @Gedmo\Versioned
      */
@@ -445,5 +451,28 @@ class Vendor
     public function getSubdomains()
     {
         return $this->subdomains;
+    }
+
+    /**
+     * Set position
+     *
+     * @param string $position
+     * @return Vendor
+     */
+    public function setPosition($position)
+    {
+        $this->position = $position;
+
+        return $this;
+    }
+
+    /**
+     * Get position
+     *
+     * @return string 
+     */
+    public function getPosition()
+    {
+        return $this->position;
     }
 }
