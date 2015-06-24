@@ -158,7 +158,8 @@ class Status
             'in-progress' => array(8),
             'linked' => array(6),
             'offline' => array(7),
-            'not-relevant' => array(3)
+            'not-relevant' => array(3),
+            'declined' => array(9),
         );
 
         return $mapping[$value];

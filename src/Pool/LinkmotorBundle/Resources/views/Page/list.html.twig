@@ -6,15 +6,15 @@
 
 <div class="uk-button-dropdown uk-float-right" data-uk-dropdown="{mode:'click'}">
 	<a href="#" class="uk-button uk-button-mini"><i class="uk-icon-columns"></i> {% trans %}Edit columns{% endtrans %}</a>
-                    <div class="uk-dropdown">
-                        <ul class="column-options uk-nav uk-nav-dropdown">
-                            <li class="uk-nav-header">{% trans %}Columns{% endtrans %}</li>
-                                {% for tableOption in tableOptions %}
-                                    {{ poolMacros.showPagesInfo(tableOption, type) }}
-                                {% endfor %}
-                            </li>
-                        </ul>
-                    </div>
+    <div class="uk-dropdown">
+        <ul class="column-options uk-nav uk-nav-dropdown">
+            <li class="uk-nav-header">{% trans %}Columns{% endtrans %}</li>
+                {% for tableOption in tableOptions %}
+                    {{ poolMacros.showPagesInfo(tableOption, type) }}
+                {% endfor %}
+            </li>
+        </ul>
+    </div>
 </div>
 
 <hr style="clear:both; margin: 10px 0 -20px 0;">
@@ -46,7 +46,6 @@
             {% for tableOption in tableOptions %}
                 {{ poolMacros.showPagesBodyCell(tableOption, page, type, previousPageId) }}
             {% endfor %}
-
 
             {% set previousPageId = page.id %}
         </tr>

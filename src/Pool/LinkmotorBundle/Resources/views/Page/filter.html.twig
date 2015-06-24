@@ -31,6 +31,9 @@
                 <option value="not-relevant"{% if filter['status'] == 'not-relevant' %} selected="selected"{% endif %}>
                     {% trans %}Not relevant{% endtrans %}
                 </option>
+                <option value="declined"{% if filter['status'] == 'declined' %} selected="selected"{% endif %}>
+                    {% trans %}Declined{% endtrans %}
+                </option>
             </select>
         </form>
     </li>

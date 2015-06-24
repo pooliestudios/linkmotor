@@ -265,6 +265,9 @@
                         <option value="8"{% if page.status.id == 8 %} selected="selected"{% endif %}>
                             {% trans %}In progress{% endtrans %}
                         </option>
+                        <option value="9"{% if page.status.id == 9 %} selected="selected"{% endif %}>
+                            {% trans %}Declined{% endtrans %}
+                        </option>
                     </select>
                 </form>
             {% else %}

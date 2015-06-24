@@ -73,6 +73,7 @@ return array(
     'Contacted' => 'Kontaktiert',
     'In progress' => 'In Umsetzung',
     'Linked' => 'Verlinkt',
+    'Declined' => 'Abgelehnt',
     'Phone' => 'Telefon',
     'Street' => 'Straße',
     'Zipcode' => 'PLZ',

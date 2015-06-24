@@ -31,7 +31,8 @@ class PageBulkActionsType extends AbstractType
                 'status-3' => 'Not relevant',
                 'status-4' => '1. Contact',
                 'status-5' => '2. Contact',
-                'status-8' => 'In progress'
+                'status-8' => 'In progress',
+                'status-9' => 'Declined'
             ),
             'Assign user' => $this->userList
         );
