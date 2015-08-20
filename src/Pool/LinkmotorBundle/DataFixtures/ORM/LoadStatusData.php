@@ -18,8 +18,10 @@ class LoadStatusData implements FixtureInterface
             5 => '2. Contact',
             6 => 'Linked',
             7 => 'Offline',
-            8 => 'In progress'
+            8 => 'In progress',
+            9 => 'Declined',
         );
+
         foreach ($statusTexts as $id => $statusText) {
             $status = new Status();
             $status->setId($id);
@@ -31,6 +33,11 @@ class LoadStatusData implements FixtureInterface
             }
 
             $manager->persist($status);
+
+            // ID-Generierung ausschalten
+            $metadata = $manager->getClassMetaData(get_class($status));
+            $metadata->setIdGeneratorType(\Doctrine\ORM\Mapping\ClassMetadata::GENERATOR_TYPE_NONE);
+
             $manager->flush();
         }
     }

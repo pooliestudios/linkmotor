@@ -14,7 +14,7 @@ class Version20150624201100 extends AbstractMigration
     {
         $this->abortIf($this->connection->getDatabasePlatform()->getName() != 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('INSERT INTO `status` (`id`, `name`, `sort_order`) VALUES (9, "Declined", 65)');
+        $this->addSql('INSERT INTO status (id, name, sort_order) VALUES (9, "Declined", 65)');
     }
 
     /**
@@ -24,6 +24,6 @@ class Version20150624201100 extends AbstractMigration
     {
         $this->abortIf($this->connection->getDatabasePlatform()->getName() != 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('DELETE FROM `status` WHERE `id`=9');
+        $this->addSql('DELETE FROM status WHERE id=9');
     }
 }
